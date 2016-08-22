@@ -79,7 +79,6 @@ class RoleController extends Controller
             foreach ($newPermissions as $newPermission)
             {
                 $newPermissionRole = new PermissionRole();
-                
                 $newPermissionRole->permission_id = $newPermission;
                 $newPermissionRole->role_id = $newRole->id;
                 $newPermissionRole->save();
@@ -92,26 +91,58 @@ class RoleController extends Controller
 
     public function edit($id){
         $role = $this->roleModel->find($id);
-        return view('admin.roles.edit', compact('role'));
+        $permissions = $this->permissionModel
+            ->orderBy('label')
+            ->get();
+        $permissionRoles = $role->permissions()->get();
+        return view('admin.roles.edit', compact('role','permissions','permissionRoles'));
 
+    }
+
+    public function update($id)
+    {
+
+        $newRole = $this->roleModel->find($id);
+
+        $newPermissions = $this->request->permissions;
+
+        $this->permissionRoleModel
+                ->where('role_id', $newRole->id)
+                ->delete();
+
+        if ($newPermissions)
+        {
+            foreach ($newPermissions as $newPermission)
+            {
+                $newPermissionRole = new PermissionRole();
+
+                $newPermissionRole->permission_id = $newPermission;
+                $newPermissionRole->role_id = $newRole->id;
+                $newPermissionRole->save();
+            }
+        }
+
+        $newRole->update($this->request->all());
+
+        session()->flash('success', 'O Papel '. $newRole->label .' foi alterado com sucesso');
+        return redirect('/admin/roles');
     }
 
 
 
     public function delete($id){
 
-        $permission = $this->permissionModel->find($id);
-        $permissionRole = $permission->role;
+        $deletedPermission = $this->roleModel->find($id);
+        $rolePermissions = $deletedPermission->permissions;
 
-        if ($permissionRole){
-            session()->flash('erro', 'A permissão ' . $permissionRole->label . '. Exclusão não permitida.');
+//        if ($rolePermissions){
+//            session()->flash('erro', 'O Papel ' . $deletedPermission->label . ' possui uma ou mais permissões associados. Exclusão não permitida.');
+//            return redirect('/admin/roles');
+//        }
 
-            return redirect('/admin/roles');
-        }
+        $deletedPermission->delete();
 
-        $permission->destroy();
-
-        session()->flash('success', 'A permissão ' . $permissionRole->label . ' foi excluida com sucesso.');
+        session()->flash('success', 'O Papel ' . $deletedPermission->label . ' foi excluido com sucesso.');
 
         return redirect('/admin/roles');
 

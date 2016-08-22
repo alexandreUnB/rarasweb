@@ -52,11 +52,19 @@
                     <i class="glyphicon glyphicon-pencil"></i>
                 </a>
             </td>
-            <td class="text-center">
-                <a class="btn btn-danger" href="/admin/roles/delete/{{$role->id}}">
-                    <i class="glyphicon glyphicon-trash"></i>
-                </a>
-            </td>
+            @if($role->name == 'adm')
+                <td class="text-center">
+                    <a class="btn btn-danger" href="">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </td>
+            @else
+                <td class="text-center">
+                    <a class="btn btn-danger" href="/admin/roles/delete/{{$role->id}}">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </td>
+            @endif
             </tbody>
         @endforeach
     </table>

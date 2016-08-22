@@ -53,6 +53,13 @@ Route::group(['middleware'=> [],'web'], function(){
 
 
     Route::get('admin/users', 'UserController@index');
+    Route::get('admin/users/create', 'UserController@create');
+    Route::post('admin/users/store', 'UserController@store');
+    Route::get('admin/users/delete/{id}', 'UserController@delete');
+    Route::get('admin/users/show/{id}', 'UserController@show');
+    Route::get('admin/users/edit/{id}', 'UserController@edit');
+    Route::put('admin/users/update/{id}', 'UserController@update');
+    Route::get('admin/users/search', 'UserController@search');
     Route::get('admin/users/{id}/roles', 'UserController@roles');
 
 
