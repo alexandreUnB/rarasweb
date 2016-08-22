@@ -95,4 +95,25 @@ class RoleController extends Controller
         return view('admin.roles.edit', compact('role'));
 
     }
+
+
+
+    public function delete($id){
+
+        $permission = $this->permissionModel->find($id);
+        $permissionRole = $permission->role;
+
+        if ($permissionRole){
+            session()->flash('erro', 'A permissão ' . $permissionRole->label . '. Exclusão não permitida.');
+
+            return redirect('/admin/roles');
+        }
+
+        $permission->destroy();
+
+        session()->flash('success', 'A permissão ' . $permissionRole->label . ' foi excluida com sucesso.');
+
+        return redirect('/admin/roles');
+
+    }
 }
