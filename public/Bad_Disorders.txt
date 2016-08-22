@@ -1,0 +1,40 @@
+Lista de Doenças que tem sinais cadastrados mas não estão na tabela de Disorders.
+1)	206			    Crohn disease
+2)	771			    Ulcerative colitis
+3)	856			    Tourette syndrome
+4)	825			    Ankylosing spondylitis
+5)	870			    Down syndrome
+6)	536			    Systemic lupus erythematosus
+7)	357			    Gilbert syndrome
+8)	1991			Cleft lip with or without cleft palate
+9)	484		    	Klinefelter syndrome
+10)	924		    	Acanthosis nigricans
+11)	200		    	Isolated corpus callosum agenesis
+12)	1232			Barrett esophagus
+13)	155			    Familial isolated hypertrophic cardiomyopathy
+14)	3185			Polycystic ovary syndrome
+15)	730			    Autosomal dominant polycystic kidney disease
+16)	120			    Pernicious anemia
+17)	907			    Wolff-Parkinson-White syndrome
+18)	323			    FG syndrome
+19)	164		    	Cerebral cavernous malformations
+20)	139498			Hemochromatosis type 1
+21)	2335			Isolated keratoconus
+22)	2227			Hypodontia
+23)	3029			Horseshoe kidney
+24)	1002			Cluster headache
+25)	378			    Sjögren syndrome
+26)	1648			Dementia with Lewy body
+27)	80			    Antiphospholipid syndrome
+28)	651			    Idiopathic infantile nystagmus
+29)	462			    Autosomal dominant ichthyosis vulgaris
+30)	69127			Immunoglobulin A deficiency
+31)	41842			Fibromyalgia
+32)	33409			Lichen sclerosus
+33)	33271			Non-alcoholic fatty liver disease
+34)	93385			Brachydactyly type D
+35)	93393			Brachydactyly type A3
+36)	99888			Adrenocortical adenoma
+37) 802             Multiple sclerosis
+38) 280110          Paget disease of bone
+39) 284130          Rheumatoid arthritis

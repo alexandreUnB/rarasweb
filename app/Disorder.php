@@ -1,0 +1,77 @@
+<?php
+
+namespace rarasweb;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Disorder extends Model
+{
+    protected $table = 'disorders';
+    
+    protected $fillable = ['name', 'orphanumber', 'description', 'drugs', 'procedures', 'references', 'disorderType_id'];
+
+    protected $casts = [
+        'orphanumber' => 'string',
+    ];
+
+    public static $rules = [
+        'name' => 'required|min:4|max:120|unique:disorders,name',
+        'orphanumber' => 'required|digits_between:1,6|unique:disorders,orphanumber',
+        'description' => 'max:10000',
+        'drugs' => 'max:5000',
+        'procedures' => 'max:5000',
+        'references' => 'max:5000',
+        'disorderType_id' => 'required',
+    ];
+
+    public static $messages = [
+        'name.required' => 'É necessário informar um nome para a desordem',
+        'name.min' => 'O nome da desordem deve ter no mínimo 5 caracteres',
+        'name.max' => 'O nome da desordem deve ter no máximo 120 caracteres',
+        'name.unique' => 'Já existe uma desordem cadastrada com esse nome',
+        'orphanumber.required' => 'É necessário informar um orphanumber para a desordem',
+        'orphanumber.digits_between' => 'O orphanumber da desordem deve ter no máximo 6 dígitos',
+        'orphanumber.unique' => 'Já existe uma desordem cadastrada com esse orphanumber',
+        'description.max' => 'A descrição da desordem deve ter no máximo 10000 caracteres',
+        'drugs.max' => 'Os medicamentos da desordem devem ter no máximo 5000 caracteres',
+        'procedures.max' => 'Os procedimentos da desordem devem ter no máximo 5000 caracteres',
+        'references.max' => 'A referência bibliográfica da desordem deve ter no máximo 5000 caracteres',
+        'disorderType_id.required' => 'É necessário escolher um tipo para a desordem',
+    ];
+
+    public function disorderType()
+    {
+        return $this->belongsTo('rarasweb\DisorderType', 'disorderType_id');
+    }
+
+    public function specialties()
+    {
+        return $this->belongsToMany('rarasweb\Specialty', 'disorder_specialty', 'disorder_id', 'specialty_id');
+    }
+
+    public function protocol()
+    {
+        return $this->hasOne('rarasweb\Protocol', 'disorder_id');
+    }
+
+    public function synonyms()
+    {
+        return $this->hasMany('rarasweb\Synonymous', 'disorder_id');
+    }
+
+    public function signs()
+    {
+        return $this->belongsToMany('rarasweb\Sign', 'disorder_sign', 'disorder_id', 'sign_id');
+    }
+
+    public function references()
+    {
+        return $this->belongsToMany('rarasweb\Reference', 'disorder_reference', 'disorder_id', 'reference_id');
+    }
+
+    public function indicators()
+    {
+        return $this->hasMany('rarasweb\Indicator', 'disorder_id');
+    }
+
+}

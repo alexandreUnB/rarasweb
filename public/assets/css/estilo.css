@@ -1,0 +1,67 @@
+.btn-superior {
+    margin-bottom: 8px; 
+}
+
+.btn-td {
+    width: 175px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.btn-acoes{
+	margin-right: 5px;
+}
+
+.text-td {
+    font-weight: bold;
+}
+
+.form-modal{
+	border:0px;
+}
+
+.panel-show {
+    margin-top: 10px;
+}
+
+.table-geral {
+    background-color: #337AB7;
+    color: #FFFFFF;
+}
+
+.vresize {
+    resize: vertical;
+}
+
+.fixed-panel {
+    min-height: 150px;
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.navbar-bottom {
+    margin-bottom: 0;
+}
+
+.material-icons.small-icon {
+    font-size: 1.2em;
+}
+
+.centro {
+    /*margin-top: 250px;*/
+    position: absolute;
+    top:37%;
+    left: 0%;
+}
+
+.google {
+    margin-bottom: 8px;
+}
+
+.panel-login {
+    margin-top: 40%;
+}
+
+.panel-register {
+    margin-top: 40%;
+}
