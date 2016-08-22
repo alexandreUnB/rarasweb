@@ -79,7 +79,7 @@ class RoleController extends Controller
             foreach ($newPermissions as $newPermission)
             {
                 $newPermissionRole = new PermissionRole();
-
+                
                 $newPermissionRole->permission_id = $newPermission;
                 $newPermissionRole->role_id = $newRole->id;
                 $newPermissionRole->save();

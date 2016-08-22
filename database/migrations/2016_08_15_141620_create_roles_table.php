@@ -17,6 +17,8 @@ class CreateRolesTable extends Migration
             $table->string('name', 50);
             $table->string('label', 200);
             $table->timestamps();
+
+            $table->collation = 'utf8_general_ci';
         });
 
         Schema::create('role_user', function (Blueprint $table) {
@@ -33,6 +35,8 @@ class CreateRolesTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+
+            $table->collation = 'utf8_general_ci';
         });
 
 

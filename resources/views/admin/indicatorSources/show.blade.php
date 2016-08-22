@@ -10,7 +10,11 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-6">
-                    <p>Fonte de indicador: <strong>{{$indicatorSource->name}}</strong></p>
+                    <p>Nome: <strong>{{$indicatorSource->name}}</strong></p>
+                </div>
+
+                <div class="col-xs-6">
+                    <p>Sigla: <strong>{{$indicatorSource->abbreviation}}</strong></p>
                 </div>
             </div>
         </div>

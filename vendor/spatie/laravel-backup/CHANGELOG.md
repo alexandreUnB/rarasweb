@@ -2,9 +2,25 @@
 
 All notable changes to `laravel-backup` will be documented in this file.
 
+### 3.10.1 - 2016-08-16
+
+- refactored some code so backing up only writes to a disk without reading from it
+
+### 3.10.0 - 2016-08-16
+
+- made backup filename configurable
+
+### 3.9.0 - 2016-08-07
+
+- added telegram sender
+
+### 3.8.2 - 2016-07-27
+
+- fixed wrong comment in the config file
+
 ### 3.8.1 - 2016-07-06
 
--  vastly reduce memory usage and speed up backup
+- vastly reduce memory usage and speed up backup
 
 ### 3.8.0 - 2016-06-16
 

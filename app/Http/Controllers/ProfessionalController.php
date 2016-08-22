@@ -49,6 +49,7 @@ class ProfessionalController extends Controller
             $professionals = $this->professionalModel
                 ->where('name' , 'like' , $searchedExpression.'%')
                 ->orderBy('name')
+                ->orderBy('surname')
                 ->paginate(10);
         }
         elseif ($this->request->searchType == 'professionalCity')
@@ -57,6 +58,7 @@ class ProfessionalController extends Controller
                 ->where('city' , 'like' , $searchedExpression.'%')
                 ->orderBy('city')
                 ->orderBy('name')
+                ->orderBy('surname')
                 ->paginate(10);
         }
         elseif ($this->request->searchType == 'professionalSpecialty')
@@ -72,7 +74,7 @@ class ProfessionalController extends Controller
                 $professionals = $professionals->merge($specialty->professionals);
             }
 
-            $professionals = $professionals->unique()->sortBy('name');
+            $professionals = $professionals->unique()->sortBy('name' . 'surname');
 
             $page = Input::get('page', 1); // Get the ?page=1 from the url
             $perPage = 10; // Number of items per page

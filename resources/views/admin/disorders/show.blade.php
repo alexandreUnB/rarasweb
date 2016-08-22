@@ -443,9 +443,10 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead class="table-geral">
                                 <th class="text-center">ID</th>
-                                <th class="text-center">Tipo de Indicador</th>
+                                <th class="text-center">Desordem</th>
+                                <th class="text-center">Tipo</th>
+                                <th class="text-center">Fonte</th>
                                 <th class="text-center">Ano</th>
-                                <th class="text-center">Dado</th>
                                 <th class="text-center">Detalhes</th>
                                 <th class="text-center">Editar</th>
                                 <th class="text-center">Deletar</th>
@@ -454,9 +455,10 @@
                                 @foreach($indicators as $indicator)
                                     <tbody>
                                     <td class="text-center table-geral">{{$indicator->id}}</td>
+                                    <td class="text-td text-center">{{$indicator->disorder->name}}</td>
                                     <td class="text-td text-center">{{$indicator->indicatorType->name}}</td>
+                                    <td class="text-td text-center">{{$indicator->indicatorSource->name}}</td>
                                     <td class="text-td text-center">{{$indicator->year}}</td>
-                                    <td class="text-td text-center">{{$indicator->amount}}</td>
                                     <td class="text-center">
                                         <a class="btn btn-default" href="/admin/indicators/show/{{$indicator->id}}">
                                             <i class="glyphicon glyphicon-eye-open"></i>

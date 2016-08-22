@@ -16,10 +16,35 @@
         <div class="col-xs-4 text-right">
             <form role="search" action="/admin/indicators/search">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Ano do indicador" name="search" autofocus>
+                    <input type="text" class="form-control" placeholder="Indicador"
+                           name="searchedIndicator" value="{{old('searchedIndicator')}}" autofocus>
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
+                </div>
+
+                <div class="input-group">
+                    {{$checkedDisorder = ""}}
+                    {{$checkedType = ""}}
+                    {{$checkedSource = ""}}
+                    {{$checkedYear = ""}}
+
+                    <span class="hide">
+                        @if(old('searchType') == 'indicatorDisorder')
+                            {{$checkedDisorder = "checked"}}
+                        @elseif(old('searchType') == 'indicatorType')
+                            {{$checkedType = "checked"}}
+                        @elseif(old('searchType') == 'indicatorSource')
+                            {{$checkedSource = "checked"}}
+                        @elseif(old('searchType') == 'indicatorYear')
+                            {{$checkedYear = "checked"}}
+                        @endif
+                    </span>
+
+                    <input type="radio" name="searchType" value="indicatorDisorder" {{$checkedDisorder}} required> Desordem
+                    <input type="radio" name="searchType" value="indicatorType" {{$checkedType}} required> Tipo
+                    <input type="radio" name="searchType" value="indicatorSource" {{$checkedSource}} required> Fonte
+                    <input type="radio" name="searchType" value="indicatorYear" {{$checkedYear}} required> Ano
                 </div>
             </form>
         </div>

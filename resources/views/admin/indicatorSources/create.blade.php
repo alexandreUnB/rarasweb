@@ -15,6 +15,12 @@
                 <input type="text" name="name" class="form-control" value="{{old('name')}}"
                        autofocus required minlength="2" maxlength="45">
             </div>
+
+            <div class="form-group col-xs-6">
+                <label for="abbreviation">Sigla</label>
+                <input type="text" name="abbreviation" class="form-control" value="{{old('abbreviation')}}"
+                       required minlength="2" maxlength="20">
+            </div>
         </div>
 
         <hr />

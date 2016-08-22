@@ -3,6 +3,8 @@
 namespace rarasweb\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 
 use rarasweb\Indicator;
@@ -43,14 +45,105 @@ class IndicatorController extends Controller
 
     public function search()
     {
-        $searchedIndicator = $this->request->search;
+        $searchedExpression = $this->request->searchedIndicator;
 
-        $indicators = $this->indicatorModel
-            ->where('year' , 'like' , $searchedIndicator.'%')
-            ->orderBy('year')
-            ->paginate(10);
+        if ($this->request->searchType == 'indicatorDisorder')
+        {
+            $disorders = $this->disorderModel
+                ->where('name' , 'like' , '%'.$searchedExpression.'%')
+                ->get();
 
-        return view('admin.indicators.index', compact('indicators'));
+            $indicators = collect();
+
+            foreach ($disorders as $disorder)
+            {
+                $indicators = $indicators->merge($disorder->indicators);
+            }
+
+            foreach ($indicators as $indicator)
+            {
+                $indicator['nameDisorder'] = $indicator->disorder->name;
+                $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
+                $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
+            }
+
+            $indicators = $indicators->sortBy('nameDisorder' . 'nameIndicatorType' . 'nameIndicatorSource' . 'year');
+
+            $page = Input::get('page', 1); // Get the ?page=1 from the url
+            $perPage = 10; // Number of items per page
+            $offset = ($page * $perPage) - $perPage;
+
+            $indicators = new LengthAwarePaginator(
+                $indicators->slice($offset, $perPage, true), // Only grab the items we need
+                count($indicators), // Total items
+                $perPage, // Items per page
+                $page, // Current page
+                ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
+            );
+        }
+        elseif ($this->request->searchType == 'indicatorType')
+        {
+            $indicatorTypes = $this->indicatorTypeModel
+                ->where('name' , 'like' , $searchedExpression.'%')
+                ->get();
+
+            $indicators = collect();
+
+            foreach ($indicatorTypes as $indicatorType)
+            {
+                $indicators = $indicators->merge($indicatorType->indicators);
+            }
+
+            $page = Input::get('page', 1); // Get the ?page=1 from the url
+            $perPage = 10; // Number of items per page
+            $offset = ($page * $perPage) - $perPage;
+
+            $indicators = new LengthAwarePaginator(
+                $indicators->slice($offset, $perPage, true), // Only grab the items we need
+                count($indicators), // Total items
+                $perPage, // Items per page
+                $page, // Current page
+                ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
+            );
+        }
+        elseif ($this->request->searchType == 'indicatorSource')
+        {
+            $specialties = $this->specialtyModel
+                ->where('name' , 'like' , '%'.$searchedExpression.'%')
+                ->get();
+
+            $professionals = collect();
+
+            foreach ($specialties as $specialty)
+            {
+                $professionals = $professionals->merge($specialty->professionals);
+            }
+
+            $professionals = $professionals->unique()->sortBy('name');
+
+            $page = Input::get('page', 1); // Get the ?page=1 from the url
+            $perPage = 10; // Number of items per page
+            $offset = ($page * $perPage) - $perPage;
+
+            $professionals = new LengthAwarePaginator(
+                $professionals->slice($offset, $perPage, true), // Only grab the items we need
+                count($professionals), // Total items
+                $perPage, // Items per page
+                $page, // Current page
+                ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
+            );
+        }
+        elseif ($this->request->searchType == 'indicatorYear')
+        {
+            $indicators = $this->indicatorModel
+                ->where('year' , 'like' , $searchedExpression.'%')
+                ->orderBy('year')
+                ->paginate(10);
+        }
+
+        Input::flash();
+
+        return view('admin.indicators.index', compact('indicators'))->with($this->request->all());
     }
 
     /**

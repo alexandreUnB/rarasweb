@@ -18,6 +18,8 @@ class CreatePermissionsTable extends Migration
             $table->string('label', 200);
 
             $table->timestamps();
+
+            $table->collation = 'utf8_general_ci';
         });
 
         Schema::create('permission_role', function (Blueprint $table) {
@@ -34,6 +36,8 @@ class CreatePermissionsTable extends Migration
                 ->references('id')
                 ->on('roles')
                 ->onDelete('cascade');
+
+            $table->collation = 'utf8_general_ci';
         });
     }
 

@@ -29,7 +29,8 @@
     <table class="table table-bordered table-striped table-hover">
         <thead class="table-geral">
         <th class="text-center">ID</th>
-        <th class="text-center">Fonte de Indicador</th>
+        <th class="text-center">Nome</th>
+        <th class="text-center">Sigla</th>
         <th class="text-center">Detalhes</th>
         <th class="text-center">Editar</th>
         <th class="text-center">Deletar</th>
@@ -39,6 +40,7 @@
             <tbody>
             <td class="text-center table-geral">{{$indicatorSource->id}}</td>
             <td class="text-td">{{$indicatorSource->name}}</td>
+            <td class="text-td text-center">{{$indicatorSource->abbreviation}}</td>
             <td class="text-center">
                 <a class="btn btn-default" href="/admin/indicatorSources/show/{{$indicatorSource->id}}">
                     <i class="glyphicon glyphicon-eye-open"></i>
