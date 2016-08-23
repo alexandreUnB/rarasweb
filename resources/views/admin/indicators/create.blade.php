@@ -40,7 +40,7 @@
                     <option value="" hidden>Selecione ou digite a fonte do indicador</option>
                 @foreach($indicatorSources as $indicatorSource)
                         <option value="{{$indicatorSource->id}}" {{$indicatorSource->id == old('indicatorSource_id') ?
-                        "selected" : ""}}>{{$indicatorSource->name}}</option>
+                        "selected" : ""}}>{{$indicatorSource->abbreviation}} - {{$indicatorSource->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -55,6 +55,14 @@
                 <label for="amount">Quantidade</label>
                 <input type="number" name="amount" class="form-control"
                        value="{{old('amount')}}" required min="1" max="1000000000">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-xs-12">
+                <label for="reference">Referência</label>
+                <textarea class="form-control vresize" rows="5" id="reference" name="reference"
+                          required maxlength="1000">{{old('reference')}}</textarea>
             </div>
         </div>
 

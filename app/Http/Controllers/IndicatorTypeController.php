@@ -4,10 +4,10 @@ namespace rarasweb\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 
 use rarasweb\IndicatorType;
-use Symfony\Component\Console\Input\InputOption;
 
 class IndicatorTypeController extends Controller
 {
@@ -36,7 +36,7 @@ class IndicatorTypeController extends Controller
     public function search()
     {
         $indicatorTypes = $this->indicatorTypeModel
-            ->where('name', 'like', $this->request->searchedIndicatorType.'%')
+            ->where('name', 'like', '%'.$this->request->searchedIndicatorType.'%')
             ->paginate(10);
 
         Input::flash();
@@ -88,7 +88,30 @@ class IndicatorTypeController extends Controller
     {
         $indicatorType = $this->indicatorTypeModel->find($id);
 
-        return view('admin.indicatorTypes.show', compact('indicatorType'));
+        $indicators = $indicatorType->indicators()->get();
+
+        foreach ($indicators as $indicator)
+        {
+            $indicator['nameDisorder'] = $indicator->disorder->name;
+            $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
+            $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
+        }
+
+        $indicators = $indicators->sortBy('nameDisorder' . 'nameIndicatorType' . 'nameIndicatorSource' . 'year');
+
+        $page = Input::get('page', 1); // Get the ?page=1 from the url
+        $perPage = 10; // Number of items per page
+        $offset = ($page * $perPage) - $perPage;
+
+        $indicators = new LengthAwarePaginator(
+            $indicators->slice($offset, $perPage, true), // Only grab the items we need
+            count($indicators), // Total items
+            $perPage, // Items per page
+            $page, // Current page
+            ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
+        );
+
+        return view('admin.indicatorTypes.show', compact('indicatorType', 'indicators'));
     }
 
     /**
@@ -114,7 +137,7 @@ class IndicatorTypeController extends Controller
     public function update($id)
     {
         $rules = IndicatorType::$rules;
-        array_set($rules, 'name', 'required|min:5|max:45|unique:indicator_types,name,' . $id);
+        array_set($rules, 'name', 'required|min:5|max:100|unique:indicator_types,name,' . $id);
         $validator = Validator::make($this->request->all(), $rules, IndicatorType::$messages);
 
         if ($validator->fails())
@@ -147,11 +170,13 @@ class IndicatorTypeController extends Controller
         {
             if (count($associatedIndicators) == 1)
             {
-                session()->flash('erro', 'Esse tipo de indicador está associado a ' . count($associatedIndicators) . ' indicador. Exclusão não permitida');
+                session()->flash('erro', 'Esse tipo de indicador está associado a ' .
+                    count($associatedIndicators) . ' indicador. Exclusão não permitida');
             }
             else
             {
-                session()->flash('erro', 'Esse tipo de indicador está associado a ' . count($associatedIndicators) . ' indicadores. Exclusão não permitida');
+                session()->flash('erro', 'Esse tipo de indicador está associado a ' .
+                    count($associatedIndicators) . ' indicadores. Exclusão não permitida');
             }
 
             return redirect('/admin/indicatorTypes');

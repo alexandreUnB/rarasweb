@@ -37,8 +37,28 @@ class IndicatorController extends Controller
     public function index()
     {
         $indicators = $this->indicatorModel
-            ->orderBy('year')
-            ->Paginate(10);
+            ->get();
+
+        foreach ($indicators as $indicator)
+        {
+            $indicator['nameDisorder'] = $indicator->disorder->name;
+            $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
+            $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
+        }
+
+        $indicators = $indicators->sortBy('nameDisorder' . 'nameIndicatorType' . 'nameIndicatorSource' . 'year');
+
+        $page = Input::get('page', 1); // Get the ?page=1 from the url
+        $perPage = 10; // Number of items per page
+        $offset = ($page * $perPage) - $perPage;
+
+        $indicators = new LengthAwarePaginator(
+            $indicators->slice($offset, $perPage, true), // Only grab the items we need
+            count($indicators), // Total items
+            $perPage, // Items per page
+            $page, // Current page
+            ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
+        );
 
         return view('admin.indicators.index', compact('indicators'));
     }
@@ -84,7 +104,7 @@ class IndicatorController extends Controller
         elseif ($this->request->searchType == 'indicatorType')
         {
             $indicatorTypes = $this->indicatorTypeModel
-                ->where('name' , 'like' , $searchedExpression.'%')
+                ->where('name' , 'like' , '%'.$searchedExpression.'%')
                 ->get();
 
             $indicators = collect();
@@ -93,6 +113,15 @@ class IndicatorController extends Controller
             {
                 $indicators = $indicators->merge($indicatorType->indicators);
             }
+
+            foreach ($indicators as $indicator)
+            {
+                $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
+                $indicator['nameDisorder'] = $indicator->disorder->name;
+                $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
+            }
+
+            $indicators = $indicators->sortBy('nameIndicatorType' . 'nameDisorder' . 'nameIndicatorSource' . 'year');
 
             $page = Input::get('page', 1); // Get the ?page=1 from the url
             $perPage = 10; // Number of items per page
@@ -108,26 +137,34 @@ class IndicatorController extends Controller
         }
         elseif ($this->request->searchType == 'indicatorSource')
         {
-            $specialties = $this->specialtyModel
+            $indicatorSources = $this->indicatorSourceModel
                 ->where('name' , 'like' , '%'.$searchedExpression.'%')
+                ->orWhere('abbreviation', 'like', $searchedExpression.'%')
                 ->get();
 
-            $professionals = collect();
+            $indicators = collect();
 
-            foreach ($specialties as $specialty)
+            foreach ($indicatorSources as $indicatorSource)
             {
-                $professionals = $professionals->merge($specialty->professionals);
+                $indicators = $indicators->merge($indicatorSource->indicators);
             }
 
-            $professionals = $professionals->unique()->sortBy('name');
+            foreach ($indicators as $indicator)
+            {
+                $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
+                $indicator['nameDisorder'] = $indicator->disorder->name;
+                $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
+            }
+
+            $indicators = $indicators->sortBy('nameIndicatorSource' . 'nameDisorder' . 'nameIndicatorType' . 'year');
 
             $page = Input::get('page', 1); // Get the ?page=1 from the url
             $perPage = 10; // Number of items per page
             $offset = ($page * $perPage) - $perPage;
 
-            $professionals = new LengthAwarePaginator(
-                $professionals->slice($offset, $perPage, true), // Only grab the items we need
-                count($professionals), // Total items
+            $indicators = new LengthAwarePaginator(
+                $indicators->slice($offset, $perPage, true), // Only grab the items we need
+                count($indicators), // Total items
                 $perPage, // Items per page
                 $page, // Current page
                 ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
@@ -200,8 +237,8 @@ class IndicatorController extends Controller
 
         if ($validationIndicator)
         {
-            session()->flash('erro', 'Já existe um dado de ' . $indicatorType->name . ' no ano de ' .
-                $newIndicator['year'] . ' fornecido pelo(a) ' . $indicatorSource->name . ' para a desordem' . $disorder->name);
+            session()->flash('erro', 'Já existe um dado de ' . $indicatorType->name . ' no ano de ' . $newIndicator['year'] .
+                ' fornecido pelo(a) ' . $indicatorSource->abbreviation . ' para a desordem' . $disorder->name);
 
             return redirect('/admin/indicators/create')
                 ->withInput($this->request->all());
@@ -209,8 +246,8 @@ class IndicatorController extends Controller
 
         $this->indicatorModel->create($newIndicator);
 
-        session()->flash('success', 'O dado de ' . $indicatorType->name . ' do ano de ' . $newIndicator['year'] .
-            ' fornecido pelo(a) ' . $indicatorSource->name . ' para a desordem ' . $disorder->name . ' foi cadastrado com sucesso');
+        session()->flash('success', 'O dado de ' . $indicatorType->name . ' do ano de ' . $newIndicator['year'] . ' fornecido pelo(a) ' .
+            $indicatorSource->abbreviation . ' para a desordem ' . $disorder->name . ' foi cadastrado com sucesso');
 
         return redirect('/admin/indicators/create');
     }
@@ -277,17 +314,17 @@ class IndicatorController extends Controller
             ['year', $updatedIndicator['year']],
             ['disorder_id', $updatedIndicator['disorder_id']],
             ['indicatorType_id', $updatedIndicator['indicatorType_id']],
-            ['indicatorSource_id', $newIndicator['indicatorSource_id']],
+            ['indicatorSource_id', $updatedIndicator['indicatorSource_id']],
         ])->first();
 
         $disorder = $this->disorderModel->find($updatedIndicator['disorder_id']);
         $indicatorType = $this->indicatorTypeModel->find($updatedIndicator['indicatorType_id']);
-        $indicatorSource = $this->indicatorSourceModel->find($newIndicator['indicatorSource_id']);
+        $indicatorSource = $this->indicatorSourceModel->find($updatedIndicator['indicatorSource_id']);
 
         if ($validationIndicator && $validationIndicator->id != $id)
         {
-            session()->flash('erro', 'Já existe um dado de ' . $indicatorType->name . ' no ano de ' .
-                $updatedIndicator['year'] . ' fornecido pelo(a) ' . $indicatorSource->name . ' para a desordem' . $disorder->name);
+            session()->flash('erro', 'Já existe um dado de ' . $indicatorType->name . ' no ano de ' . $updatedIndicator['year'] .
+                ' fornecido pelo(a) ' . $indicatorSource->abbreviation . ' para a desordem' . $disorder->name);
 
             return redirect('/admin/indicators/edit/' . $id)
                 ->withInput($this->request->all());
@@ -295,8 +332,8 @@ class IndicatorController extends Controller
 
         $this->indicatorModel->find($id)->update($updatedIndicator);
 
-        session()->flash('success', 'O dado de ' . $indicatorType->name . ' do ano de ' . $updatedIndicator['year'] .
-            ' fornecido pelo(a) ' . $indicatorSource->name . ' para a desordem ' . $disorder->name . ' foi cadastrado com sucesso');
+        session()->flash('success', 'O dado de ' . $indicatorType->name . ' do ano de ' . $updatedIndicator['year'] . ' fornecido pelo(a) ' .
+            $indicatorSource->abbreviation . ' para a desordem ' . $disorder->name . ' foi cadastrado com sucesso');
 
         return redirect('/admin/indicators');
     }
@@ -313,7 +350,7 @@ class IndicatorController extends Controller
         $deletedIndicator->delete();
 
         session()->flash('success', 'O dado de ' . $deletedIndicator->indicatorType->name . ' do ano de ' .
-            $deletedIndicator->year . ' fornecido pelo(a) ' . $deletedIndicator->indicatorSource->name .
+            $deletedIndicator->year . ' fornecido pelo(a) ' . $deletedIndicator->indicatorSource->abbreviation .
             ' para a desordem ' . $deletedIndicator->disorder->name . ' foi excluído com sucesso');
         
         return redirect()->to('/admin/indicators');

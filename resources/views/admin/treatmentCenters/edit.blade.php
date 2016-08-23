@@ -174,7 +174,7 @@
         <div id="actions" class="row">
             <div class="col-xs-12">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{{\Illuminate\Support\Facades\URL::previous()}}" class="btn btn-default">Voltar</a>
+                <a href="/admin/treatmentCenters" class="btn btn-default">Voltar</a>
             </div>
         </div>
     </form>

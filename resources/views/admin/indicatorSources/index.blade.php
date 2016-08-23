@@ -16,7 +16,7 @@
         <div class="col-xs-4 text-right">
             <form role="search" action="/admin/indicatorSources/search">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Fonte de Indicador"
+                    <input type="text" class="form-control" placeholder="Nome ou Sigla"
                            name="searchedIndicatorSource" value="{{old('searchedIndicatorSource')}}" autofocus>
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>

@@ -42,7 +42,7 @@
                     <option value="" hidden>Selecione ou digite a fonte do indicador</option>
                     @foreach($indicatorSources as $indicatorSource)
                         <option value="{{$indicatorSource->id}}" {{$indicatorSource->id == $indicator->indicatorSource_id ?
-                        "selected" : ""}}>{{$indicatorSource->name}}</option>
+                        "selected" : ""}}>{{$indicatorSource->abbreviation}} - {{$indicatorSource->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -60,12 +60,20 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="form-group col-xs-12">
+                <label for="reference">Referência</label>
+                <textarea class="form-control vresize" rows="5" id="reference" name="reference"
+                          required maxlength="1000">{{$indicator->reference}}</textarea>
+            </div>
+        </div>
+
         <hr />
 
         <div id="actions" class="row">
             <div class="col-xs-12">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{{\Illuminate\Support\Facades\URL::previous()}}" class="btn btn-default">Voltar</a>
+                <a href="/admin/indicators" class="btn btn-default">Voltar</a>
             </div>
         </div>
     </form>

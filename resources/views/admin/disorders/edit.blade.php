@@ -24,8 +24,8 @@
             </div>
 
             <div class="form-group col-xs-5">
-                <label for="disorderType">Tipo de Desordem</label>
-                <select class="form-control" name="disorderType" id="disorderType_id" required>
+                <label for="disorderType_id">Tipo de Desordem</label>
+                <select class="form-control" name="disorderType_id" id="disorderType_id" required>
                     <option value="" hidden>Selecione ou digite o tipo de desordem</option>
                     @foreach($disorderTypes as $disorderType)
                         <option value="{{$disorderType->id}}"
@@ -138,7 +138,7 @@
         <div id="actions" class="row">
             <div class="col-xs-12">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{{\Illuminate\Support\Facades\URL::previous()}}" class="btn btn-default">Voltar</a>
+                <a href="/admin/disorders" class="btn btn-default">Voltar</a>
             </div>
         </div>
     </form>

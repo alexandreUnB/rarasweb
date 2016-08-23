@@ -13,7 +13,7 @@
             <div class="form-group col-xs-6">
                 <label for="name">Nome</label>
                 <input type="text" name="name" class="form-control" value="{{old('name')}}"
-                       autofocus required minlength="5" maxlength="45">
+                       autofocus required minlength="5" maxlength="100">
             </div>
         </div>
 
