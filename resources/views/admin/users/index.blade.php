@@ -45,7 +45,7 @@
             <td class="text-center">{{$user->surname}}</td>
             <td class="text-center">{{$user->email}}</td>
             <td class="text-center">
-                <a class="btn btn-default" href="/admin/users/{{$user->id}}/roles">
+                <a class="btn btn-default" href="/admin/users/show/{{$user->id}}">
                     <i class="glyphicon glyphicon-eye-open"></i>
                 </a>
             </td>

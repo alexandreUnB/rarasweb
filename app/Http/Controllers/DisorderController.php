@@ -15,6 +15,8 @@ use rarasweb\DisorderSpecialty;
 use rarasweb\DisorderReference;
 use rarasweb\DisorderSign;
 
+use Illuminate\Support\Facades\Gate;
+
 class DisorderController extends Controller
 {
     private $disorderModel;
@@ -39,6 +41,9 @@ class DisorderController extends Controller
         $this->disorderReferenceModel = $disorderReferenceModel;
         $this->disorderSignModel = $disorderSignModel;
         $this->request = $request;
+
+//        if ((Gate::denies('user')))
+//            abort(403, 'Not Allowed');
     }
 
     /**

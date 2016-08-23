@@ -48,7 +48,6 @@
                     @endforeach
                 </div>
             </div>
-            
         </div>
 
         <hr/>

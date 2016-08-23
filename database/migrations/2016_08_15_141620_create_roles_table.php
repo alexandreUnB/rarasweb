@@ -35,6 +35,7 @@ class CreateRolesTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->timestamps();
 
             $table->collation = 'utf8_general_ci';
         });

@@ -195,25 +195,26 @@
                                 @endforelse
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <p>Medicamentos:
-                                    <textarea class="form-control vresize" rows="5" id="drugs"
-                                              name="drugs" disabled>{{$disorder->drugs}}</textarea>
-                                </p>
+                        @can('view-medication')
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <p>Medicamentos:
+                                        <textarea class="form-control vresize" rows="5" id="drugs"
+                                                  name="drugs" disabled>{{$disorder->drugs}}</textarea>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <p>Procedimentos:
-                                    <textarea class="form-control vresize" rows="5" id="procedures"
-                                              name="procedures" disabled>{{$disorder->procedures}}</textarea>
-                                </p>
+                        @endcan
+                        @can('view-procedure')
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <p>Procedimentos:
+                                        <textarea class="form-control vresize" rows="5" id="procedures"
+                                                  name="procedures" disabled>{{$disorder->procedures}}</textarea>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-
+                        @endcan
                         <div class="row">
                             <div class="col-xs-8">
                                 <p>Referências Bibliográficas:

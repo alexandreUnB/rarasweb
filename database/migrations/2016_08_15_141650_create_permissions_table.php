@@ -36,6 +36,7 @@ class CreatePermissionsTable extends Migration
                 ->references('id')
                 ->on('roles')
                 ->onDelete('cascade');
+            $table->timestamps();
 
             $table->collation = 'utf8_general_ci';
         });
