@@ -64,7 +64,7 @@
             <td class="text-center table-geral">{{$reference->id}}</td>
             <td class="text-td text-center">{{$reference->source}}</td>
             <td class="text-td text-center">{{$reference->reference}}</td>
-            <td class="text-td text-center">{{$reference->map_relation}}</td>
+            <td class="text-td text-center">{{$reference->map_relation ? $reference->map_relation : '-'}}</td>
             <td class="text-center">
                 <a class="btn btn-default" href="/admin/references/show/{{$reference->id}}">
                     <i class="glyphicon glyphicon-eye-open"></i>

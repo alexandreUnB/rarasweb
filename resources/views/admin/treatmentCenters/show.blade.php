@@ -217,6 +217,8 @@
                             </tbody>
                         @endforeach
                     </table>
+
+                    {!! $centerDisorders->links() !!}
                 </div>
             </div>
         </div>
