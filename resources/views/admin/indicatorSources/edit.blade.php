@@ -14,11 +14,11 @@
             <div class="form-group col-xs-6">
                 <label for="name">Nome</label>
                 <input type="text" name="name" class="form-control" value="{{$indicatorSource->name}}"
-                       autofocus required minlength="2" maxlength="45">
+                       autofocus required minlength="2" maxlength="200">
             </div>
 
             <div class="form-group col-xs-6">
-                <label for="abbreviation">Nome</label>
+                <label for="abbreviation">Sigla</label>
                 <input type="text" name="abbreviation" class="form-control" value="{{$indicatorSource->abbreviation}}"
                        required minlength="2" maxlength="20">
             </div>

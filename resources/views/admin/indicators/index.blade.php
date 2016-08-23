@@ -67,7 +67,7 @@
             <td class="text-center table-geral">{{$indicator->id}}</td>
             <td class="text-td text-center">{{$indicator->disorder->name}}</td>
             <td class="text-td text-center">{{$indicator->indicatorType->name}}</td>
-            <td class="text-td text-center">{{$indicator->indicatorSource->name}}</td>
+            <td class="text-td text-center">{{$indicator->indicatorSource->abbreviation}}</td>
             <td class="text-td text-center">{{$indicator->year}}</td>
             <td class="text-center">
                 <a class="btn btn-default" href="/admin/indicators/show/{{$indicator->id}}">
