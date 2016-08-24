@@ -27,7 +27,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/admin">Painel de Controle</a>
+            @can('crud')
+                <a class="navbar-brand" href="/admin">Painel de Controle</a>
+            @endcan
+            @cannot('crud')
+                <a class="navbar-brand" href="/">RarasWeb</a>
+            @endcannot
+
         </div>
 
         <ul class="nav navbar-nav navbar-right">

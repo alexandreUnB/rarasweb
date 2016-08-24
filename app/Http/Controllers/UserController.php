@@ -38,8 +38,8 @@ class UserController extends Controller
         $this->roleModel = $roleModel;
         $this->roleUserModel = $roleUserModel;
 
-        if ((Gate::denies('user')))
-            abort(403, 'Not Allowed');
+//        if ((Gate::denies('user')))
+//            abort(403, 'Not Allowed');
     }
 
     public function roles($id)

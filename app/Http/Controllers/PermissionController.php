@@ -22,8 +22,8 @@ class PermissionController extends Controller
         $this->request = $request;
         $this->permissionModel = $permissionModel;
 
-        if ((Gate::denies('user')))
-            abort(403,'Not Allowed');
+//        if ((Gate::denies('user')))
+//            abort(403,'Not Allowed');
     }
 
     public function index(){

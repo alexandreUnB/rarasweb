@@ -34,7 +34,7 @@ class MainAdminController extends Controller
                 'sunSpecialties', 'sunReferences', 'sunSynonymous', 'sunTreatmentCenters',
                 'sunIndicators'));
         }else{
-            return redirect()->to('/login');
+//            return redirect()->to('/login');
         }
 
     }

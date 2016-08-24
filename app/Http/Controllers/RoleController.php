@@ -35,8 +35,8 @@ class RoleController extends Controller
         $this->permissionModel = $permissionModel;
         $this->permissionRoleModel = $permissionRoleModel;
 
-        if ((Gate::denies('user')))
-        abort(403,'Not Allowed');
+//        if ((Gate::denies('user')))
+//        abort(403,'Not Allowed');
     }
 
     public function index(){
