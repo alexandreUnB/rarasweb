@@ -372,6 +372,6 @@ class DisorderController extends Controller
 
         session()->flash('success', 'A desordem ' . $deletedDisorder->name . ' foi deletada com sucesso');
 
-        return redirect('/admin/disorders');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

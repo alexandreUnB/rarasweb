@@ -171,6 +171,6 @@ class LawController extends Controller
 
         session()->flash('success', 'A lei ' . $deletedLaw->name_law . ' foi excluída com sucesso');
 
-        return redirect('/admin/laws');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }
