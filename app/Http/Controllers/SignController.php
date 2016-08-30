@@ -208,6 +208,6 @@ class SignController extends Controller
         session()->flash('success', 'O sinal ' . $deletedSign->name .
             ' - ' . $deletedSign->frequency . ' foi excluído com sucesso.');
 
-        return redirect('/admin/signs');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

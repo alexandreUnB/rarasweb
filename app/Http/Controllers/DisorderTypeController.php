@@ -165,6 +165,6 @@ class DisorderTypeController extends Controller
 
         session()->flash('success', 'O tipo de desordem ' . $deletedDisorderType->name . ' foi excluído com sucesso');
 
-        return redirect('/admin/disordertypes');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

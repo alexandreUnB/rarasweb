@@ -232,6 +232,6 @@ class ReferenceController extends Controller
         session()->flash('success', 'A referência ' . $deletedReference->source .
             ' - ' . $deletedReference->reference . ' foi excluída com sucesso.');
 
-        return redirect('/admin/references');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

@@ -177,6 +177,6 @@ class SpecialtyController extends Controller
 
         session()->flash('success', 'A especialidade ' . $deletedSpecialty->name . ' foi excluída com sucesso.');
 
-        return redirect('/admin/specialties');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

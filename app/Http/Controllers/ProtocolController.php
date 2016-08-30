@@ -212,6 +212,6 @@ class ProtocolController extends Controller
 
         session()->flash('success', 'O protocolo da doença ' . $deletedProtocol->disorder->name . ' foi excluído com sucesso');
 
-        return redirect('/admin/protocols');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

@@ -249,6 +249,6 @@ class ProfessionalController extends Controller
         session()->flash('success', 'O profissional ' . $deletedProfessional->name . 
             '' . $deletedProfessional->surname . ' foi deletado com sucesso');
 
-        return redirect('/admin/professionals');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

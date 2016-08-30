@@ -8,9 +8,11 @@
 
     <div class="row">
         <div class="col-xs-8">
-            <a class="btn btn-primary btn-superior" href={!!URL::to('admin/laws/create')!!}>
+            <a class="btn btn-primary" href={!!URL::to('admin/laws/create')!!}>
                 <i class="glyphicon glyphicon-plus"> Novo</i>
             </a>
+
+            <div><span class="small">{{$laws->total()}} leis</span></div>
         </div>
 
         <div class="col-xs-4 text-right">

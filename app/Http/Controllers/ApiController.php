@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+<<<<<<< HEAD
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -16,6 +17,22 @@ use App\Specialty;
 use App\Synonymous;
 use App\TreatmentCenter;
 
+=======
+use rarasweb\Http\Requests;
+use rarasweb\Http\Controllers\Controller;
+
+use rarasweb\Disorder;
+use rarasweb\Indicator;
+use rarasweb\Professional;
+use rarasweb\Reference;
+use rarasweb\Sign;
+use rarasweb\Specialty;
+use rarasweb\Synonymous;
+use rarasweb\TreatmentCenter;
+use rarasweb\Protocol;
+use rarasweb\Law;
+use DB;
+>>>>>>> 51bbf94643a7aaaacec42d49a3e6a4157562649e
 
 class ApiController extends Controller
 {
@@ -52,10 +69,19 @@ class ApiController extends Controller
      * @var TreatmentCenter
      */
     private $treatmentCenterModel;
+    /**
+     * @var Protocols
+     */
+    private $protocolModel;
+    /**
+     * @var Laws
+     */
+    private $lawModel;
 
     public function __construct(Request $request, Disorder $disorderModel, Synonymous $synonymousModel,
                                 Sign $signModel, Reference $referenceModel, Indicator $indicatorModel, 
-                                Professional $professionalModel, TreatmentCenter $treatmentCenterModel)
+                                Professional $professionalModel, TreatmentCenter $treatmentCenterModel,
+                                Protocol $protocolModel, Law $lawModel)
     {
         $this->request = $request;
         $this->disorderModel = $disorderModel;
@@ -65,14 +91,16 @@ class ApiController extends Controller
         $this->indicatorModel = $indicatorModel;
         $this->professionalModel = $professionalModel;
         $this->treatmentCenterModel = $treatmentCenterModel;
+        $this->protocolModel = $protocolModel;
+        $this->lawModel = $lawModel;
     }
 
     // function to search professional link by name
     public function professionalName($name)
     {
-        return $this->professionalModel
-            ->where('name', 'like', '%' . $name . '%')
-            ->get();
+        
+        return  $proessionals = DB::select('SELECT * FROM professionals WHERE name LIKE ? OR CONCAT(name,surname)=?', 
+            ['%'.$name.'%', $name]);
 
     }
     
@@ -156,6 +184,12 @@ class ApiController extends Controller
 
         $indicators = $disorder->indicators;
 
+        foreach ($indicators as $indicator)
+        {
+            $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
+            $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
+        }
+
         $professionals = collect();
         $treatmentCenters = collect();
 
@@ -164,7 +198,7 @@ class ApiController extends Controller
             $treatmentCenters = $treatmentCenters->merge($specialty->treatmentCenters);
         }
 
-        $professionals = $professionals->unique()->sortBy('name');
+        // $professionals = $professionals->unique()->sortBy('name');
 
         $specialties = $disorder->specialties()
             ->orderBy('name')
@@ -176,10 +210,18 @@ class ApiController extends Controller
             ->orderBy('name')
             ->get();
 
+        $signsLength = $signs->count(0);
+
+        $signs = $signs->take(10);
+
 
         $centers = $treatmentCenters->toArray();
 
-        return response()->json(compact('specialties', 'disorder', 'signs', 'centers'));
+        $professionalsFilter = $professionals->take(10)->toArray();
+
+        return response()->json(compact('specialties', 'disorder', 'signs', 
+            'signsLength','centers', 'professionalsFilter', 'indicators'));
+
     }
 
 
@@ -197,13 +239,159 @@ class ApiController extends Controller
             $centerDisorders = $centerDisorders->merge($specialty->disorders);
         }
 
-        $centersDis =  $centerDisorders->toArray();
+        $centerDis =  $centerDisorders->toArray();
 
 
         $treatmentCenter = $this->treatmentCenterModel->find($id);
 
         // return response()->json(compact('treatmentCenter', 'specialties', 'countSpecialties', 'centerDisorders'));
-        return response()->json(compact('treatmentCenter'));
+        return response()->json(compact('treatmentCenter', 'centerDis'));
 
+    }
+
+    public function signLoader($id, $pos)
+    {
+        $disorder = $this->disorderModel->find($id);
+
+        $signs = $disorder->signs()
+            ->orderBy('name')
+            ->get()->splice($pos,10)->toArray();
+
+
+ 
+        return response()->json(compact('signs'));
+
+    }
+
+    public function profLoader($id, $pos)
+    {
+        $disorder = $this->disorderModel->find($id);
+        $specialties = $disorder->specialties()
+            ->orderBy('name')
+            ->get();
+
+        $professionals = collect();
+
+        foreach ($specialties as $specialty) {
+            $professionals = $professionals->merge($specialty->professionals);
+        }
+
+        $professionalsFilter = $professionals->splice($pos,10)->toArray();
+
+
+        return response()->json(compact('professionalsFilter'));
+
+    }
+
+    public function disorderName($name)
+    {
+        $disorders = $this->disorderModel
+            ->where('name', 'like', '%'.$name.'%')
+            ->orderBy('name')->get()->toArray();
+        return response()->json(compact('disorders'));
+    }
+
+    public function centerName($name)
+    {
+        $centers = $this->treatmentCenterModel
+            ->where('name', 'like', '%'.$name.'%')
+            ->orderBy('name')->get()->toArray();
+        return response()->json(compact('centers'));
+    }
+
+    public function protocolID($id)
+    {
+        $protocol = $this->protocolModel->find($id);
+
+        return $protocol;
+    }
+
+    public function protocolName($name)
+    {
+        if($name == "all"){
+
+            $protocols = collect();
+
+            $protocols = $this->protocolModel
+                ->orderBy('document')
+                ->get();
+
+
+        }else{
+            $disorders = $this->disorderModel
+            ->where('name', 'like', '%'.$name.'%')
+            ->orderBy('name')
+            ->get();
+
+            $protocols = collect();
+
+            $protocols = $this->protocolModel
+                ->where('document', 'like', '%'.$name.'%')
+                ->orderBy('document')
+                ->get();
+
+            foreach ($disorders as $disorder)
+            {
+                if ($disorder->protocol)
+                {
+                    $protocols->push($disorder->protocol);
+                }
+            }
+
+        }
+
+        return response()->json(compact('protocols'));
+
+    }
+
+
+    public function disorderBySign($name, $pos){
+
+        $disorders = $this->disorderModel
+            ->where('name', 'like', '%'.$name.'%')
+            ->orderBy('name')->get();
+
+        $signs = collect();
+
+
+        // foreach ($disorders as $disorder)
+        // {
+        //     if ($disorder->signs)
+        //     {
+        //         foreach ($disorder->signs as $sign)
+        //         {
+        //             $signs->push($sign);
+        //         }
+        //     }
+        // } 
+
+        foreach ($disorders as $disorder) {
+            $signs = $signs->merge($disorder->signs);
+        }
+
+        $signs = $signs->splice($pos,10)->toArray();
+
+        return response()->json(compact('signs'));
+
+    }
+
+
+    public function lawID($id)
+    {
+        $law = $this->lawModel->find($id);
+
+        return $law;
+    }
+
+    public function lawName($name)
+    {
+        
+        $laws = $this->lawModel
+            ->where('name_law', 'like', '%'.$name.'%')
+            ->orderBy('name_law')
+            ->get()->toArray();
+
+  
+        return response()->json(compact('laws'));
     }
 }

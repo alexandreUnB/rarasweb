@@ -186,6 +186,6 @@ class IndicatorSourceController extends Controller
 
         session()->flash('success', 'A fonte de indicador ' . $deletedIndicatorSource->name . ' foi excluída com sucesso.');
 
-        return redirect('/admin/indicatorSources');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

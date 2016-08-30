@@ -154,6 +154,6 @@ class SynonymousController extends Controller
         
         session()->flash('success', 'O sinônimo ' . $deletedSynonymous->name . ' foi excluído com sucesso');
 
-        return redirect('/admin/synonyms');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

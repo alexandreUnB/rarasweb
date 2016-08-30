@@ -87,7 +87,10 @@ class IndicatorController extends Controller
                 $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
             }
 
-            $indicators = $indicators->sortBy('nameDisorder' . 'nameIndicatorType' . 'nameIndicatorSource' . 'year');
+            $indicators = $indicators->sortBy(function($indicators) {
+                return sprintf('%s %s %s %s', $indicators->nameDisorder, $indicators->nameIndicatorType,
+                    $indicators->nameIndicatorSource, $indicators->year);
+            });
 
             $page = Input::get('page', 1); // Get the ?page=1 from the url
             $perPage = 10; // Number of items per page
@@ -121,7 +124,10 @@ class IndicatorController extends Controller
                 $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
             }
 
-            $indicators = $indicators->sortBy('nameIndicatorType' . 'nameDisorder' . 'nameIndicatorSource' . 'year');
+            $indicators = $indicators->sortBy(function($indicators) {
+                return sprintf('%s %s %s %s', $indicators->nameIndicatorType, $indicators->nameDisorder,
+                    $indicators->nameIndicatorSource, $indicators->year);
+            });
 
             $page = Input::get('page', 1); // Get the ?page=1 from the url
             $perPage = 10; // Number of items per page
@@ -156,7 +162,10 @@ class IndicatorController extends Controller
                 $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
             }
 
-            $indicators = $indicators->sortBy('nameIndicatorSource' . 'nameDisorder' . 'nameIndicatorType' . 'year');
+            $indicators = $indicators->sortBy(function($indicators) {
+                return sprintf('%s %s %s %s', $indicators->nameIndicatorSource, $indicators->nameDisorder,
+                    $indicators->nameIndicatorType, $indicators->year);
+            });
 
             $page = Input::get('page', 1); // Get the ?page=1 from the url
             $perPage = 10; // Number of items per page
@@ -352,7 +361,7 @@ class IndicatorController extends Controller
         session()->flash('success', 'O dado de ' . $deletedIndicator->indicatorType->name . ' do ano de ' .
             $deletedIndicator->year . ' fornecido pelo(a) ' . $deletedIndicator->indicatorSource->abbreviation .
             ' para a desordem ' . $deletedIndicator->disorder->name . ' foi excluído com sucesso');
-        
-        return redirect()->to('/admin/indicators');
+
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }

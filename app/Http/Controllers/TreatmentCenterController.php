@@ -245,6 +245,6 @@ class TreatmentCenterController extends Controller
 
         session()->flash('success', 'O centro de tratamento ' . $deletedTreatmentCenter->name . ' foi deletado com sucesso');
 
-        return redirect('/admin/treatmentCenters');
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }
