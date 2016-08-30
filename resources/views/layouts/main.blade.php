@@ -41,6 +41,7 @@
     @endif
 
     <nav class="navbar navbar-default navbar-static-top navbar-bottom" role="navigation">
+        @include('layouts.alerts')
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -49,13 +50,13 @@
                 <span class="icon-bar"></span>
             </button>
 
-            {{--@ability('admin,tec','crud')--}}
-                {{--<a class="navbar-brand" href="/admin">Painel de Controle</a>--}}
-            {{--@endability--}}
+            @role(['admin','tec'])
+            <a class="navbar-brand" href="/admin">Painel de Controle</a>
+            @endrole
 
-            {{--@ability('med,user','show')--}}
-                {{--<a class="navbar-brand" href="">RarasWeb</a>--}}
-            {{--@endability--}}
+            @role(['med','user'])
+            <a class="navbar-brand" href="">RarasWeb</a>
+            @endrole
 
         </div>
 
