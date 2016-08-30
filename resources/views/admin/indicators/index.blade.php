@@ -8,9 +8,11 @@
 
     <div class="row">
         <div class="col-xs-8">
-            <a class="btn btn-primary btn-superior" href={!!URL::to('admin/indicators/create')!!}>
+            <a class="btn btn-primary" href={!!URL::to('admin/indicators/create')!!}>
                 <i class="glyphicon glyphicon-plus"> Novo</i>
             </a>
+
+            <div><span class="small">{{$indicators->total()}} indicadores</span></div>
         </div>
 
         <div class="col-xs-4 text-right">

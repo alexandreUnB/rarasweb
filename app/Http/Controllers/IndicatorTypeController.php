@@ -185,7 +185,7 @@ class IndicatorTypeController extends Controller
         $deletedIndicatorType->delete();
 
         session()->flash('success', 'O tipo de indicador ' . $deletedIndicatorType->name . ' foi excluído com sucesso.');
-        
-        return redirect('/admin/indicatorTypes');
+
+        return redirect(\Illuminate\Support\Facades\URL::previous());
     }
 }
