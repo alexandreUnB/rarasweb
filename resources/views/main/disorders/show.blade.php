@@ -195,25 +195,26 @@
                                 @endforelse
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <p>Medicamentos:
-                                    <textarea class="form-control vresize" rows="5" id="drugs"
-                                              name="drugs" disabled>{{$disorder->drugs}}</textarea>
-                                </p>
+                        @permission('view-medications')
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <p>Medicamentos:
+                                        <textarea class="form-control vresize" rows="5" id="drugs"
+                                                  name="drugs" disabled>{{$disorder->drugs}}</textarea>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <p>Procedimentos:
-                                    <textarea class="form-control vresize" rows="5" id="procedures"
-                                              name="procedures" disabled>{{$disorder->procedures}}</textarea>
-                                </p>
+                        @endpermission
+                        @permission('view-procedures')
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <p>Procedimentos:
+                                        <textarea class="form-control vresize" rows="5" id="procedures"
+                                                  name="procedures" disabled>{{$disorder->procedures}}</textarea>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-
+                        @endpermission
                         <div class="row">
                             <div class="col-xs-8">
                                 <p>Referências Bibliográficas:

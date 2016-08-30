@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 

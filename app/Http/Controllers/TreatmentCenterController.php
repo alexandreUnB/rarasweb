@@ -1,15 +1,15 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 
-use rarasweb\TreatmentCenter;
-use rarasweb\Specialty;
-use rarasweb\SpecialtyTreatmentCenter;
+use App\TreatmentCenter;
+use App\Specialty;
+use App\SpecialtyTreatmentCenter;
 
 class TreatmentCenterController extends Controller
 {
@@ -163,19 +163,7 @@ class TreatmentCenterController extends Controller
             $centerDisorders = $centerDisorders->merge($specialty->disorders);
         }
 
-        $centerDisorders = $centerDisorders->unique()->sortBy('name');
-
-        $page = Input::get('page', 1); // Get the ?page=1 from the url
-        $perPage = 10; // Number of items per page
-        $offset = ($page * $perPage) - $perPage;
-
-        $centerDisorders = new LengthAwarePaginator(
-            $centerDisorders->slice($offset, $perPage, true), // Only grab the items we need
-            count($centerDisorders), // Total items
-            $perPage, // Items per page
-            $page, // Current page
-            ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
-        );
+        $centerDisorders = $centerDisorders->unique();
 
         return view('admin.treatmentCenters.show', compact('treatmentCenter', 'specialties', 'countSpecialties', 'centerDisorders'));
     }

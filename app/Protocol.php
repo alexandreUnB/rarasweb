@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,6 +29,6 @@ class Protocol extends Model
 
     public function disorder()
     {
-        return $this->belongsTo('rarasweb\Disorder', 'disorder_id');
+        return $this->belongsTo('App\Disorder', 'disorder_id');
     }
 }

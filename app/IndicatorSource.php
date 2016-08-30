@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +28,6 @@ class IndicatorSource extends Model
 
     public function indicators()
     {
-        return $this->hasMany('rarasweb\Indicator', 'indicatorSource_id');
+        return $this->hasMany('App\Indicator', 'indicatorSource_id');
     }
 }

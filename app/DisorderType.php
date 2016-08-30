@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +23,6 @@ class DisorderType extends Model
 
     public function disorders()
     {
-        return $this->hasMany('rarasweb\Disorder', 'disorderType_id');
+        return $this->hasMany('App\Disorder', 'disorderType_id');
     }
 }

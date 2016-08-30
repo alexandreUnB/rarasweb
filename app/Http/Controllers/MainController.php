@@ -1,18 +1,18 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use rarasweb\Disorder;
-use rarasweb\Http\Requests;
-use rarasweb\Indicator;
-use rarasweb\Professional;
-use rarasweb\Reference;
-use rarasweb\Sign;
-use rarasweb\Specialty;
-use rarasweb\Synonymous;
-use rarasweb\TreatmentCenter;
+use App\Disorder;
+use App\Http\Requests;
+use App\Indicator;
+use App\Professional;
+use App\Reference;
+use App\Sign;
+use App\Specialty;
+use App\Synonymous;
+use App\TreatmentCenter;
 
 class MainController extends Controller
 {

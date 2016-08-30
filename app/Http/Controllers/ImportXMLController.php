@@ -1,24 +1,24 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use rarasweb\AuxDisEsp;
-use rarasweb\AuxProtocols;
-use rarasweb\Disorder;
+use App\AuxDisEsp;
+use App\AuxProtocols;
+use App\Disorder;
 
-use rarasweb\DisorderReference;
-use rarasweb\DisorderSign;
-use rarasweb\DisorderSpecialty;
-use rarasweb\DisorderType;
-use rarasweb\Http\Requests;
-use rarasweb\Http\Controllers\Controller;
-use rarasweb\Protocol;
-use rarasweb\Reference;
-use rarasweb\Sign;
-use rarasweb\Specialty;
-use rarasweb\Synonymous;
+use App\DisorderReference;
+use App\DisorderSign;
+use App\DisorderSpecialty;
+use App\DisorderType;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Protocol;
+use App\Reference;
+use App\Sign;
+use App\Specialty;
+use App\Synonymous;
 
 
 class ImportXMLController extends Controller

@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -8,8 +8,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
-use rarasweb\Protocol;
-use rarasweb\Disorder;
+use App\Protocol;
+use App\Disorder;
 
 class ProtocolController extends Controller
 {

@@ -7,8 +7,9 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-		"laravelcollective/html": "5.2.*",
-        "spatie/laravel-backup": "^3.8"
+        "laravelcollective/html": "5.2.*",
+        "zizaco/entrust": "5.2.x-dev"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -22,7 +23,7 @@
             "database"
         ],
         "psr-4": {
-            "rarasweb\\": "app/"
+            "App\\": "app/"
         }
     },
     "autoload-dev": {

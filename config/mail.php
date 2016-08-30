@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'administrador@rederaras.org', 'name' => 'Administrador RarasWeb'],
+    'from' => ['address' => null, 'name' => null],
 
     /*
     |--------------------------------------------------------------------------

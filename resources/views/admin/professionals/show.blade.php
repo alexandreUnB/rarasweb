@@ -164,8 +164,6 @@
                             </tbody>
                         @endforeach
                     </table>
-
-                    {!! $professionalDisorders->links() !!}
                 </div>
             </div>
         </div>

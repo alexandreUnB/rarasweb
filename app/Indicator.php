@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,16 +36,16 @@ class Indicator extends Model
 
     public function disorder()
     {
-        return $this->belongsTo('rarasweb\Disorder', 'disorder_id');
+        return $this->belongsTo('App\Disorder', 'disorder_id');
     }
 
     public function indicatorType()
     {
-        return $this->belongsTo('rarasweb\IndicatorType' , 'indicatorType_id');
+        return $this->belongsTo('App\IndicatorType' , 'indicatorType_id');
     }
 
     public function indicatorSource()
     {
-        return $this->belongsTo('rarasweb\IndicatorSource' , 'indicatorSource_id');
+        return $this->belongsTo('App\IndicatorSource' , 'indicatorSource_id');
     }
 }

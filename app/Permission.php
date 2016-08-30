@@ -1,15 +1,13 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Permission extends Model
+use Zizaco\Entrust\EntrustPermission;
+
+class Permission extends EntrustPermission
 {
+    protected $fillable = ['name', 'display_name','description'];
 
-    protected $fillable = ['name','label'];
-
-    public function roles(){
-        return $this->belongsToMany(Role::class);
-    }
 }

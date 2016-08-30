@@ -1,19 +1,19 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
-use rarasweb\Disorder;
-use rarasweb\DisorderType;
-use rarasweb\Specialty;
-use rarasweb\Reference;
-use rarasweb\Sign;
-use rarasweb\DisorderSpecialty;
-use rarasweb\DisorderReference;
-use rarasweb\DisorderSign;
+use App\Disorder;
+use App\DisorderType;
+use App\Specialty;
+use App\Reference;
+use App\Sign;
+use App\DisorderSpecialty;
+use App\DisorderReference;
+use App\DisorderSign;
 
 use Illuminate\Support\Facades\Gate;
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 
-use rarasweb\Indicator;
-use rarasweb\Disorder;
-use rarasweb\IndicatorType;
-use rarasweb\IndicatorSource;
+use App\Indicator;
+use App\Disorder;
+use App\IndicatorType;
+use App\IndicatorSource;
 
 class IndicatorController extends Controller
 {

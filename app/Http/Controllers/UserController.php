@@ -1,15 +1,15 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use rarasweb\Http\Requests;
-use rarasweb\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use rarasweb\Role;
-use rarasweb\RoleUser;
-use rarasweb\User;
+use App\Role;
+use App\RoleUser;
+use App\User;
 
 
 class UserController extends Controller
@@ -38,8 +38,8 @@ class UserController extends Controller
         $this->roleModel = $roleModel;
         $this->roleUserModel = $roleUserModel;
 
-        if ((Gate::denies('user')))
-            abort(403, 'Not Allowed');
+//        if ((Gate::denies('user')))
+//            abort(403, 'Not Allowed');
     }
 
     public function roles($id)
@@ -62,7 +62,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = $this->userModel->find($id);
-        $roles = $this->roleModel->orderBy('label')->get();
+        $roles = $this->roleModel->orderBy('display_name')->get();
         return view('admin.users.edit', compact('user', 'roles'));
     }
 

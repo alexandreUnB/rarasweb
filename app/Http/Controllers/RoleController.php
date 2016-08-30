@@ -1,15 +1,15 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use rarasweb\Http\Requests;
-use rarasweb\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use rarasweb\Permission;
-use rarasweb\PermissionRole;
-use rarasweb\Role;
+use App\Permission;
+use App\PermissionRole;
+use App\Role;
 
 class RoleController extends Controller
 {
@@ -35,12 +35,12 @@ class RoleController extends Controller
         $this->permissionModel = $permissionModel;
         $this->permissionRoleModel = $permissionRoleModel;
 
-        if ((Gate::denies('user')))
-        abort(403,'Not Allowed');
+//        if ((Gate::denies('user')))
+//        abort(403,'Not Allowed');
     }
 
     public function index(){
-        $roles = $this->roleModel->orderBy('label')->paginate(10);
+        $roles = $this->roleModel->orderBy('display_name')->paginate(10);
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -55,7 +55,7 @@ class RoleController extends Controller
     }
 
     public function create(){
-        $permissions = $this->permissionModel->orderBy('label')->get();
+        $permissions = $this->permissionModel->orderBy('display_name')->get();
         return view('admin.roles.create', compact('permissions'));
     }
 
@@ -92,7 +92,7 @@ class RoleController extends Controller
     public function edit($id){
         $role = $this->roleModel->find($id);
         $permissions = $this->permissionModel
-            ->orderBy('label')
+            ->orderBy('display_name')
             ->get();
         $permissionRoles = $role->permissions()->get();
         return view('admin.roles.edit', compact('role','permissions','permissionRoles'));

@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,18 +27,18 @@ class Specialty extends Model
 
     public function disorders()
     {
-        return $this->belongsToMany('rarasweb\Disorder', 'disorder_specialty', 'specialty_id', 'disorder_id');
+        return $this->belongsToMany('App\Disorder', 'disorder_specialty', 'specialty_id', 'disorder_id');
     }
 
     public function professionals()
     {
-        return $this->belongsToMany('rarasweb\Professional', 'professional_specialty',
+        return $this->belongsToMany('App\Professional', 'professional_specialty',
             'specialty_id', 'professional_id');
     }
 
     public function treatmentCenters()
     {
-        return $this->belongsToMany('rarasweb\TreatmentCenter', 'specialty_treatmentcenter',
+        return $this->belongsToMany('App\TreatmentCenter', 'specialty_treatmentcenter',
             'specialty_id', 'treatmentCenter_id');
     }
 }

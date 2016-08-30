@@ -1,12 +1,12 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use rarasweb\Http\Requests;
-use rarasweb\Http\Controllers\Controller;
-use rarasweb\Permission;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Permission;
 use Illuminate\Support\Facades\Gate;
 
 class PermissionController extends Controller
@@ -22,12 +22,12 @@ class PermissionController extends Controller
         $this->request = $request;
         $this->permissionModel = $permissionModel;
 
-        if ((Gate::denies('user')))
-            abort(403,'Not Allowed');
+//        if ((Gate::denies('user')))
+//            abort(403,'Not Allowed');
     }
 
     public function index(){
-        $permissions = $this->permissionModel->orderBy('label')->paginate();
+        $permissions = $this->permissionModel->orderBy('display_name')->paginate();
         return view('admin.permissions.index', compact('permissions'));
     }
 
