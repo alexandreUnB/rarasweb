@@ -5,9 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-
-
-    <link media="all" type="text/css" rel="stylesheet" href="{{public_path('assets\css\bootstrap.mim.css')}}">
+    
     {!!Html::style('assets/css/bootstrap.min.css')!!}
     {!!Html::style('assets/css/estilo.css')!!}
     {!!Html::style('assets/css/font-awesome.min.css')!!}
