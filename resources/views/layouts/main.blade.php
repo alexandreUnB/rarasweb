@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-    
+
     {!!Html::style('assets/css/bootstrap.min.css')!!}
     {!!Html::style('assets/css/estilo.css')!!}
     {!!Html::style('assets/css/font-awesome.min.css')!!}
@@ -17,29 +17,7 @@
 <body>
 <div class="container">
 
-    @if(Session::has('erro'))
-        <div class="alert alert-danger">
-            {{Session::get('erro')}}
-        </div>
-    @elseif(Session::has('success'))
-        <div class="alert alert-success">
-            {{Session::get('success')}}
-        </div>
-    @endif
-
-    @if(isset($errors) && count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>Alguns campos precisam da sua atenção</strong><br>
-            <ol type="1">
-                @foreach($errors->all() as $error)
-                    <li>{{$error}} <br></li>
-                @endforeach
-            </ol>
-        </div>
-    @endif
-
     <nav class="navbar navbar-default navbar-static-top navbar-bottom" role="navigation">
-        @include('layouts.alerts')
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -78,6 +56,7 @@
     </nav>
 
     <div>
+        @include('layouts.alerts')
         @yield('content')
     </div>
 
