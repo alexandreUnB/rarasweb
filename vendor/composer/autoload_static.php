@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
+class ComposerStaticInit676e81552f1aaf0918a2e9e89f7ece6a
 {
     public static $files = array (
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
@@ -14,20 +14,19 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
-        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '0c3c22e27afa83be19b4c938f4c6e9ea' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/functions.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'r' => 
-        array (
-            'rarasweb\\' => 9,
-        ),
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'Z' => 
+        array (
+            'Zizaco\\Entrust\\' => 15,
         ),
         'X' => 
         array (
@@ -56,8 +55,6 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
             'SuperClosure\\' => 13,
-            'Spatie\\DbDumper\\' => 16,
-            'Spatie\\Backup\\' => 14,
         ),
         'P' => 
         array (
@@ -91,18 +88,22 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
             'ClassPreloader\\' => 15,
             'Carbon\\' => 7,
         ),
+        'A' => 
+        array (
+            'App\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'rarasweb\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/app',
-        ),
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'Zizaco\\Entrust\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -180,14 +181,6 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
         array (
             0 => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src',
         ),
-        'Spatie\\DbDumper\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/spatie/db-dumper/src',
-        ),
-        'Spatie\\Backup\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/spatie/laravel-backup/src',
-        ),
         'Psy\\' => 
         array (
             0 => __DIR__ . '/..' . '/psy/psysh/src/Psy',
@@ -231,6 +224,10 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
+        ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app',
         ),
     );
 
@@ -281,6 +278,70 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
     );
 
     public static $classMap = array (
+        'App\\AuxDisEsp' => __DIR__ . '/../..' . '/app/AuxDisEsp.php',
+        'App\\AuxProtocols' => __DIR__ . '/../..' . '/app/AuxProtocols.php',
+        'App\\Console\\Commands\\Inspire' => __DIR__ . '/../..' . '/app/Console/Commands/Inspire.php',
+        'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Disorder' => __DIR__ . '/../..' . '/app/Disorder.php',
+        'App\\DisorderReference' => __DIR__ . '/../..' . '/app/DisorderReference.php',
+        'App\\DisorderSign' => __DIR__ . '/../..' . '/app/DisorderSign.php',
+        'App\\DisorderSpecialty' => __DIR__ . '/../..' . '/app/DisorderSpecialty.php',
+        'App\\DisorderType' => __DIR__ . '/../..' . '/app/DisorderType.php',
+        'App\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
+        'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\ApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApiController.php',
+        'App\\Http\\Controllers\\Auth\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthController.php',
+        'App\\Http\\Controllers\\Auth\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordController.php',
+        'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DisorderController' => __DIR__ . '/../..' . '/app/Http/Controllers/DisorderController.php',
+        'App\\Http\\Controllers\\DisorderTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/DisorderTypeController.php',
+        'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\ImportXMLController' => __DIR__ . '/../..' . '/app/Http/Controllers/ImportXMLController.php',
+        'App\\Http\\Controllers\\IndicatorController' => __DIR__ . '/../..' . '/app/Http/Controllers/IndicatorController.php',
+        'App\\Http\\Controllers\\IndicatorSourceController' => __DIR__ . '/../..' . '/app/Http/Controllers/IndicatorSourceController.php',
+        'App\\Http\\Controllers\\IndicatorTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/IndicatorTypeController.php',
+        'App\\Http\\Controllers\\LawController' => __DIR__ . '/../..' . '/app/Http/Controllers/LawController.php',
+        'App\\Http\\Controllers\\MainAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/MainAdminController.php',
+        'App\\Http\\Controllers\\MainController' => __DIR__ . '/../..' . '/app/Http/Controllers/MainController.php',
+        'App\\Http\\Controllers\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/PermissionController.php',
+        'App\\Http\\Controllers\\ProfessionalController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfessionalController.php',
+        'App\\Http\\Controllers\\ProtocolController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProtocolController.php',
+        'App\\Http\\Controllers\\ReferenceController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReferenceController.php',
+        'App\\Http\\Controllers\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/RoleController.php',
+        'App\\Http\\Controllers\\SignController' => __DIR__ . '/../..' . '/app/Http/Controllers/SignController.php',
+        'App\\Http\\Controllers\\SpecialtyController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpecialtyController.php',
+        'App\\Http\\Controllers\\SynonymousController' => __DIR__ . '/../..' . '/app/Http/Controllers/SynonymousController.php',
+        'App\\Http\\Controllers\\TreatmentCenterController' => __DIR__ . '/../..' . '/app/Http/Controllers/TreatmentCenterController.php',
+        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
+        'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
+        'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
+        'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
+        'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Requests\\Request' => __DIR__ . '/../..' . '/app/Http/Requests/Request.php',
+        'App\\Indicator' => __DIR__ . '/../..' . '/app/Indicator.php',
+        'App\\IndicatorSource' => __DIR__ . '/../..' . '/app/IndicatorSource.php',
+        'App\\IndicatorType' => __DIR__ . '/../..' . '/app/IndicatorType.php',
+        'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
+        'App\\Law' => __DIR__ . '/../..' . '/app/Law.php',
+        'App\\Permission' => __DIR__ . '/../..' . '/app/Permission.php',
+        'App\\PermissionRole' => __DIR__ . '/../..' . '/app/PermissionRole.php',
+        'App\\Professional' => __DIR__ . '/../..' . '/app/Professional.php',
+        'App\\ProfessionalSpecialty' => __DIR__ . '/../..' . '/app/ProfessionalSpecialty.php',
+        'App\\Protocol' => __DIR__ . '/../..' . '/app/Protocol.php',
+        'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
+        'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
+        'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
+        'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Reference' => __DIR__ . '/../..' . '/app/Reference.php',
+        'App\\Role' => __DIR__ . '/../..' . '/app/Role.php',
+        'App\\RoleUser' => __DIR__ . '/../..' . '/app/RoleUser.php',
+        'App\\Sign' => __DIR__ . '/../..' . '/app/Sign.php',
+        'App\\Specialty' => __DIR__ . '/../..' . '/app/Specialty.php',
+        'App\\SpecialtyTreatmentCenter' => __DIR__ . '/../..' . '/app/SpecialtyTreatmentCenter.php',
+        'App\\Synonymous' => __DIR__ . '/../..' . '/app/Synonymous.php',
+        'App\\TreatmentCenter' => __DIR__ . '/../..' . '/app/TreatmentCenter.php',
+        'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'ClassPreloader\\ClassList' => __DIR__ . '/..' . '/classpreloader/classpreloader/src/ClassList.php',
@@ -306,8 +367,6 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
         'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
         'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreatePermissionsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_15_141650_create_permissions_table.php',
-        'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_15_141620_create_roles_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
@@ -334,6 +393,7 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
         'Dotenv\\Exception\\ValidationException' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/ValidationException.php',
         'Dotenv\\Loader' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Loader.php',
         'Dotenv\\Validator' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Validator.php',
+        'EntrustSetupTables' => __DIR__ . '/../..' . '/database/migrations/2016_08_29_151106_entrust_setup_tables.php',
         'Faker\\Calculator\\Iban' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/Calculator/Iban.php',
         'Faker\\Calculator\\Luhn' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/Calculator/Luhn.php',
         'Faker\\DefaultGenerator' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/DefaultGenerator.php',
@@ -2388,56 +2448,6 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
         'SebastianBergmann\\RecursionContext\\Exception' => __DIR__ . '/..' . '/sebastian/recursion-context/src/Exception.php',
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
-        'Spatie\\Backup\\BackupDestination\\Backup' => __DIR__ . '/..' . '/spatie/laravel-backup/src/BackupDestination/Backup.php',
-        'Spatie\\Backup\\BackupDestination\\BackupCollection' => __DIR__ . '/..' . '/spatie/laravel-backup/src/BackupDestination/BackupCollection.php',
-        'Spatie\\Backup\\BackupDestination\\BackupDestination' => __DIR__ . '/..' . '/spatie/laravel-backup/src/BackupDestination/BackupDestination.php',
-        'Spatie\\Backup\\BackupDestination\\BackupDestinationFactory' => __DIR__ . '/..' . '/spatie/laravel-backup/src/BackupDestination/BackupDestinationFactory.php',
-        'Spatie\\Backup\\BackupServiceProvider' => __DIR__ . '/..' . '/spatie/laravel-backup/src/BackupServiceProvider.php',
-        'Spatie\\Backup\\Commands\\BackupCommand' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Commands/BackupCommand.php',
-        'Spatie\\Backup\\Commands\\BaseCommand' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Commands/BaseCommand.php',
-        'Spatie\\Backup\\Commands\\CleanupCommand' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Commands/CleanupCommand.php',
-        'Spatie\\Backup\\Commands\\ListCommand' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Commands/ListCommand.php',
-        'Spatie\\Backup\\Commands\\MonitorCommand' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Commands/MonitorCommand.php',
-        'Spatie\\Backup\\Events\\BackupHasFailed' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Events/BackupHasFailed.php',
-        'Spatie\\Backup\\Events\\BackupWasSuccessful' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Events/BackupWasSuccessful.php',
-        'Spatie\\Backup\\Events\\BackupZipWasCreated' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Events/BackupZipWasCreated.php',
-        'Spatie\\Backup\\Events\\CleanupHasFailed' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Events/CleanupHasFailed.php',
-        'Spatie\\Backup\\Events\\CleanupWasSuccessful' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Events/CleanupWasSuccessful.php',
-        'Spatie\\Backup\\Events\\HealthyBackupWasFound' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Events/HealthyBackupWasFound.php',
-        'Spatie\\Backup\\Events\\UnhealthyBackupWasFound' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Events/UnhealthyBackupWasFound.php',
-        'Spatie\\Backup\\Exceptions\\InvalidBackupJob' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Exceptions/InvalidBackupJob.php',
-        'Spatie\\Backup\\Exceptions\\InvalidCommand' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Exceptions/InvalidCommand.php',
-        'Spatie\\Backup\\Exceptions\\InvalidConfiguration' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Exceptions/InvalidConfiguration.php',
-        'Spatie\\Backup\\Helpers\\ConsoleOutput' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/ConsoleOutput.php',
-        'Spatie\\Backup\\Helpers\\Format' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/Format.php',
-        'Spatie\\Backup\\Notifications\\BaseSender' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/BaseSender.php',
-        'Spatie\\Backup\\Notifications\\EventHandler' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/EventHandler.php',
-        'Spatie\\Backup\\Notifications\\Notifier' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/Notifier.php',
-        'Spatie\\Backup\\Notifications\\Senders\\Log' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/Senders/Log.php',
-        'Spatie\\Backup\\Notifications\\Senders\\Mail' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/Senders/Mail.php',
-        'Spatie\\Backup\\Notifications\\Senders\\Pushover' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/Senders/Pushover.php',
-        'Spatie\\Backup\\Notifications\\Senders\\Slack' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/Senders/Slack.php',
-        'Spatie\\Backup\\Notifications\\Senders\\Telegram' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/Senders/Telegram.php',
-        'Spatie\\Backup\\Notifications\\SendsNotifications' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/SendsNotifications.php',
-        'Spatie\\Backup\\Notifications\\UnhealthyBackupMessage' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Notifications/UnhealthyBackupMessage.php',
-        'Spatie\\Backup\\Tasks\\Backup\\BackupJob' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Backup/BackupJob.php',
-        'Spatie\\Backup\\Tasks\\Backup\\BackupJobFactory' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Backup/BackupJobFactory.php',
-        'Spatie\\Backup\\Tasks\\Backup\\FileSelection' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Backup/FileSelection.php',
-        'Spatie\\Backup\\Tasks\\Backup\\FileSelectionFactory' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Backup/FileSelectionFactory.php',
-        'Spatie\\Backup\\Tasks\\Backup\\TemporaryDirectory' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Backup/TemporaryDirectory.php',
-        'Spatie\\Backup\\Tasks\\Backup\\Zip' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Backup/Zip.php',
-        'Spatie\\Backup\\Tasks\\Cleanup\\CleanupJob' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Cleanup/CleanupJob.php',
-        'Spatie\\Backup\\Tasks\\Cleanup\\CleanupStrategy' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Cleanup/CleanupStrategy.php',
-        'Spatie\\Backup\\Tasks\\Cleanup\\Period' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Cleanup/Period.php',
-        'Spatie\\Backup\\Tasks\\Cleanup\\Strategies\\DefaultStrategy' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Cleanup/Strategies/DefaultStrategy.php',
-        'Spatie\\Backup\\Tasks\\Monitor\\BackupDestinationStatus' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Monitor/BackupDestinationStatus.php',
-        'Spatie\\Backup\\Tasks\\Monitor\\BackupDestinationStatusFactory' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Tasks/Monitor/BackupDestinationStatusFactory.php',
-        'Spatie\\DbDumper\\Databases\\MySql' => __DIR__ . '/..' . '/spatie/db-dumper/src/Databases/MySql.php',
-        'Spatie\\DbDumper\\Databases\\PostgreSql' => __DIR__ . '/..' . '/spatie/db-dumper/src/Databases/PostgreSql.php',
-        'Spatie\\DbDumper\\DbDumper' => __DIR__ . '/..' . '/spatie/db-dumper/src/DbDumper.php',
-        'Spatie\\DbDumper\\Exceptions\\CannotSetParameter' => __DIR__ . '/..' . '/spatie/db-dumper/src/Exceptions/CannotSetParameter.php',
-        'Spatie\\DbDumper\\Exceptions\\CannotStartDump' => __DIR__ . '/..' . '/spatie/db-dumper/src/Exceptions/CannotStartDump.php',
-        'Spatie\\DbDumper\\Exceptions\\DumpFailed' => __DIR__ . '/..' . '/spatie/db-dumper/src/Exceptions/DumpFailed.php',
         'SuperClosure\\Analyzer\\AstAnalyzer' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/AstAnalyzer.php',
         'SuperClosure\\Analyzer\\ClosureAnalyzer' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/ClosureAnalyzer.php',
         'SuperClosure\\Analyzer\\Token' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/Token.php',
@@ -2956,6 +2966,21 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'XdgBaseDir\\Xdg' => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
+        'Zizaco\\Entrust\\Contracts\\EntrustPermissionInterface' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Contracts/EntrustPermissionInterface.php',
+        'Zizaco\\Entrust\\Contracts\\EntrustRoleInterface' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Contracts/EntrustRoleInterface.php',
+        'Zizaco\\Entrust\\Contracts\\EntrustUserInterface' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Contracts/EntrustUserInterface.php',
+        'Zizaco\\Entrust\\Entrust' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Entrust.php',
+        'Zizaco\\Entrust\\EntrustFacade' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/EntrustFacade.php',
+        'Zizaco\\Entrust\\EntrustPermission' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/EntrustPermission.php',
+        'Zizaco\\Entrust\\EntrustRole' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/EntrustRole.php',
+        'Zizaco\\Entrust\\EntrustServiceProvider' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/EntrustServiceProvider.php',
+        'Zizaco\\Entrust\\Middleware\\EntrustAbility' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Middleware/EntrustAbility.php',
+        'Zizaco\\Entrust\\Middleware\\EntrustPermission' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Middleware/EntrustPermission.php',
+        'Zizaco\\Entrust\\Middleware\\EntrustRole' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Middleware/EntrustRole.php',
+        'Zizaco\\Entrust\\MigrationCommand' => __DIR__ . '/..' . '/zizaco/entrust/src/commands/MigrationCommand.php',
+        'Zizaco\\Entrust\\Traits\\EntrustPermissionTrait' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Traits/EntrustPermissionTrait.php',
+        'Zizaco\\Entrust\\Traits\\EntrustRoleTrait' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Traits/EntrustRoleTrait.php',
+        'Zizaco\\Entrust\\Traits\\EntrustUserTrait' => __DIR__ . '/..' . '/zizaco/entrust/src/Entrust/Traits/EntrustUserTrait.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',
@@ -3038,81 +3063,15 @@ class ComposerStaticInit06932e2a12baf061decfcc1854a33f1c
         'phpDocumentor\\Reflection\\Types\\String_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/String_.php',
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
-        'rarasweb\\AuxDisEsp' => __DIR__ . '/../..' . '/app/AuxDisEsp.php',
-        'rarasweb\\AuxProtocols' => __DIR__ . '/../..' . '/app/AuxProtocols.php',
-        'rarasweb\\Console\\Commands\\Inspire' => __DIR__ . '/../..' . '/app/Console/Commands/Inspire.php',
-        'rarasweb\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
-        'rarasweb\\Disorder' => __DIR__ . '/../..' . '/app/Disorder.php',
-        'rarasweb\\DisorderReference' => __DIR__ . '/../..' . '/app/DisorderReference.php',
-        'rarasweb\\DisorderSign' => __DIR__ . '/../..' . '/app/DisorderSign.php',
-        'rarasweb\\DisorderSpecialty' => __DIR__ . '/../..' . '/app/DisorderSpecialty.php',
-        'rarasweb\\DisorderType' => __DIR__ . '/../..' . '/app/DisorderType.php',
-        'rarasweb\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
-        'rarasweb\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'rarasweb\\Http\\Controllers\\ApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApiController.php',
-        'rarasweb\\Http\\Controllers\\Auth\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthController.php',
-        'rarasweb\\Http\\Controllers\\Auth\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordController.php',
-        'rarasweb\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'rarasweb\\Http\\Controllers\\DisorderController' => __DIR__ . '/../..' . '/app/Http/Controllers/DisorderController.php',
-        'rarasweb\\Http\\Controllers\\DisorderTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/DisorderTypeController.php',
-        'rarasweb\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
-        'rarasweb\\Http\\Controllers\\ImportXMLController' => __DIR__ . '/../..' . '/app/Http/Controllers/ImportXMLController.php',
-        'rarasweb\\Http\\Controllers\\IndicatorController' => __DIR__ . '/../..' . '/app/Http/Controllers/IndicatorController.php',
-        'rarasweb\\Http\\Controllers\\IndicatorSourceController' => __DIR__ . '/../..' . '/app/Http/Controllers/IndicatorSourceController.php',
-        'rarasweb\\Http\\Controllers\\IndicatorTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/IndicatorTypeController.php',
-        'rarasweb\\Http\\Controllers\\LawController' => __DIR__ . '/../..' . '/app/Http/Controllers/LawController.php',
-        'rarasweb\\Http\\Controllers\\MainAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/MainAdminController.php',
-        'rarasweb\\Http\\Controllers\\MainController' => __DIR__ . '/../..' . '/app/Http/Controllers/MainController.php',
-        'rarasweb\\Http\\Controllers\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/PermissionController.php',
-        'rarasweb\\Http\\Controllers\\ProfessionalController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfessionalController.php',
-        'rarasweb\\Http\\Controllers\\ProtocolController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProtocolController.php',
-        'rarasweb\\Http\\Controllers\\ReferenceController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReferenceController.php',
-        'rarasweb\\Http\\Controllers\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/RoleController.php',
-        'rarasweb\\Http\\Controllers\\SignController' => __DIR__ . '/../..' . '/app/Http/Controllers/SignController.php',
-        'rarasweb\\Http\\Controllers\\SpecialtyController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpecialtyController.php',
-        'rarasweb\\Http\\Controllers\\SynonymousController' => __DIR__ . '/../..' . '/app/Http/Controllers/SynonymousController.php',
-        'rarasweb\\Http\\Controllers\\TreatmentCenterController' => __DIR__ . '/../..' . '/app/Http/Controllers/TreatmentCenterController.php',
-        'rarasweb\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
-        'rarasweb\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
-        'rarasweb\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
-        'rarasweb\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
-        'rarasweb\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
-        'rarasweb\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'rarasweb\\Http\\Requests\\DisordersRequest' => __DIR__ . '/../..' . '/app/Http/Requests/DisordersRequest.php',
-        'rarasweb\\Http\\Requests\\Request' => __DIR__ . '/../..' . '/app/Http/Requests/Request.php',
-        'rarasweb\\Http\\Requests\\SignsRequest' => __DIR__ . '/../..' . '/app/Http/Requests/SignsRequest.php',
-        'rarasweb\\Http\\Requests\\SynonymsRequest' => __DIR__ . '/../..' . '/app/Http/Requests/SynonymsRequest.php',
-        'rarasweb\\Indicator' => __DIR__ . '/../..' . '/app/Indicator.php',
-        'rarasweb\\IndicatorSource' => __DIR__ . '/../..' . '/app/IndicatorSource.php',
-        'rarasweb\\IndicatorType' => __DIR__ . '/../..' . '/app/IndicatorType.php',
-        'rarasweb\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
-        'rarasweb\\Law' => __DIR__ . '/../..' . '/app/Law.php',
-        'rarasweb\\Permission' => __DIR__ . '/../..' . '/app/Permission.php',
-        'rarasweb\\PermissionRole' => __DIR__ . '/../..' . '/app/PermissionRole.php',
-        'rarasweb\\Professional' => __DIR__ . '/../..' . '/app/Professional.php',
-        'rarasweb\\ProfessionalSpecialty' => __DIR__ . '/../..' . '/app/ProfessionalSpecialty.php',
-        'rarasweb\\Protocol' => __DIR__ . '/../..' . '/app/Protocol.php',
-        'rarasweb\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
-        'rarasweb\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
-        'rarasweb\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
-        'rarasweb\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
-        'rarasweb\\Reference' => __DIR__ . '/../..' . '/app/Reference.php',
-        'rarasweb\\Role' => __DIR__ . '/../..' . '/app/Role.php',
-        'rarasweb\\Sign' => __DIR__ . '/../..' . '/app/Sign.php',
-        'rarasweb\\Specialty' => __DIR__ . '/../..' . '/app/Specialty.php',
-        'rarasweb\\SpecialtyTreatmentCenter' => __DIR__ . '/../..' . '/app/SpecialtyTreatmentCenter.php',
-        'rarasweb\\Synonymous' => __DIR__ . '/../..' . '/app/Synonymous.php',
-        'rarasweb\\TreatmentCenter' => __DIR__ . '/../..' . '/app/TreatmentCenter.php',
-        'rarasweb\\User' => __DIR__ . '/../..' . '/app/User.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit06932e2a12baf061decfcc1854a33f1c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit06932e2a12baf061decfcc1854a33f1c::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit06932e2a12baf061decfcc1854a33f1c::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit06932e2a12baf061decfcc1854a33f1c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit676e81552f1aaf0918a2e9e89f7ece6a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit676e81552f1aaf0918a2e9e89f7ece6a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit676e81552f1aaf0918a2e9e89f7ece6a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit676e81552f1aaf0918a2e9e89f7ece6a::$classMap;
 
         }, null, ClassLoader::class);
     }

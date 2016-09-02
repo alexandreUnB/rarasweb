@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @include('layouts.alerts')
+    {{--@include('layouts.alerts')--}}
 
     <h3 class="page-header">Adicionar Referência</h3>
 
