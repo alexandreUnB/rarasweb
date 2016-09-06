@@ -29,8 +29,9 @@
     <table class="table table-bordered table-striped table-hover">
         <thead class="table-geral">
         <th class="text-center" width="10">ID</th>
-        <th class="text-center">Permissão</th>
+        <th class="text-center">Nome da Permissão</th>
         <th class="text-center">Slug</th>
+        <th class="text-center">Descrição da Permissão</th>
 
         <th class="text-center" width="80">Papeis</th>
         <th class="text-center" width="80">Editar</th>
@@ -40,8 +41,9 @@
         @foreach($permissions as $permission)
             <tbody>
             <td class="text-center table-geral">{{$permission->id}}</td>
-            <td class="text-center">{{$permission->label}}</td>
+            <td class="text-center">{{$permission->display_name}}</td>
             <td class="text-center">{{$permission->name}}</td>
+            <td class="text-center">{{$permission->description}}</td>
             <td class="text-center">
                 <a class="btn btn-default" href="/admin/permissions/{{$permission->id}}/roles">
                     <i class="material-icons small-icon">vpn_key</i>

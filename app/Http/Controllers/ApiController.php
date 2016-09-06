@@ -1,9 +1,23 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+<<<<<<< HEAD
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use App\Disorder;
+use App\Indicator;
+use App\Professional;
+use App\Reference;
+use App\Sign;
+use App\Specialty;
+use App\Synonymous;
+use App\TreatmentCenter;
+
+=======
 use rarasweb\Http\Requests;
 use rarasweb\Http\Controllers\Controller;
 
@@ -18,6 +32,7 @@ use rarasweb\TreatmentCenter;
 use rarasweb\Protocol;
 use rarasweb\Law;
 use DB;
+>>>>>>> 51bbf94643a7aaaacec42d49a3e6a4157562649e
 
 class ApiController extends Controller
 {

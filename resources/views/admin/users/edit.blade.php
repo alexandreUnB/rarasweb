@@ -44,7 +44,7 @@
                         @endforelse
 
                         <input type="checkbox" name="roleUsers[]" value="{{$role->id}}" {{$checked}}>
-                        {{$role->label}}<br>
+                        {{$role->display_name}}<br>
                     @endforeach
                 </div>
             </div>

@@ -1,13 +1,9 @@
 <?php
 
-namespace rarasweb\Providers;
+namespace App\Providers;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-
-use rarasweb\Permission;
-
-use rarasweb\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-//        'rarasweb\Model' => 'rarasweb\Policies\ModelPolicy',
+        'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -30,20 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        $permissions = Permission::with('roles')->get();
-        foreach ( $permissions as $permission)
-        {
-            $gate->define($permission->name, function(User $user) use ($permission){
-                return $user->hasPermission($permission) ;
-            });
-
-        };
-
-        $gate->before(function(User $user, $ability){
-
-            if ($user->hasAnyRoles('adm'))
-                return true;
-
-        });
+        //
     }
 }

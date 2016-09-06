@@ -29,8 +29,9 @@
     <table class="table table-bordered table-striped table-hover">
         <thead class="table-geral">
         <th class="text-center" width="10">ID</th>
-        <th class="text-center">Papel</th>
+        <th class="text-center">Nome do Papel</th>
         <th class="text-center">Slug</th>
+        <th class="text-center">Descrição do Papel</th>
 
         <th class="text-center" width="80">Permissões</th>
         <th class="text-center" width="80">Editar</th>
@@ -40,8 +41,9 @@
         @foreach($roles as $role)
             <tbody>
             <td class="text-center table-geral">{{$role->id}}</td>
-            <td class="text-center">{{$role->label}}</td>
+            <td class="text-center">{{$role->display_name}}</td>
             <td class="text-center">{{$role->name}}</td>
+            <td class="text-center">{{$role->description}}</td>
             <td class="text-center">
                 <a class="btn btn-default" href="/admin/roles/{{$role->id}}/permissions">
                     <i class="material-icons small-icon">security</i>
@@ -52,19 +54,19 @@
                     <i class="glyphicon glyphicon-pencil"></i>
                 </a>
             </td>
-            @if($role->name == 'adm')
-                <td class="text-center">
-                    <a class="btn btn-danger" href="">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
-                </td>
-            @else
+            {{--@if($role->name == 'adm')--}}
+                {{--<td class="text-center">--}}
+                    {{--<a class="btn btn-danger" href="">--}}
+                        {{--<i class="glyphicon glyphicon-trash"></i>--}}
+                    {{--</a>--}}
+                {{--</td>--}}
+            {{--@else--}}
                 <td class="text-center">
                     <a class="btn btn-danger" href="/admin/roles/delete/{{$role->id}}">
                         <i class="glyphicon glyphicon-trash"></i>
                     </a>
                 </td>
-            @endif
+            {{--@endif--}}
             </tbody>
         @endforeach
     </table>

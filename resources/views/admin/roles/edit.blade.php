@@ -15,7 +15,7 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label for="label">Descrição do Papel</label>
-                <input type="text" name="label" class="form-control" value="{{$role->label}}"
+                <input type="text" name="label" class="form-control" value="{{$role->display_name}}"
                        autofocus required minlength="5" maxlength="45">
             </div>
 
@@ -28,22 +28,6 @@
             <div class="form-group col-xs-4">
                 <label for="disorderSpecialties">Permissões do Papel</label>
 
-                {{--<div class="panel panel-default panel-body fixed-panel">--}}
-                    {{--@foreach($specialties as $specialty)--}}
-                        {{--{{$checked = ""}}--}}
-
-                        {{--@forelse($disorderSpecialties as $disorderSpecialty)--}}
-                            {{--@if($specialty->id == $disorderSpecialty->id)--}}
-                                {{--<span class="hide">{{$checked = "checked"}}</span>--}}
-                                {{--@break--}}
-                            {{--@endif--}}
-                        {{--@empty--}}
-                        {{--@endforelse--}}
-
-                        {{--<input type="checkbox" name="disorderSpecialties[]" value="{{$specialty->id}}" {{$checked}}>--}}
-                        {{--{{$specialty->name}} - {{$specialty->cbo}}<br>--}}
-                    {{--@endforeach--}}
-                {{--</div>--}}
 
                 <div class="panel panel-default panel-body fixed-panel">
                     @foreach($permissions as $permission)
@@ -56,7 +40,7 @@
                             @empty
                         @endforelse
                         <input type="checkbox" name="permissions[]" value="{{$permission->id}}" {{$checked}}>
-                        {{$permission->label}}<br>
+                        {{$permission->display_name}}<br>
                     @endforeach
                 </div>
             </div>

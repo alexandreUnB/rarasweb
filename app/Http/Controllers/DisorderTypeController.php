@@ -1,12 +1,12 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
-use rarasweb\DisorderType;
+use App\DisorderType;
 
 class DisorderTypeController extends Controller
 {

@@ -195,7 +195,7 @@
                                 @endforelse
                             </div>
                         </div>
-                        @can('view-medication')
+                        @permission('view-medications')
                             <div class="row">
                                 <div class="col-xs-8">
                                     <p>Medicamentos:
@@ -204,8 +204,8 @@
                                     </p>
                                 </div>
                             </div>
-                        @endcan
-                        @can('view-procedure')
+                        @endpermission
+                        @permission('view-procedures')
                             <div class="row">
                                 <div class="col-xs-8">
                                     <p>Procedimentos:
@@ -214,7 +214,7 @@
                                     </p>
                                 </div>
                             </div>
-                        @endcan
+                        @endpermission
                         <div class="row">
                             <div class="col-xs-8">
                                 <p>Referências Bibliográficas:

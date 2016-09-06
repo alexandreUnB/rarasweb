@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +23,6 @@ class IndicatorType extends Model
 
     public function indicators()
     {
-        return $this->hasMany('rarasweb\Indicator', 'indicatorType_id');
+        return $this->hasMany('App\Indicator', 'indicatorType_id');
     }
 }

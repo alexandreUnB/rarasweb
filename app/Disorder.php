@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,37 +41,37 @@ class Disorder extends Model
 
     public function disorderType()
     {
-        return $this->belongsTo('rarasweb\DisorderType', 'disorderType_id');
+        return $this->belongsTo('App\DisorderType', 'disorderType_id');
     }
 
     public function specialties()
     {
-        return $this->belongsToMany('rarasweb\Specialty', 'disorder_specialty', 'disorder_id', 'specialty_id');
+        return $this->belongsToMany('App\Specialty', 'disorder_specialty', 'disorder_id', 'specialty_id');
     }
 
     public function protocol()
     {
-        return $this->hasOne('rarasweb\Protocol', 'disorder_id');
+        return $this->hasOne('App\Protocol', 'disorder_id');
     }
 
     public function synonyms()
     {
-        return $this->hasMany('rarasweb\Synonymous', 'disorder_id');
+        return $this->hasMany('App\Synonymous', 'disorder_id');
     }
 
     public function signs()
     {
-        return $this->belongsToMany('rarasweb\Sign', 'disorder_sign', 'disorder_id', 'sign_id');
+        return $this->belongsToMany('App\Sign', 'disorder_sign', 'disorder_id', 'sign_id');
     }
 
     public function references()
     {
-        return $this->belongsToMany('rarasweb\Reference', 'disorder_reference', 'disorder_id', 'reference_id');
+        return $this->belongsToMany('App\Reference', 'disorder_reference', 'disorder_id', 'reference_id');
     }
 
     public function indicators()
     {
-        return $this->hasMany('rarasweb\Indicator', 'disorder_id');
+        return $this->hasMany('App\Indicator', 'disorder_id');
     }
 
 }

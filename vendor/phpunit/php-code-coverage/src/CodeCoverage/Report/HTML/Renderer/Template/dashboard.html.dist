@@ -16,7 +16,7 @@
   <header>
    <div class="container">
     <div class="row">
-     <div class="col-xs-12">
+     <div class="col-md-12">
       <ol class="breadcrumb">
 {{breadcrumbs}}
       </ol>
@@ -26,18 +26,18 @@
   </header>
   <div class="container">
    <div class="row">
-    <div class="col-xs-12">
+    <div class="col-md-12">
      <h2>Classes</h2>
     </div>
    </div>
    <div class="row">
-    <div class="col-xs-6">
+    <div class="col-md-6">
      <h3>Coverage Distribution</h3>
      <div id="classCoverageDistribution" style="height: 300px;">
        <svg></svg>
      </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-md-6">
      <h3>Complexity</h3>
      <div id="classComplexity" style="height: 300px;">
        <svg></svg>
@@ -45,7 +45,7 @@
     </div>
    </div>
    <div class="row">
-    <div class="col-xs-6">
+    <div class="col-md-6">
      <h3>Insufficient Coverage</h3>
      <div class="scrollbox">
       <table class="table">
@@ -61,7 +61,7 @@
       </table>
      </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-md-6">
      <h3>Project Risks</h3>
      <div class="scrollbox">
       <table class="table">
@@ -79,18 +79,18 @@
     </div>
    </div>
    <div class="row">
-    <div class="col-xs-12">
+    <div class="col-md-12">
      <h2>Methods</h2>
     </div>
    </div>
    <div class="row">
-    <div class="col-xs-6">
+    <div class="col-md-6">
      <h3>Coverage Distribution</h3>
      <div id="methodCoverageDistribution" style="height: 300px;">
        <svg></svg>
      </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-md-6">
      <h3>Complexity</h3>
      <div id="methodComplexity" style="height: 300px;">
        <svg></svg>
@@ -98,7 +98,7 @@
     </div>
    </div>
    <div class="row">
-    <div class="col-xs-6">
+    <div class="col-md-6">
      <h3>Insufficient Coverage</h3>
      <div class="scrollbox">
       <table class="table">
@@ -114,7 +114,7 @@
       </table>
      </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-md-6">
      <h3>Project Risks</h3>
      <div class="scrollbox">
       <table class="table">

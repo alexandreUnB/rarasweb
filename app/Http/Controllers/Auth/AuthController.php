@@ -1,10 +1,10 @@
 <?php
 
-namespace rarasweb\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-use rarasweb\User;
+use App\User;
 use Validator;
-use rarasweb\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -28,7 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/';
 
     /**
      * Create a new authentication controller instance.
@@ -65,7 +65,6 @@ class AuthController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -60,6 +60,6 @@ class Professional extends Model
 
     public function specialties()
     {
-        return $this->belongsToMany('rarasweb\Specialty', 'professional_specialty', 'professional_id', 'specialty_id');
+        return $this->belongsToMany('App\Specialty', 'professional_specialty', 'professional_id', 'specialty_id');
     }
 }

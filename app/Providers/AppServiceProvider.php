@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb\Providers;
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

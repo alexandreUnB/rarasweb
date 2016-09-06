@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb\Events;
+namespace App\Events;
 
 abstract class Event
 {

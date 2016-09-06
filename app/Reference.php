@@ -1,6 +1,6 @@
 <?php
 
-namespace rarasweb;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +27,6 @@ class Reference extends Model
 
     public function disorders()
     {
-        return $this->belongsToMany('rarasweb\Disorder', 'disorder_reference', 'reference_id', 'disorder_id');
+        return $this->belongsToMany('App\Disorder', 'disorder_reference', 'reference_id', 'disorder_id');
     }
 }

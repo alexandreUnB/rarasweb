@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
 <div id="wrapper">
     <nav class="navbar navbar-default navbar-static-top navbar-bottom" role="navigation">
         <div class="navbar-header">
@@ -32,7 +33,7 @@
             <!-- Authentication Links -->
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{Auth::user()->name}} <span class="caret"></span>
+                    {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
 
                 <ul class="dropdown-menu" role="menu">
@@ -45,7 +46,7 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    @can('adm')
+                    @role('admin')
                         <li>
                             <a href="#"><i class="material-icons small-icon">lock</i> Administração<span
                                         class="fa arrow"></span></a>
@@ -63,7 +64,7 @@
                                 </li>
                             </ul>
                         </li>
-                    @endcan
+                    @endrole
                     <li>
                         <a href="#"><i class="fa fa-heartbeat"></i> Desordens<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -247,6 +248,7 @@
     </nav>
 
     <div id="page-wrapper">
+        @include('layouts.alerts')
         @yield('content')
     </div>
 </div>

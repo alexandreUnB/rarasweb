@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
 
-
-    <link media="all" type="text/css" rel="stylesheet" href="{{public_path('assets\css\bootstrap.mim.css')}}">
     {!!Html::style('assets/css/bootstrap.min.css')!!}
     {!!Html::style('assets/css/estilo.css')!!}
     {!!Html::style('assets/css/font-awesome.min.css')!!}
@@ -27,7 +25,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+
+            @role(['admin','tec'])
             <a class="navbar-brand" href="/admin">Painel de Controle</a>
+            @endrole
+
+            @role(['med','user'])
+            <a class="navbar-brand" href="">RarasWeb</a>
+            @endrole
+
         </div>
 
         <ul class="nav navbar-nav navbar-right">
@@ -50,6 +56,7 @@
     </nav>
 
     <div>
+        @include('layouts.alerts')
         @yield('content')
     </div>
 

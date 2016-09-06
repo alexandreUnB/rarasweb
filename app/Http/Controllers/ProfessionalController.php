@@ -1,15 +1,15 @@
 <?php
 
-namespace rarasweb\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 
-use rarasweb\Professional;
-use rarasweb\Specialty;
-use rarasweb\ProfessionalSpecialty;
+use App\Professional;
+use App\Specialty;
+use App\ProfessionalSpecialty;
 
 class ProfessionalController extends Controller
 {
@@ -165,19 +165,7 @@ class ProfessionalController extends Controller
             $professionalDisorders = $professionalDisorders->merge($specialty->disorders);
         }
 
-        $professionalDisorders = $professionalDisorders->unique()->sortBy('name');
-
-        $page = Input::get('page', 1); // Get the ?page=1 from the url
-        $perPage = 10; // Number of items per page
-        $offset = ($page * $perPage) - $perPage;
-
-        $professionalDisorders = new LengthAwarePaginator(
-            $professionalDisorders->slice($offset, $perPage, true), // Only grab the items we need
-            count($professionalDisorders), // Total items
-            $perPage, // Items per page
-            $page, // Current page
-            ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
-        );
+        $professionalDisorders = $professionalDisorders->unique();
 
         return view('admin.professionals.show', compact('professional', 'specialties', 'countSpecialties', 'professionalDisorders'));
     }

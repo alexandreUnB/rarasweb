@@ -18,11 +18,11 @@
                 </div>
 
                 <div class="col-xs-4">
-                    <p>Papéis:</p>
+                    <p>Papéis:
                     @forelse($user->roles as $role)
-                        <p><strong>{{$role->label}}</strong></p>
+                        <strong>{{$role->display_name}}</strong></p>
                     @empty
-                        <p><strong>Nenhum papel associado a este usuário</strong></p>
+                        <strong>Nenhum papel associado a este usuário</strong></p>
                     @endforelse
                 </div>
 
