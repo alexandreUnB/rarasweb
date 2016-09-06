@@ -38,6 +38,8 @@ Route::get('/api/lawID/{id}', 'ApiController@lawID');
 Route::get('/api/lawName/{name}', 'ApiController@lawName');
 
 
+Route::get('/api/cidID/{name}', 'ApiController@cidID');
+
 
 //********* Rotas WEB *********************
 Route::get('/home', 'HomeController@index');

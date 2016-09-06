@@ -379,4 +379,22 @@ class ApiController extends Controller
   
         return response()->json(compact('laws'));
     }
+
+
+    public function cidID($id)
+    {
+        $references = $this->referenceModel
+            ->where('reference', 'like', '%'.$id.'%')
+            ->where('source', 'ICD-10')
+            ->get();
+
+        $disorders = collect();
+
+        foreach ($references as $reference){
+            $disorders = $disorders->merge($reference->disorders);
+        }
+
+ 
+       return response()->json(compact('disorders'));
+    }
 }
