@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Protocolo - <strong>{{$protocol->disorder->name}}</strong></h3>
 
     <form action="/admin/protocols/update/{{$protocol->id}}" enctype="multipart/form-data" method="post">

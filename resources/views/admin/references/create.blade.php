@@ -2,8 +2,6 @@
 
 @section('content')
 
-    {{--@include('layouts.alerts')--}}
-
     <h3 class="page-header">Adicionar Referência</h3>
 
     <form action="/admin/references/store" method="post">

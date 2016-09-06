@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Sinônimo</h3>
 
     <form action="/admin/synonyms/store" method="post">

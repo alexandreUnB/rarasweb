@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Indicador - <strong>{{$indicator->disorder->name}}</strong></h3>
 
     <form action="/admin/indicators/update/{{$indicator->id}}" method="post">

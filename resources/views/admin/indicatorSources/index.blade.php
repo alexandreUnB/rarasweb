@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Fontes de Indicador</h3>
 
     <div class="row">

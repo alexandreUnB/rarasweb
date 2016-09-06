@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Protocolo</h3>
 
     <form action="/admin/protocols/store" enctype="multipart/form-data" method="post">

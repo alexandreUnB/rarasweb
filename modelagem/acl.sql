@@ -63,10 +63,7 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'admin@admin.com', '$2y$10$VtkpSKHZqf8Crx7ADSaNvuiCP5OA.3Rj6Jxlbyng6wM.WKIU9ik0e', 'oyO0CF7sTrYcVG701ig3hdZ8oU2OWjv9x49oCnZhI9gWTTsygeLqUx67qGMM', '2016-08-29 18:53:39', '2016-08-30 20:39:53'),
-(2, 'Médico', '', 'med@email.com', '$2y$10$3XijKfK2gxUTPyy6LZk.weJs62WDwIwCmJHdV794EybAzE//KjKkm', 'yfxxjazowl1VJ4U8fFZ6GNgAp1mp97gCIuxR1g3nV9Cd8npwIImeH4dn7KcS', '2016-08-30 17:32:03', '2016-08-30 20:39:09'),
-(3, 'Usuário', '', 'user@email.com', '$2y$10$mIKPc67u448OQPlLbwTNLemEmT40t0lrhdZZQF/x29UH2V3DEorvu', 'CFDv6VsJVfiAg7y18Cx2fMhyA3QR6dCSganOAhe6vKrBFvZjC7EFTrV5Y8Rk', '2016-08-30 20:04:30', '2016-08-30 20:38:40'),
-(4, 'Técnico', '', 'tec@email.com', '$2y$10$Ep.8fE916Noj7H740sj9/erAtbHI01gjseUeoRjm.i7Iv..Z/EbUy', 'Z0XWWKs1yj6eIWKBLUzdVdjrQunrtx1t6kjJmArg9XngV8GInTSB4pAQoOMH', '2016-08-30 20:28:54', '2016-08-30 20:33:46');
+(1, 'admin', 'admin', 'admin@admin.com', '$2y$10$VtkpSKHZqf8Crx7ADSaNvuiCP5OA.3Rj6Jxlbyng6wM.WKIU9ik0e', 'oyO0CF7sTrYcVG701ig3hdZ8oU2OWjv9x49oCnZhI9gWTTsygeLqUx67qGMM', '2016-08-29 18:53:39', '2016-08-30 20:39:53');
 
 
 
@@ -75,9 +72,7 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `remember_tok
 --
 
 INSERT INTO `role_user` (`user_id`, `role_id`) VALUES
-(1, 2),
-(2, 1),
-(4, 4);
+(1, 2);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Desordem</h3>
 
     <form action="/admin/disorders/store" method="post">
@@ -23,12 +21,12 @@
             </div>
 
             <div class="form-group col-xs-5">
-                <label for="disorderType">Tipo de Desordem</label>
-                <select class="form-control" name="disorderType" id="disorderType_id" required>
+                <label for="disorderType_id">Tipo de Desordem</label>
+                <select class="form-control" name="disorderType_id" id="disorderType_id" required>
                     <option value="" hidden>Selecione ou digite o tipo de desordem</option>
                     @foreach($disorderTypes as $disorderType)
                         <option value="{{$disorderType->id}}" {{$disorderType->id ==
-                        old('disorderType') ? "selected" : ""}}>{{$disorderType->name}}</option>
+                        old('disorderType_id') ? "selected" : ""}}>{{$disorderType->name}}</option>
                     @endforeach
                 </select>
             </div>

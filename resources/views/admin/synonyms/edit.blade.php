@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Sinônimo - <strong>{{$synonymous->name}}</strong></h3>
 
     <form action="/admin/synonyms/update/{{$synonymous->id}}" method="post">

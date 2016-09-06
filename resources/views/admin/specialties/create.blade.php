@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Especialidade</h3>
 
     <form action="/admin/specialties/store" method="post">
