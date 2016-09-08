@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Lei - <strong>{{$law->name_law}}</strong></h3>
 
     <form action="/admin/laws/update/{{$law->id}}" enctype="multipart/form-data" method="post">

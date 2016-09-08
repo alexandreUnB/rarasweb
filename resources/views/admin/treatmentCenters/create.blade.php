@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Centro de Tratamento</h3>
 
     <form action="/admin/treatmentCenters/store" method="post">

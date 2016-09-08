@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Tipo de Desordem - <strong>{{$disorderType->name}}</strong></h3>
 
     <form action="/admin/disordertypes/update/{{$disorderType->id}}" method="post">

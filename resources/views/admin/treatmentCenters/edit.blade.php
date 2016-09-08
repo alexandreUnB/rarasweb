@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Centro de Tratamento - <strong>{{$treatmentCenter->name}}</strong></h3>
 
     <form action="/admin/treatmentCenters/update/{{$treatmentCenter->id}}" method="post">

@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Lei</h3>
 
     <form action="/admin/laws/store" enctype="multipart/form-data" method="post">

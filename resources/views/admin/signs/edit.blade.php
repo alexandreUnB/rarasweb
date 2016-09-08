@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Sinal - <strong>{{$sign->name}}</strong></h3>
 
     <form action="/admin/signs/update/{{$sign->id}}" method="post">

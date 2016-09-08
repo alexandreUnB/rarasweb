@@ -117,17 +117,26 @@ class DisorderController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), Disorder::$rules, Disorder::$messages );
+        $request = $this->request->all();
+
+        $validator = Validator::make($request, Disorder::$rules, Disorder::$messages );
 
         if ($validator->fails())
         {
             return redirect('/admin/disorders/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newDisorder = $this->disorderModel->create($this->request->all());
-        
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome da doença não pode conter os símbolos / e \\');
+
+            return redirect('admin/disorders/create')->withInput($request);
+        }
+
+        $newDisorder = $this->disorderModel->create($request);
+
         $newSpecialties = $this->request->disorderSpecialties;
         $newReferences = $this->request->disorderReferences;
         $newSigns = $this->request->disorderSigns;
