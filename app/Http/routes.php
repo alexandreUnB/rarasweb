@@ -44,6 +44,8 @@ Route::get('/api/cidID/{name}', 'ApiController@cidID');
 //********* Rotas WEB *********************
 Route::get('/home', 'HomeController@index');
 
+Route::get('/charts', 'ChartController@testChart');
+
 Route::group(['middleware'=> [],'web'], function(){
 
     Route::get('admin/permissions', 'PermissionController@index');
