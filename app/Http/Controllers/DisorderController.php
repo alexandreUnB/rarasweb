@@ -42,8 +42,6 @@ class DisorderController extends Controller
         $this->disorderSignModel = $disorderSignModel;
         $this->request = $request;
 
-//        if ((Gate::denies('user')))
-//            abort(403, 'Not Allowed');
     }
 
     /**
@@ -194,6 +192,8 @@ class DisorderController extends Controller
     public function show($id)
     {
         $disorder = $this->disorderModel->find($id);
+
+
 
         $disorderType = $disorder->disorderType;
 
