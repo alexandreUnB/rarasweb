@@ -63,11 +63,20 @@ class ApiController extends Controller
      * @var Laws
      */
     private $lawModel;
+    /**
+     * @var Specialties
+     */
+    private $specialtyModel;
 
+
+    /**
+    * Method constructor
+    * @param
+    **/
     public function __construct(Request $request, Disorder $disorderModel, Synonymous $synonymousModel,
                                 Sign $signModel, Reference $referenceModel, Indicator $indicatorModel, 
                                 Professional $professionalModel, TreatmentCenter $treatmentCenterModel,
-                                Protocol $protocolModel, Law $lawModel)
+                                Protocol $protocolModel, Law $lawModel, Specialty $specialtyModel)
     {
         $this->request = $request;
         $this->disorderModel = $disorderModel;
@@ -79,18 +88,33 @@ class ApiController extends Controller
         $this->treatmentCenterModel = $treatmentCenterModel;
         $this->protocolModel = $protocolModel;
         $this->lawModel = $lawModel;
+        $this->specialtyModel = $specialtyModel;
     }
 
-    // function to search professional link by name
+    // **********************************************************************
+    // *                    Professional related routes                     *
+    // **********************************************************************
+
     public function professionalName($name)
     {
         
-        return  $proessionals = DB::select('SELECT * FROM professionals WHERE name LIKE ? OR CONCAT(name,surname)=?', 
+        $response = DB::select('SELECT * FROM professionals WHERE name LIKE ? OR CONCAT(name,surname)=?', 
             ['%'.$name.'%', $name]);
+
+        $professionals = collect();
+
+        foreach ($response as $professional){
+            $professionals->push($professional);
+        }
+
+
+        $professionals = $professionals->toArray();
+
+        return  response()->json(compact('professionals'));
+
 
     }
     
-    // function to search professional link by ID
     public function professionalID($id)
     {
     	 $professional = $this->professionalModel->find($id);
@@ -108,15 +132,197 @@ class ApiController extends Controller
         $professionalDisorders = $professionalDisorders->unique();
 
         return response()->json(compact('professional', 'specialties', 'countSpecialties', 'professionalDisorders'));
+    }
+
+    public function profLoader($id, $pos)
+    {
+        $disorder = $this->disorderModel->find($id);
+        $specialties = $disorder->specialties()
+            ->orderBy('name')
+            ->get();
+
+        $professionals = collect();
+
+        foreach ($specialties as $specialty) {
+            $professionals = $professionals->merge($specialty->professionals);
+        }
+
+        $professionalsFilter = $professionals->splice($pos,10)->toArray();
+
+
+        return response()->json(compact('professionalsFilter'));
+
+    }
+
+    public function profDisorder($disorderName)
+    {
+        $disorders = $this->disorderModel
+            ->where('name', 'like', '%'.$disorderName.'%')
+            ->orderBy('name')->get();
+
+
+        $specialties = collect();
+
+        foreach ($disorders as $disorder){
+            $specialties = $specialties->merge($disorder->specialties);
+        }
+
+        $professionals = collect();
+
+        foreach ($specialties as $specialty){
+            $professionals = $professionals->merge($specialty->professionals);
+        }
+
+
+       return response()->json(compact('professionals'));
+    }
+
+    public function professionalLocal($local)
+    {
+
+        $professionals= $this->professionalModel
+            ->where('uf', 'like', '%'.$local.'%') 
+            ->orWhere('city', 'like', '%'.$local.'%') 
+            ->orderBy('name')->get();
+
+       return response()->json(compact('professionals'));
+    }
+
+    public function professionalSpecialty($specialtyName)
+    {
+
+        $specialties = $this->specialtyModel
+            ->where('name', 'like', '%'.$specialtyName.'%') 
+            ->orderBy('name')->get();
+
+
+        $professionals = collect();
+
+        foreach ($specialties as $specialty){
+            $professionals = $professionals->merge($specialty->professionals);
+        }
+
+
+       return response()->json(compact('professionals'));
+    }
+
+
+    // **********************************************************************
+    // *                    Center related routes                           *
+    // **********************************************************************
+
+    public function centerID($id)
+    {
+        $treatmentCenter = $this->treatmentCenterModel->find($id);
+
+        $specialties = $treatmentCenter->specialties;
+        $countSpecialties = count($specialties) - 1;
         
-        // return $this->professionalModel
-        //     ->where('id', $id)
-        //     ->get();
+        $centerDisorders = collect();
+
+        foreach ($specialties as $specialty)
+        {
+            $centerDisorders = $centerDisorders->merge($specialty->disorders);
+        }
+
+        $centerDis =  $centerDisorders->toArray();
+
+
+        $treatmentCenter = $this->treatmentCenterModel->find($id);
+
+        return response()->json(compact('treatmentCenter', 'centerDis'));
+
+    }
+
+    public function centerName($name)
+    {
+        $centers = $this->treatmentCenterModel
+            ->where('name', 'like', '%'.$name.'%')
+            ->orderBy('name')->get()->toArray();
+        return response()->json(compact('centers'));
+    }
+
+    public function centerDisorder($disorderName)
+    {
+        $disorders = $this->disorderModel
+            ->where('name', 'like', '%'.$disorderName.'%')
+            ->orderBy('name')->get();
+
+
+        $specialties = collect();
+
+        foreach ($disorders as $disorder){
+            $specialties = $specialties->merge($disorder->specialties);
+        }
+
+        $centers = collect();
+
+        foreach ($specialties as $specialty){
+            $centers = $centers->merge($specialty->treatmentCenters);
+        }
+
+
+       return response()->json(compact('centers'));
+    }
+
+
+    public function centerSpecialty($specialtyName)
+    {
+
+        $specialties = $this->specialtyModel
+            ->where('name', 'like', '%'.$specialtyName.'%') 
+            ->orderBy('name')->get();
+
+
+        $centers = collect();
+
+        foreach ($specialties as $specialty){
+            $centers = $centers->merge($specialty->treatmentCenters);
+        }
+
+
+       return response()->json(compact('centers'));
+    }
+
+
+
+    public function centerLocal($local)
+    {
+
+        $centers= $this->treatmentCenterModel
+            ->where('uf', 'like', '%'.$local.'%') 
+            ->orWhere('city', 'like', '%'.$local.'%') 
+            ->orderBy('name')->get();
+
+
+       return response()->json(compact('centers'));
+    }
+
+
+    // ************************************************************************
+    // *                    Signs related routes                              *
+    // ************************************************************************
+
+
+    public function signLoader($id, $pos)
+    {
+        $disorder = $this->disorderModel->find($id);
+
+        $signs = $disorder->signs()
+            ->orderBy('name')
+            ->get()->splice($pos,10)->toArray();
+
+
+ 
+        return response()->json(compact('signs'));
 
     }
 
 
-    // function to search disorder by id
+    // **********************************************************************
+    // *                    Disorder related routes                         *
+    // **********************************************************************
+
     public function disorderID($id)
     {
         $disorder = $this->disorderModel->find($id);
@@ -184,15 +390,14 @@ class ApiController extends Controller
             $treatmentCenters = $treatmentCenters->merge($specialty->treatmentCenters);
         }
 
-        // $professionals = $professionals->unique()->sortBy('name');
 
         $specialties = $disorder->specialties()
             ->orderBy('name')
             ->get();
 
-		$disorder = $this->disorderModel->find($id);
+        $disorder = $this->disorderModel->find($id);
 
-		$signs = $disorder->signs()
+        $signs = $disorder->signs()
             ->orderBy('name')
             ->get();
 
@@ -206,66 +411,7 @@ class ApiController extends Controller
         $professionalsFilter = $professionals->take(10)->toArray();
 
         return response()->json(compact('specialties', 'disorder', 'signs', 
-            'signsLength','centers', 'professionalsFilter', 'indicators'));
-
-    }
-
-
-    public function centerID($id)
-    {
-        $treatmentCenter = $this->treatmentCenterModel->find($id);
-
-        $specialties = $treatmentCenter->specialties;
-        $countSpecialties = count($specialties) - 1;
-        
-        $centerDisorders = collect();
-
-        foreach ($specialties as $specialty)
-        {
-            $centerDisorders = $centerDisorders->merge($specialty->disorders);
-        }
-
-        $centerDis =  $centerDisorders->toArray();
-
-
-        $treatmentCenter = $this->treatmentCenterModel->find($id);
-
-        // return response()->json(compact('treatmentCenter', 'specialties', 'countSpecialties', 'centerDisorders'));
-        return response()->json(compact('treatmentCenter', 'centerDis'));
-
-    }
-
-    public function signLoader($id, $pos)
-    {
-        $disorder = $this->disorderModel->find($id);
-
-        $signs = $disorder->signs()
-            ->orderBy('name')
-            ->get()->splice($pos,10)->toArray();
-
-
- 
-        return response()->json(compact('signs'));
-
-    }
-
-    public function profLoader($id, $pos)
-    {
-        $disorder = $this->disorderModel->find($id);
-        $specialties = $disorder->specialties()
-            ->orderBy('name')
-            ->get();
-
-        $professionals = collect();
-
-        foreach ($specialties as $specialty) {
-            $professionals = $professionals->merge($specialty->professionals);
-        }
-
-        $professionalsFilter = $professionals->splice($pos,10)->toArray();
-
-
-        return response()->json(compact('professionalsFilter'));
+            'signsLength','centers', 'professionalsFilter', 'indicators','protocol'));
 
     }
 
@@ -277,13 +423,29 @@ class ApiController extends Controller
         return response()->json(compact('disorders'));
     }
 
-    public function centerName($name)
-    {
-        $centers = $this->treatmentCenterModel
+
+
+    public function disorderBySign($name, $pos){
+
+        $disorders = $this->disorderModel
             ->where('name', 'like', '%'.$name.'%')
-            ->orderBy('name')->get()->toArray();
-        return response()->json(compact('centers'));
+            ->orderBy('name')->get();
+
+        $signs = collect();
+
+        foreach ($disorders as $disorder) {
+            $signs = $signs->merge($disorder->signs);
+        }
+
+        $signs = $signs->splice($pos,10)->toArray();
+
+        return response()->json(compact('signs'));
+
     }
+
+    // ***********************************************************************
+    // *                    Protocols related routes                         *
+    // ***********************************************************************
 
     public function protocolID($id)
     {
@@ -331,36 +493,9 @@ class ApiController extends Controller
     }
 
 
-    public function disorderBySign($name, $pos){
-
-        $disorders = $this->disorderModel
-            ->where('name', 'like', '%'.$name.'%')
-            ->orderBy('name')->get();
-
-        $signs = collect();
-
-
-        // foreach ($disorders as $disorder)
-        // {
-        //     if ($disorder->signs)
-        //     {
-        //         foreach ($disorder->signs as $sign)
-        //         {
-        //             $signs->push($sign);
-        //         }
-        //     }
-        // } 
-
-        foreach ($disorders as $disorder) {
-            $signs = $signs->merge($disorder->signs);
-        }
-
-        $signs = $signs->splice($pos,10)->toArray();
-
-        return response()->json(compact('signs'));
-
-    }
-
+    // ***********************************************************************
+    // *                    Laws related routes                              *
+    // ***********************************************************************
 
     public function lawID($id)
     {
@@ -382,20 +517,7 @@ class ApiController extends Controller
     }
 
 
-    public function cidID($id)
-    {
-        $references = $this->referenceModel
-            ->where('reference', 'like', '%'.$id.'%')
-            ->where('source', 'ICD-10')
-            ->get();
 
-        $disorders = collect();
 
-        foreach ($references as $reference){
-            $disorders = $disorders->merge($reference->disorders);
-        }
 
- 
-       return response()->json(compact('disorders'));
-    }
 }

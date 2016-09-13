@@ -20,14 +20,23 @@ Route::auth();
 
 Route::get('/api/professionalName/{name}', 'ApiController@professionalName');
 Route::get('/api/professionalID/{id}', 'ApiController@professionalID');
+Route::get('/api/profDisorder/{disorderName}', 'ApiController@profDisorder');
 Route::get('/api/profLoader/{id},{pos}', 'ApiController@profLoader');
+Route::get('/api/professionalLocal/{local}', 'ApiController@professionalLocal');
+Route::get('/api/professionalSpecialty/{specialtyName}', 'ApiController@professionalSpecialty');
+
 
 Route::get('/api/disorderID/{id}', 'ApiController@disorderID');
 Route::get('/api/disorderName/{name}', 'ApiController@disorderName');
 Route::get('/api/disorderBySign/{name},{pos}', 'ApiController@disorderBySign');
+Route::get('/api/cidID/{name}', 'ApiController@cidID');
+
 
 Route::get('/api/centerName/{name}', 'ApiController@centerName');
 Route::get('/api/centerID/{id}', 'ApiController@centerID');
+Route::get('/api/centerDisorder/{disorderName}', 'ApiController@centerDisorder');
+Route::get('/api/centerSpecialty/{specialtyName}', 'ApiController@centerSpecialty');
+Route::get('/api/centerLocal/{local}', 'ApiController@centerLocal');
 
 Route::get('/api/signLoader/{id},{pos}', 'ApiController@signLoader');
 
@@ -38,7 +47,6 @@ Route::get('/api/lawID/{id}', 'ApiController@lawID');
 Route::get('/api/lawName/{name}', 'ApiController@lawName');
 
 
-Route::get('/api/cidID/{name}', 'ApiController@cidID');
 
 
 //********* Rotas WEB *********************
