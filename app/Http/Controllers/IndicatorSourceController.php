@@ -63,16 +63,27 @@ class IndicatorSourceController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), IndicatorSource::$rules, IndicatorSource::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, IndicatorSource::$rules, IndicatorSource::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/indicatorSources/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newIndicatorSource = $this->indicatorSourceModel->create($this->request->all());
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome fonte de indicador não pode conter os símbolos / e \\');
+
+            return redirect('admin/indicatorSources/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        $newIndicatorSource = $this->indicatorSourceModel->create($request);
 
         session()->flash('success', 'A fonte de indicador '. $newIndicatorSource->name .' foi cadastrada com sucesso');
 
@@ -140,17 +151,28 @@ class IndicatorSourceController extends Controller
         $rules = IndicatorSource::$rules;
         array_set($rules, 'name', 'required|min:5|max:45|unique:indicator_sources,name,' . $id);
         array_set($rules, 'abbreviation', 'required|min:2|max:20|unique:indicator_sources,abbreviation,' . $id);
-        $validator = Validator::make($this->request->all(), $rules, IndicatorSource::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, $rules, IndicatorSource::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/indicatorSources/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome fonte de indicador não pode conter os símbolos / e \\');
+
+            return redirect('admin/indicatorSources/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
         $updatedIndicatorSource = $this->indicatorSourceModel->find($id);
-        $updatedIndicatorSource->update($this->request->all());
+        $updatedIndicatorSource->update($request);
 
         session()->flash('success', 'A fonte de indicador ' . $updatedIndicatorSource->name . ' foi editada com sucesso');
 

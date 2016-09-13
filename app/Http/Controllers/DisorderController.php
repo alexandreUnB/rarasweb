@@ -132,10 +132,13 @@ class DisorderController extends Controller
 
         if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
         {
-            session()->flash('erro', 'O nome da doença não pode conter os símbolos / e \\');
+            session()->flash('erro', 'O nome da desordem não pode conter os símbolos / e \\');
 
             return redirect('admin/disorders/create')->withInput($request);
         }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
 
         $newDisorder = $this->disorderModel->create($request);
 
@@ -303,20 +306,31 @@ class DisorderController extends Controller
      */
     public function update($id)
     {
+        $request = $this->request->all();
         $rules = Disorder::$rules;
         array_set($rules, 'name', 'required|min:4|max:120|unique:disorders,name,' . $id);
         array_set($rules, 'orphanumber', 'required|digits_between:1,6|unique:disorders,orphanumber,' . $id);
-        $validator = Validator::make($this->request->all(), $rules, Disorder::$messages );
+        $validator = Validator::make($request, $rules, Disorder::$messages );
 
         if ($validator->fails())
         {
             return redirect('/admin/disorders/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome da desordem não pode conter os símbolos / e \\');
+
+            return redirect('admin/disorders/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
         $updatedDisorder = $this->disorderModel->find($id);
-        $updatedDisorder->update($this->request->all());
+        $updatedDisorder->update($request);
 
         $this->disorderSpecialtyModel
             ->where('disorder_id', $updatedDisorder->id)

@@ -74,15 +74,26 @@ class SpecialtyController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), Specialty::$rules, Specialty::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, Specialty::$rules, Specialty::$messages);
 
         if ($validator->fails()) {
             return redirect('/admin/specialties/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newSpecialty = $this->specialtyModel->create($this->request->all());
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'A especialidade não pode conter os símbolos / e \\');
+
+            return redirect('admin/specialties/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        $newSpecialty = $this->specialtyModel->create($request);
 
         session()->flash('success', 'A especialidade ' . $newSpecialty->name . ' foi cadastrada com sucesso');
 
@@ -132,16 +143,27 @@ class SpecialtyController extends Controller
         array_set($rules, 'name', 'required|min:5|max:50|unique:specialties,name,'. $id);
         array_set($rules, 'cbo', 'required|size:7|unique:specialties,cbo,'. $id);
 
-        $validator = Validator::make($this->request->all(), $rules, Specialty::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, $rules, Specialty::$messages);
 
         if ($validator->fails()) {
             return redirect('/admin/specialties/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'A especialidade não pode conter os símbolos / e \\');
+
+            return redirect('admin/specialties/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
         $updatedSpecialty = $this->specialtyModel->find($id);
-        $updatedSpecialty->update($this->request->all());
+        $updatedSpecialty->update($request);
 
         session()->flash('success', 'A especialidade ' . $updatedSpecialty->name . ' foi editada com sucesso');
 

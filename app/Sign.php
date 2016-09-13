@@ -17,8 +17,8 @@ class Sign extends Model
 
     public static $messages = [
         'name.required' => 'É necessário informar um nome para o sinal',
-        'name.min' => 'O nome da sinal deve ter no mínimo 5 caracteres',
-        'name.max' => 'O nome da sinal deve ter no máximo 120 caracteres',
+        'name.min' => 'O nome do sinal deve ter no mínimo 5 caracteres',
+        'name.max' => 'O nome do sinal deve ter no máximo 120 caracteres',
         'frequency.required' => 'É necessário informar uma frequência para o sinal',
     ];
 

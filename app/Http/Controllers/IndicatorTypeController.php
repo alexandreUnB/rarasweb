@@ -62,16 +62,27 @@ class IndicatorTypeController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), IndicatorType::$rules, IndicatorType::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, IndicatorType::$rules, IndicatorType::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/indicatorTypes/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newIndicatorType = $this->indicatorTypeModel->create($this->request->all());
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O tipo de indicador não pode conter os símbolos / e \\');
+
+            return redirect('admin/indicatorTypes/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        $newIndicatorType = $this->indicatorTypeModel->create($request);
 
         session()->flash('success', 'O tipo de indicador '. $newIndicatorType->name .' foi cadastrado com sucesso');
         
@@ -138,17 +149,28 @@ class IndicatorTypeController extends Controller
     {
         $rules = IndicatorType::$rules;
         array_set($rules, 'name', 'required|min:5|max:100|unique:indicator_types,name,' . $id);
-        $validator = Validator::make($this->request->all(), $rules, IndicatorType::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, $rules, IndicatorType::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/indicatorTypes/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O tipo de indicador não pode conter os símbolos / e \\');
+
+            return redirect('admin/indicatorTypes/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
         $updatedIndicatorType = $this->indicatorTypeModel->find($id);
-        $updatedIndicatorType->update($this->request->all());
+        $updatedIndicatorType->update($request);
 
         session()->flash('success', 'O tipo de indicador ' . $updatedIndicatorType->name . ' foi editado com sucesso');
         
