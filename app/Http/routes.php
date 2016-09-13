@@ -52,6 +52,8 @@ Route::get('/api/lawName/{name}', 'ApiController@lawName');
 //********* Rotas WEB *********************
 Route::get('/home', 'HomeController@index');
 
+Route::get('/charts', 'ChartController@testChart');
+
 Route::group(['middleware'=> [],'web'], function(){
 
     Route::get('admin/permissions', 'PermissionController@index');

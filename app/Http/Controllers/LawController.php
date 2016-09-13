@@ -64,17 +64,27 @@ class LawController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), Law::$rules, Law::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, Law::$rules, Law::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/laws/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newLaw = $this->request->all();
-        $newLaw = $this->lawModel->create($newLaw);
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome da lei não pode conter os símbolos / e \\');
+
+            return redirect('admin/laws/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        $newLaw = $this->lawModel->create($request);
 
         $pdf = $this->request->file('pdf');
         $fileExtension = $pdf->getClientOriginalExtension();
@@ -133,17 +143,28 @@ class LawController extends Controller
         }
 
         array_set($rules, 'name_law', 'required|min:10|max:50|unique:laws,name_law,' . $id);
-        $validator = Validator::make($this->request->all(), $rules, Law::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, $rules, Law::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/laws/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome da lei não pode conter os símbolos / e \\');
+
+            return redirect('admin/laws/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
         $law = $this->lawModel->find($id);
-        $law->update($this->request->all());
+        $law->update($request);
 
         if ($this->request->hasFile('pdf'))
         {

@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Sinal</h3>
 
     <form action="/admin/signs/store" method="post">

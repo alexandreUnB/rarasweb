@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Profissional</h3>
 
     <form action="/admin/professionals/store" method="post">

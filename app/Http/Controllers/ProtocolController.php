@@ -107,14 +107,25 @@ class ProtocolController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), Protocol::$rules, Protocol::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, Protocol::$rules, Protocol::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/protocols/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
+
+        if (str_contains($request['document'], '/') || str_contains($request['document'], '\\'))
+        {
+            session()->flash('erro', 'A portaria não pode conter os símbolos / e \\');
+
+            return redirect('admin/protocols/create')->withInput($request);
+        }
+
+        $request['document'] = trim($request['document']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['document'] = str_replace('°', 'º', $request['document']); // Troca o símbolo de grau pelo indicador cardinal
 
         $pdf = $this->request->file('pdf');
         $disorder = $this->disorderModel->find($this->request->disorder_id);
@@ -122,7 +133,7 @@ class ProtocolController extends Controller
         $fileName = $disorder->orphanumber . "." . $fileExtension;
         $pdf->move(public_path('protocols'), $fileName);
 
-        $newProtocol = $this->request->all();
+        $newProtocol = $request;
         $newProtocol['name_pdf'] = $fileName;
         $this->protocolModel->create($newProtocol);
 
@@ -174,17 +185,28 @@ class ProtocolController extends Controller
         }
         
         array_pull($rules, 'disorder_id');
-        $validator = Validator::make($this->request->all(), $rules, Protocol::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, $rules, Protocol::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/protocols/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
+        if (str_contains($request['document'], '/') || str_contains($request['document'], '\\'))
+        {
+            session()->flash('erro', 'A portaria não pode conter os símbolos / e \\');
+
+            return redirect('admin/protocols/edit/' . $id)->withInput($request);
+        }
+
+        $request['document'] = trim($request['document']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['document'] = str_replace('°', 'º', $request['document']); // Troca o símbolo de grau pelo indicador cardinal
+
         $protocol = $this->protocolModel->find($id);
-        $protocol->update($this->request->all());
+        $protocol->update($request);
 
         if ($this->request->hasFile('pdf'))
         {

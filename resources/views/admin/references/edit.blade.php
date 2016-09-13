@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Referência - <strong>{{$reference->source}} - {{$reference->reference}}</strong></h3>
 
     <form action="/admin/references/update/{{$reference->id}}" method="post">

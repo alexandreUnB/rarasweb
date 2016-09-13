@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Tipo de Indicador</h3>
 
     <form action="/admin/indicatorTypes/store" method="post">

@@ -62,16 +62,27 @@ class DisorderTypeController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), DisorderType::$rules, DisorderType::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, DisorderType::$rules, DisorderType::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/disordertypes/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newDisorderType = $this->disorderTypeModel->create($this->request->all());
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome do tipo de desordem não pode conter os símbolos / e \\');
+
+            return redirect('admin/disordertypes/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        $newDisorderType = $this->disorderTypeModel->create($request);
 
         session()->flash('success', 'O tipo de desordem ' . $newDisorderType->name . ' foi cadastrado com sucesso');
         
@@ -117,19 +128,30 @@ class DisorderTypeController extends Controller
      */
     public function update($id)
     {
+        $request = $this->request->all();
         $rules = DisorderType::$rules;
         array_set($rules, 'name', 'required|min:5|max:100|unique:disorder_types,name,' . $id);
-        $validator = Validator::make($this->request->all(), $rules, DisorderType::$messages);
+        $validator = Validator::make($request, $rules, DisorderType::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/disordertypes/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome do tipo de desordem não pode conter os símbolos / e \\');
+
+            return redirect('admin/disordertypes/edit' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
         $updatedDisorderType = $this->disorderTypeModel->find($id);
-        $updatedDisorderType->update($this->request->all());
+        $updatedDisorderType->update($request);
 
         session()->flash('success', 'O tipo de desordem ' . $updatedDisorderType->name . ' foi editado com sucesso');
         

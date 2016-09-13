@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Profissional - <strong>{{$professional->name}} {{$professional->surname}}</strong></h3>
 
     <form action="/admin/professionals/update/{{$professional->id}}" method="post">

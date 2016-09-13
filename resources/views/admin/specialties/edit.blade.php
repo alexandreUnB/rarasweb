@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Especialidade - <strong>{{$specialty->name}} - {{$specialty->cbo}}</strong></h3>
 
     <form action="/admin/specialties/update/{{$specialty->id}}" method="post">

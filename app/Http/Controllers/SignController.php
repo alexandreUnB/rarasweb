@@ -69,15 +69,16 @@ class SignController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), Sign::$rules, Sign::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, Sign::$rules, Sign::$messages);
 
         if ($validator->fails()) {
             return redirect('admin/signs/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newSign = $this->request->all();
+        $newSign = $request;
 
         $validationSign = $this->signModel->where([
             ['name', $newSign['name']],
@@ -86,12 +87,20 @@ class SignController extends Controller
 
         if($validationSign)
         {
-            session()->flash('erro', 'O sinal ' . $newSign['name'] .
-                ' - ' . $newSign['frequency'] . ' já está cadastrado');
+            session()->flash('erro', 'O sinal ' . $newSign['name'] . ' - ' . $newSign['frequency'] . ' já está cadastrado');
 
-            return redirect('/admin/signs/create')
-                ->withInput($this->request->all());
+            return redirect('/admin/signs/create')->withInput($request);
         }
+
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome do sinal não pode conter os símbolos / e \\');
+
+            return redirect('admin/signs/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
 
         $this->signModel->create($newSign);
 
@@ -145,16 +154,17 @@ class SignController extends Controller
      */
     public function update($id)
     {
-        $validator = Validator::make($this->request->all(), Sign::$rules, Sign::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, Sign::$rules, Sign::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/sign/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $updatedSign = $this->request->all();
+        $updatedSign = $request;
 
         $validationSign = $this->signModel->where([
             ['name', $updatedSign['name']],
@@ -163,12 +173,20 @@ class SignController extends Controller
 
         if($validationSign)
         {
-            session()->flash('erro', 'O sinal ' . $updatedSign['name'] .
-                ' - ' . $updatedSign['frequency'] . ' já está cadastrado');
+            session()->flash('erro', 'O sinal ' . $updatedSign['name'] . ' - ' . $updatedSign['frequency'] . ' já está cadastrado');
 
-            return redirect('/admin/signs/create')
-                ->withInput($this->request->all());
+            return redirect('/admin/signs/edit/' . $id)->withInput($request);
         }
+
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome do sinal não pode conter os símbolos / e \\');
+
+            return redirect('admin/signs/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
 
         $this->signModel->find($id)->update($updatedSign);
 

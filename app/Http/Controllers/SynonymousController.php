@@ -69,16 +69,27 @@ class SynonymousController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), Synonymous::$rules, Synonymous::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, Synonymous::$rules, Synonymous::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/synonyms/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newSynonymous = $this->synonymousModel->create($this->request->all());
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O sinônimo não pode conter os símbolos / e \\');
+
+            return redirect('admin/synonyms/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        $newSynonymous = $this->synonymousModel->create($request);
 
         session()->flash('success', 'O sinônimo ' . $newSynonymous->name . ' foi cadastrado com sucesso');
 
@@ -124,17 +135,28 @@ class SynonymousController extends Controller
     {
         $rules = Synonymous::$rules;
         array_set($rules, 'name', 'required|min:2|max:150|unique:synonyms,name,' . $id);
-        $validator = Validator::make($this->request->all(), $rules, Synonymous::$messages);
+        $request = $this->request->all();
+        $validator = Validator::make($request, $rules, Synonymous::$messages);
 
         if ($validator->fails())
         {
             return redirect('/admin/synonyms/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O sinônimo não pode conter os símbolos / e \\');
+
+            return redirect('admin/synonyms/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
         $updatedSynonymous = $this->synonymousModel->find($id);
-        $updatedSynonymous->update($this->request->all());
+        $updatedSynonymous->update($request);
 
         session()->flash('success', 'O sinônimo ' . $updatedSynonymous->name . ' foi editado com sucesso');
 
