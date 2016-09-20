@@ -18,12 +18,12 @@ Route::auth();
 
 //****** Rotas API ****************
 
-Route::get('/api/professionalName/{name}', 'ApiController@professionalName');
+Route::get('/api/professionalName/{name},{pos}', 'ApiController@professionalName');
 Route::get('/api/professionalID/{id}', 'ApiController@professionalID');
-Route::get('/api/profDisorder/{disorderName}', 'ApiController@profDisorder');
+Route::get('/api/profDisorder/{disorderName},{pos}', 'ApiController@profDisorder');
 Route::get('/api/profLoader/{id},{pos}', 'ApiController@profLoader');
-Route::get('/api/professionalLocal/{local}', 'ApiController@professionalLocal');
-Route::get('/api/professionalSpecialty/{specialtyName}', 'ApiController@professionalSpecialty');
+Route::get('/api/professionalLocal/{local},{pos}', 'ApiController@professionalLocal');
+Route::get('/api/professionalSpecialty/{specialtyName},{pos}', 'ApiController@professionalSpecialty');
 
 
 Route::get('/api/disorderID/{id}', 'ApiController@disorderID');

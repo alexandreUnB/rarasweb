@@ -95,7 +95,7 @@ class ApiController extends Controller
     // *                    Professional related routes                     *
     // **********************************************************************
 
-    public function professionalName($name)
+    public function professionalName($name, $pos)
     {
         
         $response = DB::select('SELECT * FROM professionals WHERE name LIKE ? OR CONCAT(name,surname)=?', 
@@ -105,10 +105,16 @@ class ApiController extends Controller
 
         foreach ($response as $professional){
             $professionals->push($professional);
+
         }
+        $professionalCount = $professionals->count();
+        foreach ($professionals as $profAux){
+            $profAux->count = $professionalCount;
+            break;
 
+        }
+        $professionals = $professionals->splice($pos,10)->toArray();
 
-        $professionals = $professionals->toArray();
 
         return  response()->json(compact('professionals'));
 
@@ -154,7 +160,7 @@ class ApiController extends Controller
 
     }
 
-    public function profDisorder($disorderName)
+    public function profDisorder($disorderName, $pos)
     {
         $disorders = $this->disorderModel
             ->where('name', 'like', '%'.$disorderName.'%')
@@ -174,21 +180,42 @@ class ApiController extends Controller
         }
 
 
+        $professionalCount = $professionals->count();
+        foreach ($professionals as $profAux){
+            $profAux->count = $professionalCount;
+            break;
+
+        }
+
+                $professionals = $professionals->splice($pos,10)->toArray();
+
+
        return response()->json(compact('professionals'));
     }
 
-    public function professionalLocal($local)
+    public function professionalLocal($local, $pos)
     {
 
-        $professionals= $this->professionalModel
+        $professionals = $this->professionalModel
             ->where('uf', 'like', '%'.$local.'%') 
             ->orWhere('city', 'like', '%'.$local.'%') 
             ->orderBy('name')->get();
 
+        $professionalCount = $professionals->count();
+        foreach ($professionals as $profAux){
+            $profAux->count = $professionalCount;
+            break;
+
+        }
+        $professionals = $professionals->splice($pos,10)->toArray();
+
+
+
+
        return response()->json(compact('professionals'));
     }
 
-    public function professionalSpecialty($specialtyName)
+    public function professionalSpecialty($specialtyName, $pos)
     {
 
         $specialties = $this->specialtyModel
@@ -202,6 +229,15 @@ class ApiController extends Controller
             $professionals = $professionals->merge($specialty->professionals);
         }
 
+
+        $professionalCount = $professionals->count();
+        foreach ($professionals as $profAux){
+            $profAux->count = $professionalCount;
+            break;
+
+        }
+
+        $professionals = $professionals->splice($pos,10)->toArray();
 
        return response()->json(compact('professionals'));
     }
@@ -411,7 +447,7 @@ class ApiController extends Controller
         $professionalsFilter = $professionals->take(10)->toArray();
 
         return response()->json(compact('specialties', 'disorder', 'signs', 
-            'signsLength','centers', 'professionalsFilter', 'indicators','protocol'));
+            'signsLength','centers', 'professionalsFilter', 'indicators','protocol','icds'));
 
     }
 
@@ -458,11 +494,19 @@ class ApiController extends Controller
     {
         if($name == "all"){
 
-            $protocols = collect();
 
-            $protocols = $this->protocolModel
-                ->orderBy('document')
-                ->get();
+        $response = DB::select('SELECT p.*, d.name as disorder_name FROM protocols p LEFT JOIN disorders d on p.disorder_id = d.id');
+
+        $protocols = collect();
+
+        foreach ($response as $protocol){
+            $protocols->push($protocol);
+        }
+
+
+        $protocols = $protocols->toArray();
+
+        
 
 
         }else{
@@ -482,9 +526,12 @@ class ApiController extends Controller
             {
                 if ($disorder->protocol)
                 {
+                    $disorder->protocol['disorder_name'] = $disorder->name;
                     $protocols->push($disorder->protocol);
                 }
             }
+
+        
 
         }
 
@@ -517,6 +564,25 @@ class ApiController extends Controller
     }
 
 
+    // ***********************************************************************
+    // *                    Cid related routes                              *
+    // ***********************************************************************
+   public function cidID($id)
+     {
+         $references = $this->referenceModel
+             ->where('reference', 'like', '%'.$id.'%')
+             ->where('source', 'ICD-10')
+             ->get();
+ 
+         $disorders = collect();
+ 
+         foreach ($references as $reference){
+             $disorders = $disorders->merge($reference->disorders);
+         }
+ 
+ 
+        return response()->json(compact('disorders'));
+     }
 
 
 
