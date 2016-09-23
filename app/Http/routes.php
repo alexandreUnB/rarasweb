@@ -27,9 +27,9 @@ Route::get('/api/professionalSpecialty/{specialtyName},{pos}', 'ApiController@pr
 
 
 Route::get('/api/disorderID/{id}', 'ApiController@disorderID');
-Route::get('/api/disorderName/{name}', 'ApiController@disorderName');
+Route::get('/api/disorderName/{name},{pos}', 'ApiController@disorderName');
 Route::get('/api/disorderBySign/{name},{pos}', 'ApiController@disorderBySign');
-Route::get('/api/cidID/{name}', 'ApiController@cidID');
+Route::get('/api/disorderCID/{id},{pos}', 'ApiController@disorderCID');
 
 
 Route::get('/api/centerName/{name}', 'ApiController@centerName');

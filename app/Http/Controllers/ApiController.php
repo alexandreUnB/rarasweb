@@ -451,11 +451,23 @@ class ApiController extends Controller
 
     }
 
-    public function disorderName($name)
+    public function disorderName($name, $pos)
     {
         $disorders = $this->disorderModel
             ->where('name', 'like', '%'.$name.'%')
-            ->orderBy('name')->get()->toArray();
+            ->orderBy('name')->get();
+
+
+
+        $disordersCount = $disorders->count();
+        foreach ($disorders as $disorder){
+            $disorder->count = $disordersCount;
+            break;
+
+        }
+
+        $disorders = $disorders->splice($pos,10)->toArray();
+
         return response()->json(compact('disorders'));
     }
 
@@ -478,6 +490,33 @@ class ApiController extends Controller
         return response()->json(compact('signs'));
 
     }
+
+    public function disorderCID($id, $pos)
+     {
+         $references = $this->referenceModel
+             ->where('reference', 'like', '%'.$id.'%')
+             ->where('source', 'ICD-10')
+             ->get();
+ 
+         $disorders = collect();
+ 
+         foreach ($references as $reference){
+             $disorders = $disorders->merge($reference->disorders);
+         }
+ 
+ 
+        $disordersCount = $disorders->count();
+        foreach ($disorders as $disorder){
+            $disorder->count = $disordersCount;
+            break;
+
+        }
+
+        $disorders = $disorders->splice($pos,10)->toArray();
+
+ 
+        return response()->json(compact('disorders'));
+     }
 
     // ***********************************************************************
     // *                    Protocols related routes                         *
@@ -564,25 +603,7 @@ class ApiController extends Controller
     }
 
 
-    // ***********************************************************************
-    // *                    Cid related routes                              *
-    // ***********************************************************************
-   public function cidID($id)
-     {
-         $references = $this->referenceModel
-             ->where('reference', 'like', '%'.$id.'%')
-             ->where('source', 'ICD-10')
-             ->get();
- 
-         $disorders = collect();
- 
-         foreach ($references as $reference){
-             $disorders = $disorders->merge($reference->disorders);
-         }
- 
- 
-        return response()->json(compact('disorders'));
-     }
+
 
 
 
