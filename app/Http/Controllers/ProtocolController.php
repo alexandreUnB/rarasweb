@@ -47,6 +47,13 @@ class ProtocolController extends Controller
                 ->orderBy('name')
                 ->get();
         }
+        elseif ($this->request->searchType == 'protocolDisorderNamePortuguese')
+        {
+            $disorders = $this->disorderModel
+                ->where('name_portuguese' , 'like' , '%'.$searchedExpression.'%')
+                ->orderBy('name_portuguese')
+                ->paginate(10);
+        }
         elseif ($this->request->searchType == 'protocolDisorderOrphanumber')
         {
             $disorders = $this->disorderModel

@@ -25,17 +25,21 @@
 
                 <div class="input-group">
                     {{$checkedName = ""}}
+                    {{$checkedNamePortuguese = ""}}
                     {{$checkedOrphanumber = ""}}
 
                     <span class="hide">
                         @if(old('searchType') == 'protocolDisorderName')
                             {{$checkedName = "checked"}}
+                        @elseif(old('searchType') == 'protocolDisorderNamePortuguese')
+                            {{$checkedNamePortuguese = "checked"}}
                         @elseif(old('searchType') == 'protocolDisorderOrphanumber')
                             {{$checkedOrphanumber = "checked"}}
                         @endif
                     </span>
 
-                    <input type="radio" name="searchType" value="protocolDisorderName" {{$checkedName}} required> Nome
+                    <input type="radio" name="searchType" value="protocolDisorderName" {{$checkedName}} required> Nome EN-US
+                    <input type="radio" name="searchType" value="protocolDisorderNamePortuguese" {{$checkedNamePortuguese}} required> Nome PT-PT
                     <input type="radio" name="searchType" value="protocolDisorderOrphanumber" {{$checkedOrphanumber}} required> Orphanumber
                 </div>
             </form>

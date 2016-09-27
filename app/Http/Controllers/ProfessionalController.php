@@ -116,16 +116,17 @@ class ProfessionalController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make($this->request->all(), Professional::$rules, Professional::$messages );
+        $request = $this->request->all();
+        $validator = Validator::make($request, Professional::$rules, Professional::$messages );
 
         if ($validator->fails())
         {
             return redirect('/admin/professionals/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newProfessional = $this->professionalModel->create($this->request->all());
+        $newProfessional = $this->professionalModel->create($request);
         $newSpecialties = $this->request->professionalSpecialties;
 
         if ($newSpecialties)
@@ -138,6 +139,36 @@ class ProfessionalController extends Controller
                 $newProfessionalSpecialty->save();
             }
         }
+
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome do profissional não pode conter os símbolos / e \\');
+
+            return redirect('admin/professionals/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        if (str_contains($request['surname'], '/') || str_contains($request['surname'], '\\'))
+        {
+            session()->flash('erro', 'O sobrenome do profissional não pode conter os símbolos / e \\');
+
+            return redirect('admin/professionals/create')->withInput($request);
+        }
+
+        $request['surname'] = trim($request['surname']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['surname'] = str_replace('°', 'º', $request['surname']); // Troca o símbolo de grau pelo indicador cardinal
+
+        if (str_contains($request['city'], '/') || str_contains($request['city'], '\\'))
+        {
+            session()->flash('erro', 'A cidade do profissional não pode conter os símbolos / e \\');
+
+            return redirect('admin/professionals/create')->withInput($request);
+        }
+
+        $request['city'] = trim($request['city']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['city'] = str_replace('°', 'º', $request['city']); // Troca o símbolo de grau pelo indicador cardinal
 
         session()->flash('success', 'O profissional ' . $newProfessional->name .
             '' . $newProfessional->surname . ' foi cadastrado com sucesso');
@@ -158,16 +189,7 @@ class ProfessionalController extends Controller
         $specialties = $professional->specialties()->get();
         $countSpecialties = count($specialties) - 1;
 
-        $professionalDisorders = collect();
-
-        foreach ($specialties as $specialty)
-        {
-            $professionalDisorders = $professionalDisorders->merge($specialty->disorders);
-        }
-
-        $professionalDisorders = $professionalDisorders->unique();
-
-        return view('admin.professionals.show', compact('professional', 'specialties', 'countSpecialties', 'professionalDisorders'));
+        return view('admin.professionals.show', compact('professional', 'specialties', 'countSpecialties'));
     }
 
     /**
@@ -198,19 +220,20 @@ class ProfessionalController extends Controller
      */
     public function update($id)
     {
+        $request = $this->request->all();
         $rules = Professional::$rules;
         array_set($rules, 'council_number', 'numeric|digits_between:2,5|unique:professionals,council_number,' . $id);
-        $validator = Validator::make($this->request->all(), $rules, Professional::$messages );
+        $validator = Validator::make($request, $rules, Professional::$messages );
 
         if ($validator->fails())
         {
             return redirect('/admin/professionals/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
         $updatedProfessional = $this->professionalModel->find($id);
-        $updatedProfessional->update($this->request->all());
+        $updatedProfessional->update($request);
         
         $this->professionalSpecialtyModel
             ->where('professional_id', $updatedProfessional->id)
@@ -228,6 +251,36 @@ class ProfessionalController extends Controller
                 $newProfessionalSpecialty->save();
             }
         }
+
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome do profissional não pode conter os símbolos / e \\');
+
+            return redirect('admin/professionals/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        if (str_contains($request['surname'], '/') || str_contains($request['surname'], '\\'))
+        {
+            session()->flash('erro', 'O sobrenome do profissional não pode conter os símbolos / e \\');
+
+            return redirect('admin/professionals/edit/' . $id)->withInput($request);
+        }
+
+        $request['surname'] = trim($request['surname']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['surname'] = str_replace('°', 'º', $request['surname']); // Troca o símbolo de grau pelo indicador cardinal
+
+        if (str_contains($request['city'], '/') || str_contains($request['city'], '\\'))
+        {
+            session()->flash('erro', 'A cidade do profissional não pode conter os símbolos / e \\');
+
+            return redirect('admin/professionals/edit/' . $id)->withInput($request);
+        }
+
+        $request['city'] = trim($request['city']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['city'] = str_replace('°', 'º', $request['city']); // Troca o símbolo de grau pelo indicador cardinal
 
         session()->flash('success', 'O profissional ' . $updatedProfessional->name .
             '' . $updatedProfessional->surname . ' foi editado com sucesso');

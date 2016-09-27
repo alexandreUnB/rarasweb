@@ -6,12 +6,9 @@
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab1" data-toggle="tab">Desordem</a></li>
             <li><a href="#tab2" data-toggle="tab">Sinônimos</a></li>
-            <li><a href="#tab3" data-toggle="tab">Especialidades</a></li>
-            <li><a href="#tab4" data-toggle="tab">Sinais</a></li>
-            <li><a href="#tab5" data-toggle="tab">Referências</a></li>
-            <li><a href="#tab6" data-toggle="tab">Indicadores</a></li>
-            <li><a href="#tab7" data-toggle="tab">Profissionais</a></li>
-            <li><a href="#tab8" data-toggle="tab">Centros de Tratamento</a></li>
+            <li><a href="#tab3" data-toggle="tab">Sinais</a></li>
+            <li><a href="#tab4" data-toggle="tab">Referências</a></li>
+            <li><a href="#tab5" data-toggle="tab">Indicadores</a></li>
         </ul>
 
         <div class="tab-content">
@@ -60,23 +57,6 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-8">
-                                <p>Especialidade(s):
-                                    <strong>
-                                        @forelse($specialties as $specialty)
-                                            {{$specialty->name}} {{$specialty->cbo}}
-
-                                            @if($countSpecialties)
-                                                -
-                                                <span class="hide">{{$countSpecialties--}}</span>
-                                            @endif
-                                        @empty
-                                            <span class="alert-warning">Não existem especialidades associadas</span>
-                                        @endforelse
-                                    </strong>
-                                </p>
-                            </div>
-
                             <div class="col-xs-1">
                                 <p>MeSH:
                                 </p>
@@ -284,56 +264,6 @@
                     </div>
 
                     <div class="panel-body">
-                        @if(count($specialties))
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead class="table-geral">
-                                <th class="text-center">ID</th>
-                                <th class="text-center">Especialidade</th>
-                                <th class="text-center">CBO</th>
-                                <th class="text-center">Detalhes</th>
-                                <th class="text-center">Editar</th>
-                                <th class="text-center">Deletar</th>
-                                </thead>
-
-                                @foreach($specialties as $specialty)
-                                    <tbody>
-                                    <td class="text-center table-geral">{{$specialty->id}}</td>
-                                    <td class="text-td">{{$specialty->name}}</td>
-                                    <td class="text-td text-center">{{$specialty->cbo}}</td>
-                                    <td class="text-center">
-                                        <a class="btn btn-default" href="#">
-                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-primary" href="#">
-                                            <i class="glyphicon glyphicon-pencil"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-danger" href="#">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </a>
-                                    </td>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                        @else
-                            <strong>
-                                <span class="alert-warning">Não existem especialidades associadas a essa doença</span>
-                            </strong>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="tab4">
-                <div class="panel panel-primary panel-show">
-                    <div class="panel-heading text-center">
-                        <h4><strong>{{$disorder->name}}</strong></h4>
-                    </div>
-
-                    <div class="panel-body">
                         @if(count($signs))
                             <table class="table table-bordered table-striped table-hover">
                                 <thead class="table-geral">
@@ -379,7 +309,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="tab5">
+            <div class="tab-pane fade" id="tab4">
                 <div class="panel panel-primary panel-show">
                     <div class="panel-heading text-center">
                         <h4><strong>{{$disorder->name}}</strong></h4>
@@ -433,7 +363,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="tab6">
+            <div class="tab-pane fade" id="tab5">
                 <div class="panel panel-primary panel-show">
                     <div class="panel-heading text-center">
                         <h4><strong>{{$disorder->name}}</strong></h4>
@@ -481,106 +411,6 @@
                         @else
                             <strong>
                                 <span class="alert-warning">Não existem indicadores associados a essa doença</span>
-                            </strong>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="tab7">
-                <div class="panel panel-primary panel-show">
-                    <div class="panel-heading text-center">
-                        <h4><strong>{{$disorder->name}}</strong></h4>
-                    </div>
-
-                    <div class="panel-body">
-                        @if(count($professionals))
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead class="table-geral">
-                                <th class="text-center">ID</th>
-                                <th class="text-center">Nome do Profissional</th>
-                                <th class="text-center">Cidade - UF</th>
-                                <th class="text-center">Detalhes</th>
-                                <th class="text-center">Editar</th>
-                                <th class="text-center">Deletar</th>
-                                </thead>
-
-                                @foreach($professionals as $professional)
-                                    <tbody>
-                                    <td class="text-center table-geral">{{$professional->id}}</td>
-                                    <td class="text-td">{{$professional->name}} {{$professional->surname}}</td>
-                                    <td class="text-td text-center">{{$professional->city}} - {{$professional->uf}}</td>
-                                    <td class="text-center">
-                                        <a class="btn btn-default" href="/admin/professionals/show/{{$professional->id}}">
-                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-primary" href="/admin/professionals/edit/{{$professional->id}}">
-                                            <i class="glyphicon glyphicon-pencil"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-danger" href="/admin/professionals/delete/{{$professional->id}}">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </a>
-                                    </td>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                        @else
-                            <strong>
-                                <span class="alert-warning">Não existem profissionais associados a essa doença</span>
-                            </strong>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="tab8">
-                <div class="panel panel-primary panel-show">
-                    <div class="panel-heading text-center">
-                        <h4><strong>{{$disorder->name}}</strong></h4>
-                    </div>
-
-                    <div class="panel-body">
-                        @if(count($treatmentCenters))
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead class="table-geral">
-                                <th class="text-center">ID</th>
-                                <th class="text-center">Nome do Centro</th>
-                                <th class="text-center">Cidade - UF</th>
-                                <th class="text-center">Detalhes</th>
-                                <th class="text-center">Editar</th>
-                                <th class="text-center">Deletar</th>
-                                </thead>
-
-                                @foreach($treatmentCenters as $treatmentCenter)
-                                    <tbody>
-                                    <td class="text-center table-geral">{{$treatmentCenter->id}}</td>
-                                    <td class="text-td">{{$treatmentCenter->name}}</td>
-                                    <td class="text-td text-center">{{$treatmentCenter->city}} - {{$treatmentCenter->uf}}</td>
-                                    <td class="text-center">
-                                        <a class="btn btn-default" href="/admin/treatmentCenters/show/{{$treatmentCenter->id}}">
-                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-primary" href="/admin/treatmentCenters/edit/{{$treatmentCenter->id}}">
-                                            <i class="glyphicon glyphicon-pencil"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-danger" href="/admin/treatmentCenters/delete/{{$treatmentCenter->id}}">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </a>
-                                    </td>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                        @else
-                            <strong>
-                                <span class="alert-warning">Não existem centros de tratamento associados a essa doença</span>
                             </strong>
                         @endif
                     </div>

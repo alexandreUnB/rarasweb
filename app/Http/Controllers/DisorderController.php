@@ -8,36 +8,28 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Disorder;
 use App\DisorderType;
-use App\Specialty;
 use App\Reference;
 use App\Sign;
-use App\DisorderSpecialty;
 use App\DisorderReference;
 use App\DisorderSign;
-
-use Illuminate\Support\Facades\Gate;
 
 class DisorderController extends Controller
 {
     private $disorderModel;
     private $disorderTypeModel;
-    private $specialtyModel;
     private $referenceModel;
     private $signModel;
-    private $disorderSpecialtyModel;
     private $disorderReferenceModel;
     private $disorderSignModel;
 
-    public function __construct(Disorder $disorderModel, DisorderType $disorderTypeModel, Specialty $specialtyModel,
-                                Reference $referenceModel, Sign $signModel, DisorderSpecialty $disorderSpecialtyModel,
-                                DisorderReference $disorderReferenceModel, DisorderSign $disorderSignModel, Request $request)
+    public function __construct(Disorder $disorderModel, DisorderType $disorderTypeModel, Reference $referenceModel,
+                                Sign $signModel, DisorderReference $disorderReferenceModel,
+                                DisorderSign $disorderSignModel, Request $request)
     {
         $this->disorderModel = $disorderModel;
         $this->disorderTypeModel = $disorderTypeModel;
-        $this->specialtyModel = $specialtyModel;
         $this->referenceModel = $referenceModel;
         $this->signModel = $signModel;
-        $this->disorderSpecialtyModel = $disorderSpecialtyModel;
         $this->disorderReferenceModel = $disorderReferenceModel;
         $this->disorderSignModel = $disorderSignModel;
         $this->request = $request;
@@ -69,6 +61,13 @@ class DisorderController extends Controller
                 ->orderBy('name')
                 ->paginate(10);
         }
+        elseif ($this->request->searchType == 'disorderNamePortuguese')
+        {
+            $disorders = $this->disorderModel
+                ->where('name_portuguese' , 'like' , '%'.$searchedExpression.'%')
+                ->orderBy('name_portuguese')
+                ->paginate(10);
+        }
         elseif ($this->request->searchType == 'disorderOrphanumber')
         {
             $disorders = $this->disorderModel
@@ -93,10 +92,6 @@ class DisorderController extends Controller
             ->orderBy('name')
             ->get();
 
-        $specialties = $this->specialtyModel
-            ->orderBy('name')
-            ->get();
-
         $references = $this->referenceModel
             ->orderBy('source')
             ->orderBy('reference')
@@ -106,7 +101,7 @@ class DisorderController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.disorders.create', compact('disorderTypes', 'specialties', 'references', 'signs'));
+        return view('admin.disorders.create', compact('disorderTypes', 'references', 'signs'));
     }
 
     /**
@@ -140,20 +135,8 @@ class DisorderController extends Controller
 
         $newDisorder = $this->disorderModel->create($request);
 
-        $newSpecialties = $this->request->disorderSpecialties;
         $newReferences = $this->request->disorderReferences;
         $newSigns = $this->request->disorderSigns;
-
-        if ($newSpecialties)
-        {
-            foreach ($newSpecialties as $newSpecialty)
-            {
-                $newDisorderSpecialty = new DisorderSpecialty();
-                $newDisorderSpecialty->disorder_id = $newDisorder->id;
-                $newDisorderSpecialty->specialty_id = $newSpecialty;
-                $newDisorderSpecialty->save();
-            }
-        }
 
         if ($newReferences)
         {
@@ -177,7 +160,6 @@ class DisorderController extends Controller
             }
         }
 
-
         session()->flash('success', 'A desordem ' . $newDisorder->name . ' foi cadastrada com sucesso');
 
         return redirect('/admin/disorders/create');
@@ -193,14 +175,7 @@ class DisorderController extends Controller
     {
         $disorder = $this->disorderModel->find($id);
 
-
-
         $disorderType = $disorder->disorderType;
-
-        $specialties = $disorder->specialties()
-            ->orderBy('name')
-            ->get();
-        $countSpecialties = count($specialties) - 1;
 
         $protocol = $disorder->protocol;
 
@@ -244,20 +219,9 @@ class DisorderController extends Controller
 
         $indicators = $disorder->indicators;
 
-        $professionals = collect();
-        $treatmentCenters = collect();
-
-        foreach ($specialties as $specialty) {
-            $professionals = $professionals->merge($specialty->professionals);
-            $treatmentCenters = $treatmentCenters->merge($specialty->treatmentCenters);
-        }
-
-        $professionals = $professionals->unique()->sortBy('name');
-        $treatmentCenters = $treatmentCenters->unique()->sortBy('name');
-
-        return view('admin.disorders.show', compact('disorder', 'disorderType', 'specialties', 'countSpecialties',
-            'protocol', 'icds', 'countICDs', 'meshes', 'countMeSHes', 'umlses', 'countUMLSes', 'meddras', 'countMedDRAs',
-            'omims', 'countOMIMs', 'synonyms', 'signs', 'references', 'indicators', 'professionals', 'treatmentCenters'));
+        return view('admin.disorders.show', compact('disorder', 'disorderType', 'protocol', 'icds',
+            'countICDs', 'meshes', 'countMeSHes', 'umlses', 'countUMLSes', 'meddras', 'countMedDRAs',
+            'omims', 'countOMIMs', 'synonyms', 'signs', 'references', 'indicators'));
     }
 
     /**
@@ -274,12 +238,6 @@ class DisorderController extends Controller
             ->orderBy('name')
             ->get();
 
-        $specialties = $this->specialtyModel
-            ->orderBy('name')
-            ->get();
-
-        $disorderSpecialties = $disorder->specialties()->get();
-
         $references = $this->referenceModel
             ->orderBy('source')
             ->orderBy('reference')
@@ -293,8 +251,8 @@ class DisorderController extends Controller
 
         $disorderSigns = $disorder->signs()->get();
 
-        return view('admin.disorders.edit', compact('disorder', 'disorderTypes', 'specialties',
-            'disorderSpecialties', 'references', 'disorderReferences', 'signs', 'disorderSigns'));
+        return view('admin.disorders.edit', compact('disorder', 'disorderTypes',
+            'references', 'disorderReferences', 'signs', 'disorderSigns'));
     }
 
     /**
@@ -332,9 +290,6 @@ class DisorderController extends Controller
         $updatedDisorder = $this->disorderModel->find($id);
         $updatedDisorder->update($request);
 
-        $this->disorderSpecialtyModel
-            ->where('disorder_id', $updatedDisorder->id)
-            ->delete();
         $this->disorderReferenceModel
             ->where('disorder_id', $updatedDisorder->id)
             ->delete();
@@ -342,20 +297,9 @@ class DisorderController extends Controller
             ->where('disorder_id', $updatedDisorder->id)
             ->delete();
 
-        $newSpecialtiesID = $this->request->disorderSpecialties;
         $newReferencesID = $this->request->disorderReferences;
         $newSignsID = $this->request->disorderSigns;
 
-        if ($newSpecialtiesID)
-        {
-            foreach ($newSpecialtiesID as $newSpecialtyID)
-            {
-                $newDisorderSpecialty = new DisorderSpecialty();
-                $newDisorderSpecialty->disorder_id = $updatedDisorder->id;
-                $newDisorderSpecialty->specialty_id = $newSpecialtyID;
-                $newDisorderSpecialty->save();
-            }
-        }
         if ($newReferencesID)
         {
             foreach ($newReferencesID as $newReferenceID)

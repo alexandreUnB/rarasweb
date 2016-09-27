@@ -114,17 +114,17 @@ class TreatmentCenterController extends Controller
      */
     public function store()
     {
-
-        $validator = Validator::make($this->request->all(), TreatmentCenter::$rules, TreatmentCenter::$messages );
+        $request = $this->request->all();
+        $validator = Validator::make($request, TreatmentCenter::$rules, TreatmentCenter::$messages );
 
         if ($validator->fails())
         {
             return redirect('/admin/treatmentCenters/create')
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
 
-        $newTreatmentCenter = $this->treatmentCenterModel->create($this->request->all());
+        $newTreatmentCenter = $this->treatmentCenterModel->create($request);
         $newSpecialties = $this->request->centerSpecialties;
 
         if ($newSpecialties)
@@ -137,6 +137,26 @@ class TreatmentCenterController extends Controller
                 $newSpecialtyTreatmentCenter->save();
             }
         }
+
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome do centro não pode conter os símbolos / e \\');
+
+            return redirect('admin/treatmentCenters/create')->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        if (str_contains($request['city'], '/') || str_contains($request['city'], '\\'))
+        {
+            session()->flash('erro', 'A cidade do centro não pode conter os símbolos / e \\');
+
+            return redirect('admin/treatmentCenters/create')->withInput($request);
+        }
+
+        $request['city'] = trim($request['city']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['city'] = str_replace('°', 'º', $request['city']); // Troca o símbolo de grau pelo indicador cardinal
 
         session()->flash('success', 'O centro de tratamento ' . $newTreatmentCenter->name . ' foi cadastrado com sucesso');
 
@@ -155,17 +175,8 @@ class TreatmentCenterController extends Controller
 
         $specialties = $treatmentCenter->specialties;
         $countSpecialties = count($specialties) - 1;
-        
-        $centerDisorders = collect();
 
-        foreach ($specialties as $specialty)
-        {
-            $centerDisorders = $centerDisorders->merge($specialty->disorders);
-        }
-
-        $centerDisorders = $centerDisorders->unique();
-
-        return view('admin.treatmentCenters.show', compact('treatmentCenter', 'specialties', 'countSpecialties', 'centerDisorders'));
+        return view('admin.treatmentCenters.show', compact('treatmentCenter', 'specialties', 'countSpecialties'));
     }
 
     /**
@@ -196,19 +207,20 @@ class TreatmentCenterController extends Controller
      */
     public function update($id)
     {
+        $request = $this->request->all();
         $rules = TreatmentCenter::$rules;
         array_set($rules, 'name', 'required|min:8|max:200|unique:treatment_centers,name,' . $id);
-        $validator = Validator::make($this->request->all(), $rules, TreatmentCenter::$messages );
+        $validator = Validator::make($request, $rules, TreatmentCenter::$messages );
 
         if ($validator->fails())
         {
             return redirect('/admin/treatmentCenters/edit/' . $id)
                 ->withErrors($validator)
-                ->withInput($this->request->all());
+                ->withInput($request);
         }
-        
+
         $updatedTreatmentCenter = $this->treatmentCenterModel->find($id);
-        $updatedTreatmentCenter->update($this->request->all());
+        $updatedTreatmentCenter->update($request);
 
         $this->specialtyTreatmentCenterModel
             ->where('treatmentCenter_id', $updatedTreatmentCenter->id)
@@ -226,6 +238,26 @@ class TreatmentCenterController extends Controller
                 $newSpecialtyTreatmentCenter->save();
             }
         }
+
+        if (str_contains($request['name'], '/') || str_contains($request['name'], '\\'))
+        {
+            session()->flash('erro', 'O nome do centro não pode conter os símbolos / e \\');
+
+            return redirect('admin/treatmentCenters/edit/' . $id)->withInput($request);
+        }
+
+        $request['name'] = trim($request['name']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['name'] = str_replace('°', 'º', $request['name']); // Troca o símbolo de grau pelo indicador cardinal
+
+        if (str_contains($request['city'], '/') || str_contains($request['city'], '\\'))
+        {
+            session()->flash('erro', 'A cidade do centro não pode conter os símbolos / e \\');
+
+            return redirect('admin/treatmentCenters/edit/' . $id)->withInput($request);
+        }
+
+        $request['city'] = trim($request['city']); // Remove espaços, tabulações e afins do começo e do final da string
+        $request['city'] = str_replace('°', 'º', $request['city']); // Troca o símbolo de grau pelo indicador cardinal
 
         session()->flash('success', 'O centro de tratamento ' . $updatedTreatmentCenter->name . ' foi editado com sucesso');
 
