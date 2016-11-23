@@ -149,9 +149,9 @@ class ApiController extends Controller
     public function profLoader($id, $pos)
     {
         $disorder = $this->disorderModel->find($id);
-        $specialties = $disorder->specialties()
-            ->orderBy('name')
-            ->get();
+        // $specialties = $disorder->specialties()
+        //     ->orderBy('name')
+        //     ->get();
 
         $professionals = collect();
 
@@ -173,11 +173,11 @@ class ApiController extends Controller
             ->orderBy('name')->get();
 
 
-        $specialties = collect();
+        // $specialties = collect();
 
-        foreach ($disorders as $disorder){
-            $specialties = $specialties->merge($disorder->specialties);
-        }
+        // foreach ($disorders as $disorder){
+        //     $specialties = $specialties->merge($disorder->specialties);
+        // }
 
         $professionals = collect();
 
@@ -340,11 +340,11 @@ class ApiController extends Controller
             ->orderBy('name')->get();
 
 
-        $specialties = collect();
+        // $specialties = collect();
 
-        foreach ($disorders as $disorder){
-            $specialties = $specialties->merge($disorder->specialties);
-        }
+        // foreach ($disorders as $disorder){
+        //     $specialties = $specialties->merge($disorder->specialties);
+        // }
 
         $centers = collect();
 
@@ -476,10 +476,10 @@ class ApiController extends Controller
 
         $disorderType = $disorder->disorderType;
 
-        $specialties = $disorder->specialties()
-            ->orderBy('name')
-            ->get();
-        $countSpecialties = count($specialties) - 1;
+        // $specialties = $disorder->specialties()
+        //     ->orderBy('name')
+        //     ->get();
+        // $countSpecialties = count($specialties) - 1;
 
         $protocol = $disorder->protocol;
 
@@ -532,15 +532,15 @@ class ApiController extends Controller
         $professionals = collect();
         $treatmentCenters = collect();
 
-        foreach ($specialties as $specialty) {
-            $professionals = $professionals->merge($specialty->professionals);
-            $treatmentCenters = $treatmentCenters->merge($specialty->treatmentCenters);
-        }
+        // foreach ($specialties as $specialty) {
+        //     $professionals = $professionals->merge($specialty->professionals);
+        //     $treatmentCenters = $treatmentCenters->merge($specialty->treatmentCenters);
+        // }
 
 
-        $specialties = $disorder->specialties()
-            ->orderBy('name')
-            ->get();
+        // $specialties = $disorder->specialties()
+        //     ->orderBy('name')
+        //     ->get();
 
         $disorder = $this->disorderModel->find($id);
 
@@ -557,7 +557,7 @@ class ApiController extends Controller
 
         $professionalsFilter = $professionals->take(10)->toArray();
 
-        return response()->json(compact('specialties', 'disorder', 'signs', 
+        return response()->json(compact('disorder', 'signs', 
             'signsLength','centers', 'professionalsFilter', 'indicators','protocol','icds'))
             ->header('Access-Control-Allow-Origin' , '*')
             ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')

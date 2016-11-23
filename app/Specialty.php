@@ -25,11 +25,6 @@ class Specialty extends Model
         'cbo.unique' => 'Já existe uma especialidade com esse CBO',
     ];
 
-    public function disorders()
-    {
-        return $this->belongsToMany('App\Disorder', 'disorder_specialty', 'specialty_id', 'disorder_id');
-    }
-
     public function professionals()
     {
         return $this->belongsToMany('App\Professional', 'professional_specialty',

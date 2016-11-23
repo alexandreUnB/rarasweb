@@ -8,7 +8,7 @@ class Disorder extends Model
 {
     protected $table = 'disorders';
     
-    protected $fillable = ['name', 'orphanumber', 'description', 'drugs', 'procedures', 'references', 'disorderType_id'];
+    protected $fillable = ['name', 'name_portuguese', 'orphanumber', 'description', 'drugs', 'procedures', 'references', 'disorderType_id'];
 
     protected $casts = [
         'orphanumber' => 'string',
@@ -16,6 +16,7 @@ class Disorder extends Model
 
     public static $rules = [
         'name' => 'required|min:4|max:120|unique:disorders,name',
+        'name_portuguese' => 'min:4|max:120|unique:disorders,name_portuguese',
         'orphanumber' => 'required|digits_between:1,6|unique:disorders,orphanumber',
         'description' => 'max:10000',
         'drugs' => 'max:5000',
@@ -29,6 +30,9 @@ class Disorder extends Model
         'name.min' => 'O nome da desordem deve ter no mínimo 5 caracteres',
         'name.max' => 'O nome da desordem deve ter no máximo 120 caracteres',
         'name.unique' => 'Já existe uma desordem cadastrada com esse nome',
+        'name_portuguese.min' => 'O nome em português da desordem deve ter no mínimo 5 caracteres',
+        'name_portuguese.max' => 'O nome em português da desordem deve ter no máximo 120 caracteres',
+        'name_portuguese.unique' => 'Já existe uma desordem cadastrada com esse nome em português',
         'orphanumber.required' => 'É necessário informar um orphanumber para a desordem',
         'orphanumber.digits_between' => 'O orphanumber da desordem deve ter no máximo 6 dígitos',
         'orphanumber.unique' => 'Já existe uma desordem cadastrada com esse orphanumber',
@@ -42,11 +46,6 @@ class Disorder extends Model
     public function disorderType()
     {
         return $this->belongsTo('App\DisorderType', 'disorderType_id');
-    }
-
-    public function specialties()
-    {
-        return $this->belongsToMany('App\Specialty', 'disorder_specialty', 'disorder_id', 'specialty_id');
     }
 
     public function protocol()

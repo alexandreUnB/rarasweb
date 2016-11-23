@@ -110,11 +110,7 @@ class SpecialtyController extends Controller
     {
         $specialty = $this->specialtyModel->find($id);
 
-        $specialtyDisorders = $specialty->disorders()
-            ->orderBy('name')
-            ->paginate(10);
-
-        return view('admin.specialties.show', compact('specialty', 'specialtyDisorders'));
+        return view('admin.specialties.show', compact('specialty'));
     }
 
     /**
@@ -179,17 +175,31 @@ class SpecialtyController extends Controller
     public function delete($id)
     {
         $deletedSpecialty = $this->specialtyModel->find($id);
-        $associatedDisorders = $deletedSpecialty->disorders;
+        $associatedProfessionals = $deletedSpecialty->professionals;
+        $associatedCenters = $deletedSpecialty->treatmentCenters;
 
-        if (count($associatedDisorders))
+        if (count($associatedProfessionals) || count($associatedCenters))
         {
-            if (count($associatedDisorders) == 1)
+            if (count($associatedProfessionals) == 1)
             {
-                session()->flash('erro', 'Essa especialidade está associada a ' . count($associatedDisorders) . ' desordem. Exclusão não permitida');
+                session()->flash('erro', 'Essa especialidade está associada a ' .
+                    count($associatedProfessionals) . ' profissional. Exclusão não permitida');
             }
-            else
+            else if (count($associatedProfessionals) > 1)
             {
-                session()->flash('erro', 'Essa especialidade está associado a ' . count($associatedDisorders) . ' desordens. Exclusão não permitida');
+                session()->flash('erro', 'Essa especialidade está associado a ' .
+                    count($associatedProfessionals) . ' profissionais. Exclusão não permitida');
+            }
+
+            if (count($associatedCenters) == 1)
+            {
+                session()->flash('erro', 'Essa especialidade está associada a ' .
+                    count($associatedCenters) . ' centro de tratamento. Exclusão não permitida');
+            }
+            else if (count($associatedCenters) > 1)
+            {
+                session()->flash('erro', 'Essa especialidade está associado a ' .
+                    count($associatedCenters) . ' centros de tratamento. Exclusão não permitida');
             }
 
             return redirect('/admin/specialties');
