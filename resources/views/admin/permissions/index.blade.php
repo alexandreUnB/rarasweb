@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Permissões</h3>
 
     <div class="row">
@@ -16,7 +14,7 @@
         <div class="col-xs-4 text-right">
             <form role="search" action="/admin/permissions/search">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Permissões"
+                    <input type="text" class="form-control" placeholder="Permissão"
                            name="search" value="{{old('search')}}" autofocus>
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>

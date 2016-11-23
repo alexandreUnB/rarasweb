@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use App\Professional;
 use App\Specialty;
@@ -47,7 +48,7 @@ class ProfessionalController extends Controller
         if ($this->request->searchType == 'professionalName')
         {
             $professionals = $this->professionalModel
-                ->where('name' , 'like' , $searchedExpression.'%')
+                ->where(DB::raw("CONCAT(name, '', surname)") , 'like' , $searchedExpression.'%')
                 ->orderBy('name')
                 ->orderBy('surname')
                 ->paginate(10);

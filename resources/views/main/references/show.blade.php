@@ -18,14 +18,22 @@
                 </div>
 
                 <div class="col-xs-7">
-                    <p>Map Relation: <strong>{{$reference->map_relation}}</strong></p>
+                    <p>Map Relation:
+                        <strong>
+                            @if($reference->map_relation)
+                                {{$reference->map_relation}}
+                            @else
+                                <span class="alert-warning">N/D</span>
+                            @endif
+                        </strong>
+                    </p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-xs-12">
                     <table class="table table-bordered table-striped table-hover">
-                        <caption class="text-center text-td">Desordens relacionadas a essa referência</caption>
+                        <caption class="text-center text-td">Desordens associadas a essa referência</caption>
                         <thead class="table-geral">
                         <th class="text-center">ID</th>
                         <th class="text-center">Orphanumber</th>
@@ -37,7 +45,7 @@
                             <tbody>
                             <td class="text-center table-geral">{{$referenceDisorder->id}}</td>
                             <td class="text-td text-center">{{$referenceDisorder->orphanumber}}</td>
-                            <td class="text-td text-center">{{$referenceDisorder->name}}</td>
+                            <td class="text-td">{{$referenceDisorder->name}}</td>
                             <td class="text-center">
                                 <a class="btn btn-default" href="/admin/disorders/show/{{$referenceDisorder->id}}">
                                     <i class="glyphicon glyphicon-eye-open"></i>

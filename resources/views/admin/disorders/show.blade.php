@@ -57,26 +57,6 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-1">
-                                <p>MeSH:
-                                </p>
-                            </div>
-
-                            <div class="col-xs-3">
-                                @forelse($meshes as $mesh)
-                                    <a href="http://www.ncbi.nlm.nih.gov/mesh/{{$mesh}}" target="_blank">{{$mesh}}</a>
-
-                                    @if($countMeSHes)
-                                        <strong>-</strong>
-                                        <span class="hide">{{$countMeSHes--}}</span>
-                                    @endif
-                                @empty
-                                    <strong>-</strong>
-                                @endforelse
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-xs-8">
                                 @if($protocol)
                                     {{--<div class="modal fade" id="modal" tabindex="-1">--}}
@@ -110,6 +90,26 @@
                             </div>
 
                             <div class="col-xs-1">
+                                <p>MeSH:
+                                </p>
+                            </div>
+
+                            <div class="col-xs-3">
+                                @forelse($meshes as $mesh)
+                                    <a href="http://www.ncbi.nlm.nih.gov/mesh/{{$mesh}}" target="_blank">{{$mesh}}</a>
+
+                                    @if($countMeSHes)
+                                        <strong>-</strong>
+                                        <span class="hide">{{$countMeSHes--}}</span>
+                                    @endif
+                                @empty
+                                    <strong>-</strong>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-offset-8 col-xs-1">
                                 <p>UMLS:</p>
                             </div>
 

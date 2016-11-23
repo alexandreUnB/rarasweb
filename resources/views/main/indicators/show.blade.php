@@ -4,7 +4,8 @@
 
     <div class="panel panel-primary panel-show">
         <div class="panel-heading text-center">
-            <h4><strong>{{$indicator->disorder->name}} - {{$indicator->indicatorType->name}} {{$indicator->year}}</strong></h4>
+            <h4><strong>{{$indicator->disorder->name}} - {{$indicator->indicatorType->name}} -
+                    {{$indicator->indicatorSource->abbreviation}} - {{$indicator->year}}</strong></h4>
         </div>
 
         <div class="panel-body">
@@ -13,16 +14,31 @@
                     <p>Doença: <strong>{{$indicator->disorder->name}}</strong></p>
                 </div>
 
-                <div class="col-xs-3">
-                    <p>Indicador: <strong>{{$indicator->indicatorType->name}}</strong></p>
+                <div class="col-xs-6">
+                    <p>Fonte: <strong>{{$indicator->indicatorSource->abbreviation}} - {{$indicator->indicatorSource->name}}</strong></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <p>Tipo: <strong>{{$indicator->indicatorType->name}}</strong></p>
                 </div>
 
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                     <p>Ano: <strong>{{$indicator->year}}</strong></p>
                 </div>
 
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                     <p>Quantidade: <strong>{{$indicator->amount}}</strong></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>Referência:
+                        <textarea class="form-control vresize" rows="5" id="reference"
+                                  name="reference" disabled>{{$indicator->reference}}</textarea>
+                    </p>
                 </div>
             </div>
         </div>

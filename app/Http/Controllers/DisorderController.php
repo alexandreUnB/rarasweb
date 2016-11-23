@@ -61,13 +61,13 @@ class DisorderController extends Controller
                 ->orderBy('name')
                 ->paginate(10);
         }
-        elseif ($this->request->searchType == 'disorderNamePortuguese')
-        {
-            $disorders = $this->disorderModel
-                ->where('name_portuguese' , 'like' , '%'.$searchedExpression.'%')
-                ->orderBy('name_portuguese')
-                ->paginate(10);
-        }
+//        elseif ($this->request->searchType == 'disorderNamePortuguese')
+//        {
+//            $disorders = $this->disorderModel
+//                ->where('name_portuguese' , 'like' , '%'.$searchedExpression.'%')
+//                ->orderBy('name_portuguese')
+//                ->paginate(10);
+//        }
         elseif ($this->request->searchType == 'disorderOrphanumber')
         {
             $disorders = $this->disorderModel

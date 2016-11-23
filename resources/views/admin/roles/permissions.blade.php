@@ -2,9 +2,7 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
-    <h3 class="page-header">Permissões relacionadas ao Papel de: {{$role->label}}</h3>
+    <h3 class="page-header">Permissões relacionadas ao Papel de: {{$role->display_name}}</h3>
 
 
     <table class="table table-bordered table-striped table-hover">

@@ -104,43 +104,43 @@ class IndicatorController extends Controller
                 ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
             );
         }
-        elseif ($this->request->searchType == 'indicatorDisorderPortuguese')
-        {
-            $disorders = $this->disorderModel
-                ->where('name_portuguese' , 'like' , '%'.$searchedExpression.'%')
-                ->get();
-
-            $indicators = collect();
-
-            foreach ($disorders as $disorder)
-            {
-                $indicators = $indicators->merge($disorder->indicators);
-            }
-
-            foreach ($indicators as $indicator)
-            {
-                $indicator['nameDisorder'] = $indicator->disorder->name_portuguese;
-                $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
-                $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
-            }
-
-            $indicators = $indicators->sortBy(function($indicators) {
-                return sprintf('%s %s %s %s', $indicators->nameDisorder, $indicators->nameIndicatorType,
-                    $indicators->nameIndicatorSource, $indicators->year);
-            });
-
-            $page = Input::get('page', 1); // Get the ?page=1 from the url
-            $perPage = 10; // Number of items per page
-            $offset = ($page * $perPage) - $perPage;
-
-            $indicators = new LengthAwarePaginator(
-                $indicators->slice($offset, $perPage, true), // Only grab the items we need
-                count($indicators), // Total items
-                $perPage, // Items per page
-                $page, // Current page
-                ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
-            );
-        }
+//        elseif ($this->request->searchType == 'indicatorDisorderPortuguese')
+//        {
+//            $disorders = $this->disorderModel
+//                ->where('name_portuguese' , 'like' , '%'.$searchedExpression.'%')
+//                ->get();
+//
+//            $indicators = collect();
+//
+//            foreach ($disorders as $disorder)
+//            {
+//                $indicators = $indicators->merge($disorder->indicators);
+//            }
+//
+//            foreach ($indicators as $indicator)
+//            {
+//                $indicator['nameDisorder'] = $indicator->disorder->name_portuguese;
+//                $indicator['nameIndicatorType'] = $indicator->indicatorType->name;
+//                $indicator['nameIndicatorSource'] = $indicator->indicatorSource->name;
+//            }
+//
+//            $indicators = $indicators->sortBy(function($indicators) {
+//                return sprintf('%s %s %s %s', $indicators->nameDisorder, $indicators->nameIndicatorType,
+//                    $indicators->nameIndicatorSource, $indicators->year);
+//            });
+//
+//            $page = Input::get('page', 1); // Get the ?page=1 from the url
+//            $perPage = 10; // Number of items per page
+//            $offset = ($page * $perPage) - $perPage;
+//
+//            $indicators = new LengthAwarePaginator(
+//                $indicators->slice($offset, $perPage, true), // Only grab the items we need
+//                count($indicators), // Total items
+//                $perPage, // Items per page
+//                $page, // Current page
+//                ['path' => $this->request->url(), 'query' => $this->request->query()] // We need this so we can keep all old query parameters from the url
+//            );
+//        }
         elseif ($this->request->searchType == 'indicatorType')
         {
             $indicatorTypes = $this->indicatorTypeModel

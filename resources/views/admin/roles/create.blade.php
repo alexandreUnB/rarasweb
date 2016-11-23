@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Adicionar Papel</h3>
 
     <form action="/admin/roles/store" method="post">

@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Usuários</h3>
 
     <div class="row">
@@ -13,7 +11,7 @@
             {{--</a>--}}
         {{--</div>--}}
 
-        <div class="col-xs-4 col-xs-offset-8 text-right">
+        <div class="col-xs-offset-8 col-xs-4 text-right">
             <form role="search" action="/admin/users/search">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Usuário"

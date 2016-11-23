@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Papéis</h3>
 
     <form action="/admin/roles/update/{{$role->id}}" method="post">

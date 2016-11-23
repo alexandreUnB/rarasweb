@@ -6,12 +6,9 @@
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab1" data-toggle="tab">Desordem</a></li>
             <li><a href="#tab2" data-toggle="tab">Sinônimos</a></li>
-            <li><a href="#tab3" data-toggle="tab">Especialidades</a></li>
-            <li><a href="#tab4" data-toggle="tab">Sinais</a></li>
-            <li><a href="#tab5" data-toggle="tab">Referências</a></li>
-            <li><a href="#tab6" data-toggle="tab">Indicadores</a></li>
-            <li><a href="#tab7" data-toggle="tab">Profissionais</a></li>
-            <li><a href="#tab8" data-toggle="tab">Centros de Tratamento</a></li>
+            <li><a href="#tab3" data-toggle="tab">Sinais</a></li>
+            <li><a href="#tab4" data-toggle="tab">Referências</a></li>
+            <li><a href="#tab5" data-toggle="tab">Indicadores</a></li>
         </ul>
 
         <div class="tab-content">
@@ -33,7 +30,7 @@
                                         @if($disorderType)
                                             {{$disorderType->name}}
                                         @else
-                                            <span class="alert-warning">Não existe tipo cadastrado</span>
+                                            <span class="alert-warning">Não existe tipo associado</span>
                                         @endif
                                     </strong>
                                 </p>
@@ -49,50 +46,13 @@
                                         {{$icd}}
 
                                         @if($countICDs)
-                                            <strong>-</strong>
+                                            -
                                             <span class="hide">{{$countICDs--}}</span>
                                         @endif
                                     @empty
-                                        <strong>-</strong>
+                                        -
                                     @endforelse
                                 </strong>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <p>Especialidade(s):
-                                    <strong>
-                                        @forelse($specialties as $specialty)
-                                            {{$specialty->name}} {{$specialty->cbo}}
-
-                                            @if($countSpecialties)
-                                                <strong>-</strong>
-                                                <span class="hide">{{$countSpecialties--}}</span>
-                                            @endif
-                                        @empty
-                                            <span class="alert-warning">Não existe especialidade cadastrada</span>
-                                        @endforelse
-                                    </strong>
-                                </p>
-                            </div>
-
-                            <div class="col-xs-1">
-                                <p>MeSH:
-                                </p>
-                            </div>
-
-                            <div class="col-xs-3">
-                                @forelse($meshes as $mesh)
-                                    <a href="http://www.ncbi.nlm.nih.gov/mesh/{{$mesh}}" target="_blank">{{$mesh}}</a>
-
-                                    @if($countMeSHes)
-                                        <strong>-</strong>
-                                        <span class="hide">{{$countMeSHes--}}</span>
-                                    @endif
-                                @empty
-                                    <strong>-</strong>
-                                @endforelse
                             </div>
                         </div>
 
@@ -123,13 +83,33 @@
                                 @else
                                     <p>Protocolo:
                                         <strong>
-                                            <span class="alert-warning">Não existe protocolo cadastrado</span>
+                                            <span class="alert-warning">Não existe protocolo associado</span>
                                         </strong>
                                     </p>
                                 @endif
                             </div>
 
                             <div class="col-xs-1">
+                                <p>MeSH:
+                                </p>
+                            </div>
+
+                            <div class="col-xs-3">
+                                @forelse($meshes as $mesh)
+                                    <a href="http://www.ncbi.nlm.nih.gov/mesh/{{$mesh}}" target="_blank">{{$mesh}}</a>
+
+                                    @if($countMeSHes)
+                                        <strong>-</strong>
+                                        <span class="hide">{{$countMeSHes--}}</span>
+                                    @endif
+                                @empty
+                                    <strong>-</strong>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-offset-8 col-xs-1">
                                 <p>UMLS:</p>
                             </div>
 
@@ -139,11 +119,11 @@
                                         {{$umls}}
 
                                         @if($countUMLSes)
-                                            <strong>-</strong>
+                                            -
                                             <span class="hide">{{$countUMLSes--}}</span>
                                         @endif
                                     @empty
-                                        <strong>-</strong>
+                                        -
                                     @endforelse
                                 </strong>
                             </div>
@@ -160,11 +140,11 @@
                                         {{$meddra}}
 
                                         @if($countMedDRAs)
-                                            <strong>-</strong>
+                                            -
                                             <span class="hide">{{$countMedDRAs--}}</span>
                                         @endif
                                     @empty
-                                        <strong>-</strong>
+                                        -
                                     @endforelse
                                 </strong>
                             </div>
@@ -254,9 +234,11 @@
                                     </tbody>
                                 @endforeach
                             </table>
+
+                            {!! $synonyms->links() !!}
                         @else
                             <strong>
-                                <span class="alert-warning">Não existem sinônimos cadastrados</span>
+                                <span class="alert-warning">Não existem sinônimos associados a essa doença</span>
                             </strong>
                         @endif
                     </div>
@@ -264,44 +246,6 @@
             </div>
 
             <div class="tab-pane fade" id="tab3">
-                <div class="panel panel-primary panel-show">
-                    <div class="panel-heading text-center">
-                        <h4><strong>{{$disorder->name}}</strong></h4>
-                    </div>
-
-                    <div class="panel-body">
-                        @if(count($specialties))
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead class="table-geral">
-                                <th class="text-center">ID</th>
-                                <th class="text-center">Especialidade</th>
-                                <th class="text-center">CBO</th>
-                                <th class="text-center">Detalhes</th>
-                                </thead>
-
-                                @foreach($specialties as $specialty)
-                                    <tbody>
-                                    <td class="text-center table-geral">{{$specialty->id}}</td>
-                                    <td class="text-td">{{$specialty->name}}</td>
-                                    <td class="text-td text-center">{{$specialty->cbo}}</td>
-                                    <td class="text-center">
-                                        <a class="btn btn-default" href="/specialties/show/{{$specialty->id}}">
-                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                        </a>
-                                    </td>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                        @else
-                            <strong>
-                                <span class="alert-warning">Não existem especialidades cadastradas</span>
-                            </strong>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="tab4">
                 <div class="panel panel-primary panel-show">
                     <div class="panel-heading text-center">
                         <h4><strong>{{$disorder->name}}</strong></h4>
@@ -330,16 +274,18 @@
                                     </tbody>
                                 @endforeach
                             </table>
+
+                            {!! $signs->links() !!}
                         @else
                             <strong>
-                                <span class="alert-warning">Não existem sinais cadastrados</span>
+                                <span class="alert-warning">Não existem sinais associados a essa doença</span>
                             </strong>
                         @endif
                     </div>
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="tab5">
+            <div class="tab-pane fade" id="tab4">
                 <div class="panel panel-primary panel-show">
                     <div class="panel-heading text-center">
                         <h4><strong>{{$disorder->name}}</strong></h4>
@@ -370,16 +316,18 @@
                                     </tbody>
                                 @endforeach
                             </table>
+
+                            {!! $references->links() !!}
                         @else
                             <strong>
-                                <span class="alert-warning">Não existem referências cadastradas</span>
+                                <span class="alert-warning">Não existem referências associadas a essa doença</span>
                             </strong>
                         @endif
                     </div>
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="tab6">
+            <div class="tab-pane fade" id="tab5">
                 <div class="panel panel-primary panel-show">
                     <div class="panel-heading text-center">
                         <h4><strong>{{$disorder->name}}</strong></h4>
@@ -390,18 +338,20 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead class="table-geral">
                                 <th class="text-center">ID</th>
-                                <th class="text-center">Tipo de Indicador</th>
+                                <th class="text-center">Desordem</th>
+                                <th class="text-center">Tipo</th>
+                                <th class="text-center">Fonte</th>
                                 <th class="text-center">Ano</th>
-                                <th class="text-center">Dado</th>
                                 <th class="text-center">Detalhes</th>
                                 </thead>
 
                                 @foreach($indicators as $indicator)
                                     <tbody>
                                     <td class="text-center table-geral">{{$indicator->id}}</td>
+                                    <td class="text-td text-center">{{$indicator->disorder->name}}</td>
                                     <td class="text-td text-center">{{$indicator->indicatorType->name}}</td>
+                                    <td class="text-td text-center">{{$indicator->indicatorSource->name}}</td>
                                     <td class="text-td text-center">{{$indicator->year}}</td>
-                                    <td class="text-td text-center">{{$indicator->amount}}</td>
                                     <td class="text-center">
                                         <a class="btn btn-default" href="/indicators/show/{{$indicator->id}}">
                                             <i class="glyphicon glyphicon-eye-open"></i>
@@ -412,83 +362,7 @@
                             </table>
                         @else
                             <strong>
-                                <span class="alert-warning">Não existem indicadores cadastrados</span>
-                            </strong>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="tab7">
-                <div class="panel panel-primary panel-show">
-                    <div class="panel-heading text-center">
-                        <h4><strong>{{$disorder->name}}</strong></h4>
-                    </div>
-
-                    <div class="panel-body">
-                        @if(count($professionals))
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead class="table-geral">
-                                <th class="text-center">ID</th>
-                                <th class="text-center">Nome do Profissional</th>
-                                <th class="text-center">Cidade - UF</th>
-                                <th class="text-center">Detalhes</th>
-                                </thead>
-
-                                @foreach($professionals as $professional)
-                                    <tbody>
-                                    <td class="text-center table-geral">{{$professional->id}}</td>
-                                    <td class="text-td">{{$professional->name}} {{$professional->surname}}</td>
-                                    <td class="text-td text-center">{{$professional->city}} - {{$professional->uf}}</td>
-                                    <td class="text-center">
-                                        <a class="btn btn-default" href="/professionals/show/{{$professional->id}}">
-                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                        </a>
-                                    </td>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                        @else
-                            <strong>
-                                <span class="alert-warning">Não existem profissionais cadastrados</span>
-                            </strong>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="tab8">
-                <div class="panel panel-primary panel-show">
-                    <div class="panel-heading text-center">
-                        <h4><strong>{{$disorder->name}}</strong></h4>
-                    </div>
-
-                    <div class="panel-body">
-                        @if(count($treatmentCenters))
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead class="table-geral">
-                                <th class="text-center">ID</th>
-                                <th class="text-center">Nome do Centro</th>
-                                <th class="text-center">Cidade - UF</th>
-                                <th class="text-center">Detalhes</th>
-                                </thead>
-
-                                @foreach($treatmentCenters as $treatmentCenter)
-                                    <tbody>
-                                    <td class="text-center table-geral">{{$treatmentCenter->id}}</td>
-                                    <td class="text-td">{{$treatmentCenter->name}}</td>
-                                    <td class="text-td text-center">{{$treatmentCenter->city}} - {{$treatmentCenter->uf}}</td>
-                                    <td class="text-center">
-                                        <a class="btn btn-default" href="/treatmentCenters/show/{{$treatmentCenter->id}}">
-                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                        </a>
-                                    </td>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                        @else
-                            <strong>
-                                <span class="alert-warning">Não existem centros de tratamento cadastrados</span>
+                                <span class="alert-warning">Não existem indicadores associados a essa doença</span>
                             </strong>
                         @endif
                     </div>

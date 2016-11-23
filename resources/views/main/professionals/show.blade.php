@@ -19,7 +19,13 @@
 
                 <div class="col-xs-2">
                     <p>Nº Conselho:
-                        <strong>{{$professional->council_number ? $professional->council_number : "N/D"}}</strong>
+                        <strong>
+                            @if($professional->council_number)
+                                {{$professional->council_number}}
+                            @else
+                                <span class="alert-warning">N/D</span>
+                            @endif
+                        </strong>
                     </p>
                 </div>
 
@@ -37,7 +43,7 @@
                             @if($professional->city)
                                 {{$professional->city}} - {{$professional->uf}}
                             @else
-                                N/D
+                                <span class="alert-warning">N/D</span>
                             @endif
                         </strong>
                     </p>
@@ -49,7 +55,7 @@
                             @if($professional->telephone)
                                 {{$professional->ddd}} {{$professional->telephone}}
                             @else
-                                N/D
+                                <span class="alert-warning">N/D</span>
                             @endif
                         </strong>
                     </p>
@@ -60,7 +66,7 @@
                         @if($professional->facebook)
                             <a href="{{$professional->facebook}}" target="_blank">{{$professional->facebook}}</a>
                         @else
-                            <strong>N/D</strong>
+                            <span class="alert-warning"><strong>N/D</strong></span>
                         @endif
                     </p>
                 </div>
@@ -69,13 +75,25 @@
             <div class="row">
                 <div class="col-xs-4">
                     <p>Email:
-                        <strong>{{$professional->email ? $professional->email : "N/D"}}</strong>
+                        <strong>
+                            @if($professional->email)
+                                {{$professional->email}}
+                            @else
+                                <span class="alert-warning">N/D</span>
+                            @endif
+                        </strong>
                     </p>
                 </div>
 
                 <div class="col-xs-3">
                     <p>Ocupação:
-                        <strong>{{$professional->profession ? $professional->profession : "N/D"}}</strong>
+                        <strong>
+                            @if($professional->profession)
+                                {{$professional->profession}}
+                            @else
+                                <span class="alert-warning">N/D</span>
+                            @endif
+                        </strong>
                     </p>
 
                 </div>
@@ -85,7 +103,7 @@
                         @if($professional->twitter)
                             <a href="{{$professional->twitter}}" target="_blank">{{$professional->twitter}}</a>
                         @else
-                            <strong>N/D</strong>
+                            <span class="alert-warning text-bd"><strong>N/D</strong></span>
                         @endif
                     </p>
                 </div>
@@ -103,37 +121,10 @@
                                     <span class="hide">{{$countSpecialties--}}</span>
                                 @endif
                             @empty
-                                <span class="alert-warning">Não existe especialidade cadastrada para esse profissional</span>
+                                <span class="alert-warning">Não existem especialidades cadastradas para esse profissional</span>
                             @endforelse
                         </strong>
                     </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <table class="table table-bordered table-striped table-hover">
-                        <caption class="text-center text-td">Desordens relacionadas a esse profissional</caption>
-                        <thead class="table-geral">
-                        <th class="text-center">ID</th>
-                        <th class="text-center">Orphanumber</th>
-                        <th class="text-center">Desordem</th>
-                        <th class="text-center">Detalhes</th>
-                        </thead>
-
-                        @foreach($professionalDisorders as $professionalDisorder)
-                            <tbody>
-                            <td class="text-center table-geral">{{$professionalDisorder->id}}</td>
-                            <td class="text-td text-center">{{$professionalDisorder->orphanumber}}</td>
-                            <td class="text-td">{{$professionalDisorder->name}}</td>
-                            <td class="text-center">
-                                <a class="btn btn-default" href="/admin/disorders/show/{{$professionalDisorder->id}}">
-                                    <i class="glyphicon glyphicon-eye-open"></i>
-                                </a>
-                            </td>
-                            </tbody>
-                        @endforeach
-                    </table>
                 </div>
             </div>
         </div>

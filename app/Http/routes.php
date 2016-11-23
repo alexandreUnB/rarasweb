@@ -11,10 +11,7 @@
 |
 */
 
-
 Route::auth();
-
-
 
 //****** Rotas API ****************
 
@@ -25,7 +22,6 @@ Route::get('/api/profLoader/{id},{pos}', 'ApiController@profLoader');
 Route::get('/api/professionalLocal/{local},{pos}', 'ApiController@professionalLocal');
 Route::get('/api/professionalSpecialty/{specialtyName},{pos}', 'ApiController@professionalSpecialty');
 Route::get('/api/professionalUF/{local},{pos}', 'ApiController@professionalUF');
-
 
 Route::get('/api/disorderID/{id}', 'ApiController@disorderID');
 Route::get('/api/disorderName/{name},{pos}', 'ApiController@disorderName');
@@ -49,10 +45,8 @@ Route::get('/api/protocolName/{name}', 'ApiController@protocolName');
 Route::get('/api/lawID/{id}', 'ApiController@lawID');
 Route::get('/api/lawName/{name}', 'ApiController@lawName');
 
-
-
-
 //********* Rotas WEB *********************
+
 Route::get('/home', 'HomeController@index');
 
 Route::get('/charts', 'ChartController@testChart');
@@ -79,8 +73,6 @@ Route::group(['middleware'=> [],'web'], function(){
     Route::get('admin/roles/search', 'RoleController@search');
     Route::get('admin/roles/{id}/permissions', 'RoleController@permissions');
 
-
-
     Route::get('admin/users', 'UserController@index');
     Route::get('admin/users/create', 'UserController@create');
     Route::post('admin/users/store', 'UserController@store');
@@ -90,7 +82,6 @@ Route::group(['middleware'=> [],'web'], function(){
     Route::put('admin/users/update/{id}', 'UserController@update');
     Route::get('admin/users/search', 'UserController@search');
     Route::get('admin/users/{id}/roles', 'UserController@roles');
-
 
     Route::get('/', 'MainController@main');
     Route::get('/disorders/search', 'MainController@search');
