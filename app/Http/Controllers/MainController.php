@@ -83,70 +83,54 @@ class MainController extends Controller
     public function showDisorders($id)
     {
         $disorder = $this->disorderModel->find($id);
-        
+
         $disorderType = $disorder->disorderType;
-        
-        $specialties = $disorder->specialties()
-            ->orderBy('name')
-            ->get();
-        $countSpecialties = count($specialties) - 1;
-        
+
         $protocol = $disorder->protocol;
-        
+
         $synonyms = $disorder->synonyms()
             ->orderBy('name')
-            ->get();
-        
+            ->paginate(10);
+
         $signs = $disorder->signs()
             ->orderBy('name')
-            ->get();
-        
+            ->paginate(10);
+
         $references = $disorder->references()
             ->orderBy('source')
             ->orderBy('reference')
-            ->get();
-        
+            ->paginate(10);
+
         $icds = $references
             ->where('source', 'ICD-10')
             ->pluck('reference');
         $countICDs = count($icds) - 1;
-        
+
         $meshes = $references
             ->where('source', 'MeSH')
             ->pluck('reference');
         $countMeSHes = count($meshes) - 1;
-        
+
         $umlses = $references
             ->where('source', 'UMLS')
             ->pluck('reference');
         $countUMLSes = count($umlses) - 1;
-        
+
         $meddras = $references
             ->where('source', 'MedDRA')
             ->pluck('reference');
         $countMedDRAs = count($meddras) - 1;
-        
+
         $omims = $references
             ->where('source', 'OMIM')
             ->pluck('reference');
         $countOMIMs = count($omims) - 1;
-        
+
         $indicators = $disorder->indicators;
 
-        $professionals = collect();
-        $treatmentCenters = collect();
-
-        foreach ($specialties as $specialty) {
-            $professionals = $professionals->merge($specialty->professionals);
-            $treatmentCenters = $treatmentCenters->merge($specialty->treatmentCenters);
-        }
-
-        $professionals = $professionals->unique();
-        $treatmentCenters = $treatmentCenters->unique();
-
-        return view('main.disorders.show', compact('disorder', 'disorderType', 'specialties', 'countSpecialties',
-            'protocol', 'icds', 'countICDs', 'meshes', 'countMeSHes', 'umlses', 'countUMLSes', 'meddras', 'countMedDRAs',
-            'omims', 'countOMIMs', 'synonyms', 'signs', 'references', 'indicators', 'professionals', 'treatmentCenters'));
+        return view('admin.disorders.show', compact('disorder', 'disorderType', 'protocol', 'icds',
+            'countICDs', 'meshes', 'countMeSHes', 'umlses', 'countUMLSes', 'meddras', 'countMedDRAs',
+            'omims', 'countOMIMs', 'synonyms', 'signs', 'references', 'indicators'));
     }
 
     public function showSynonimous($id)
@@ -193,17 +177,8 @@ class MainController extends Controller
 
         $specialties = $professional->specialties()->get();
         $countSpecialties = count($specialties) - 1;
-        
-        $professionalDisorders = collect();
 
-        foreach ($specialties as $specialty)
-        {
-            $professionalDisorders = $professionalDisorders->merge($specialty->disorders);
-        }
-
-        $professionalDisorders = $professionalDisorders->unique();
-
-        return view('main.professionals.show', compact('professional', 'specialties', 'countSpecialties', 'professionalDisorders'));
+        return view('main.professionals.show', compact('professional', 'specialties', 'countSpecialties'));
     }
 
     public function showTreatmentCenters($id)
@@ -212,16 +187,7 @@ class MainController extends Controller
         
         $specialties = $treatmentCenter->specialties;
         $countSpecialties = count($specialties) - 1;
-        
-        $centerDisorders = collect();
 
-        foreach ($specialties as $specialty)
-        {
-            $centerDisorders = $centerDisorders->merge($specialty->disorders);
-        }
-
-        $centerDisorders = $centerDisorders->unique();
-
-        return view('main.treatmentCenters.show', compact('treatmentCenter', 'specialties', 'countSpecialties', 'centerDisorders'));
+        return view('main.treatmentCenters.show', compact('treatmentCenter', 'specialties', 'countSpecialties'));
     }
 }

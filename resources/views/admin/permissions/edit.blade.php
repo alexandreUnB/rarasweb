@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
     <h3 class="page-header">Editando Permissão</h3>
 
     <form action="/admin/permissions/update/{{$permission->id}}" method="post">

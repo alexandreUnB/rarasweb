@@ -8,11 +8,26 @@
         {{csrf_field()}}
 
         <div class="row">
-            <div class="form-group col-xs-7">
+            <div class="form-group col-xs-5">
                 <label for="name">Nome em Inglês</label>
                 <input type="text" name="name" class="form-control" value="{{old('name')}}"
                        autofocus required minlength="4" maxlength="120">
             </div>
+
+            <div class="form-group col-xs-2">
+                <label for="orphanumber">Orphanumber</label>
+                <input type="number" name="orphanumber" class="form-control"
+                       value="{{old('orphanumber')}}" required min="1" max="999999">
+
+            </div>
+            {{--</div>--}}
+
+        {{--<div class="row">--}}
+            {{--<div class="form-group col-xs-7">--}}
+                {{--<label for="name_portuguese">Nome em Português</label>--}}
+                {{--<input type="text" name="name_portuguese" class="form-control"--}}
+                       {{--value="{{old('name_portuguese')}}" minlength="4" maxlength="120">--}}
+            {{--</div>--}}
 
             <div class="form-group col-xs-5">
                 <label for="disorderType_id">Tipo de Desordem</label>
@@ -23,20 +38,6 @@
                         old('disorderType_id') ? "selected" : ""}}>{{$disorderType->name}}</option>
                     @endforeach
                 </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-xs-7">
-                <label for="name_portuguese">Nome em Português</label>
-                <input type="text" name="name_portuguese" class="form-control"
-                       value="{{old('name_portuguese')}}" minlength="4" maxlength="120">
-            </div>
-
-            <div class="form-group col-xs-offset-1 col-xs-3">
-                <label for="orphanumber">Orphanumber</label>
-                <input type="number" name="orphanumber" class="form-control"
-                       value="{{old('orphanumber')}}" required min="1" max="999999">
             </div>
         </div>
 

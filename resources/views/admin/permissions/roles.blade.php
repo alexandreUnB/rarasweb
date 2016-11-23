@@ -2,9 +2,7 @@
 
 @section('content')
 
-    @include('layouts.alerts')
-
-    <h3 class="page-header">Papeis que contém a Permissão: {{$permission->label}}</h3>
+    <h3 class="page-header">Papeis que contém a Permissão: {{$permission->display_name}}</h3>
 
 
     <table class="table table-bordered table-striped table-hover">
@@ -21,7 +19,7 @@
         @forelse($roles as $role)
             <tbody>
             <td class="text-center table-geral">{{$role->id}}</td>
-            <td class="text-center">{{$role->label}}</td>
+            <td class="text-center">{{$role->display_name}}</td>
             <td class="text-center">{{$role->name}}</td>
             {{--<td class="text-center">--}}
                 {{--<a class="btn btn-default" href="/admin/users/{{$role->id}}/roles">--}}

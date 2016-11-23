@@ -16,7 +16,7 @@
 
             <div class="form-group col-xs-2">
                 <label for="cbo">CBO</label>
-                <input type="text" name="cbo" class="form-control"
+                <input type="text" name="cbo" id="cbo" class="form-control"
                        value="{{old('cbo')}}" required minlength="7" maxlength="7">
             </div>
         </div>

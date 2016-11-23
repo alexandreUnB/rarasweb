@@ -46,7 +46,7 @@
 
     <div id="actions" class="row">
         <div class="col-xs-6">
-            {!! $disorders->links() !!}
+            {!! $disorders->appends(Request::input())->links() !!}
         </div>
 
         <div class="col-xs-6 text-right">

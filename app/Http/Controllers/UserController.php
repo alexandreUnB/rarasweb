@@ -49,6 +49,7 @@ class UserController extends Controller
         // recuperar permissions
 
         $roles = $user->roles;
+
         return view('admin.users.roles', compact('roles', 'user'));
     }
 
@@ -63,12 +64,14 @@ class UserController extends Controller
     {
         $user = $this->userModel->find($id);
         $roles = $this->roleModel->orderBy('display_name')->get();
+
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function show($id)
     {
         $user = $this->userModel->find($id);
+
         return view('admin.users.show', compact('user'));
     }
 
@@ -88,11 +91,19 @@ class UserController extends Controller
             $newRoleUser->user_id = $updateUser->id;
             $newRoleUser->save();
         }
+
         session()->flash('success', 'Usuário ' . $updateUser->name . ' foi editado com sucesso');
 
         return redirect('/admin/users');
     }
 
+    public function delete($id)
+    {
+        $deletedUser = $this->userModel->find($id);
+        $deletedUser->delete();
 
+        session()->flash('success', 'O usuário ' . $deletedUser->name . ' foi deletado com sucesso');
 
+        return redirect(\Illuminate\Support\Facades\URL::previous());
+    }
 }

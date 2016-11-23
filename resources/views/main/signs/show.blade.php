@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <table class="table table-bordered table-striped table-hover">
-                        <caption class="text-center text-td">Desordens relacionadas a esse sinal</caption>
+                        <caption class="text-center text-td">Desordens associadas a esse sinal</caption>
                         <thead class="table-geral">
                         <th class="text-center">ID</th>
                         <th class="text-center">Orphanumber</th>

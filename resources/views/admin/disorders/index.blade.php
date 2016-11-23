@@ -25,21 +25,21 @@
 
                 <div class="input-group">
                     {{$checkedName = ""}}
-                    {{$checkedNamePortuguese = ""}}
+                    {{--{{$checkedNamePortuguese = ""}}--}}
                     {{$checkedOrphanumber = ""}}
 
                     <span class="hide">
                         @if(old('searchType') == 'disorderName')
                             {{$checkedName = "checked"}}
-                        @elseif(old('searchType') == 'disorderNamePortuguese')
-                            {{$checkedNamePortuguese = "checked"}}
+                        {{--@elseif(old('searchType') == 'disorderNamePortuguese')--}}
+                            {{--{{$checkedNamePortuguese = "checked"}}--}}
                         @elseif(old('searchType') == 'disorderOrphanumber')
                             {{$checkedOrphanumber = "checked"}}
                         @endif
                     </span>
 
-                    <input type="radio" name="searchType" value="disorderName" {{$checkedName}} required> Nome EN
-                    <input type="radio" name="searchType" value="disorderNamePortuguese" {{$checkedNamePortuguese}} required> Nome PT
+                    <input type="radio" name="searchType" value="disorderName" {{$checkedName}} required> Nome
+                    {{--<input type="radio" name="searchType" value="disorderNamePortuguese" {{$checkedNamePortuguese}} required> Nome PT--}}
                     <input type="radio" name="searchType" value="disorderOrphanumber" {{$checkedOrphanumber}} required> Orphanumber
                 </div>
             </form>
@@ -49,11 +49,11 @@
     <table class="table table-bordered table-striped table-hover">
         <thead class="table-geral">
         <th class="text-center">ID</th>
-        @if($checkedNamePortuguese == "checked")
-            <th class="text-center">Nome em Português</th>
-        @else
-            <th class="text-center">Nome em Inglês</th>
-        @endif
+        {{--@if($checkedNamePortuguese == "checked")--}}
+            {{--<th class="text-center">Nome em Português</th>--}}
+        {{--@else--}}
+            <th class="text-center">Nome</th>
+        {{--@endif--}}
         <th class="text-center">Orphanumber</th>
         <th class="text-center">CID-10</th>
         <th class="text-center">OMIM</th>
@@ -66,11 +66,11 @@
         @foreach($disorders as $disorder)
             <tbody>
             <td class="text-center table-geral">{{$disorder->id}}</td>
-            @if($checkedNamePortuguese == "checked")
-                <td class="text-td">{{$disorder->name_portuguese}}</td>
-            @else
+            {{--@if($checkedNamePortuguese == "checked")--}}
+                {{--<td class="text-td">{{$disorder->name_portuguese}}</td>--}}
+            {{--@else--}}
                 <td class="text-td">{{$disorder->name}}</td>
-            @endif
+            {{--@endif--}}
             <td class="text-td text-center">{{$disorder->orphanumber}}</td>
             <td class="text-td text-center">
                 @if($disorder->references()->where('source', 'ICD-10')->first())

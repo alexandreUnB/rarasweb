@@ -174,37 +174,10 @@
                                     <span class="hide">{{$countSpecialties--}}</span>
                                 @endif
                             @empty
-                                <span class="alert-warning">Não existe especialidade cadastrada para esse centro</span>
+                                <span class="alert-warning">Não existem especialidades cadastradas para esse centro</span>
                             @endforelse
                         </strong>
                     </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <table class="table table-bordered table-striped table-hover">
-                        <caption class="text-center text-td">Desordens relacionadas a esse centro</caption>
-                        <thead class="table-geral">
-                        <th class="text-center">ID</th>
-                        <th class="text-center">Orphanumber</th>
-                        <th class="text-center">Desordem</th>
-                        <th class="text-center">Detalhes</th>
-                        </thead>
-
-                        @foreach($centerDisorders as $centerDisorder)
-                            <tbody>
-                            <td class="text-center table-geral">{{$centerDisorder->id}}</td>
-                            <td class="text-td text-center">{{$centerDisorder->orphanumber}}</td>
-                            <td class="text-td">{{$centerDisorder->name}}</td>
-                            <td class="text-center">
-                                <a class="btn btn-default" href="/admin/disorders/show/{{$centerDisorder->id}}">
-                                    <i class="glyphicon glyphicon-eye-open"></i>
-                                </a>
-                            </td>
-                            </tbody>
-                        @endforeach
-                    </table>
                 </div>
             </div>
         </div>
