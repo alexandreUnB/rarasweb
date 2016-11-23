@@ -116,7 +116,9 @@ class ApiController extends Controller
         $professionals = $professionals->splice($pos,10)->toArray();
 
 
-        return  response()->json(compact('professionals'));
+        return  response()->json(compact('professionals'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
 
 
     }
@@ -137,7 +139,11 @@ class ApiController extends Controller
 
         $professionalDisorders = $professionalDisorders->unique();
 
-        return response()->json(compact('professional', 'specialties', 'countSpecialties', 'professionalDisorders'));
+        return response()->json(compact('professional', 'specialties', 'countSpecialties', 'professionalDisorders'))
+            ->header('Access-Control-Allow-Origin' , '*')
+            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
     }
 
     public function profLoader($id, $pos)
@@ -190,7 +196,10 @@ class ApiController extends Controller
                 $professionals = $professionals->splice($pos,10)->toArray();
 
 
-       return response()->json(compact('professionals'));
+       return response()->json(compact('professionals'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+;
     }
 
     public function professionalLocal($local, $pos)
@@ -212,7 +221,33 @@ class ApiController extends Controller
 
 
 
-       return response()->json(compact('professionals'));
+       return response()->json(compact('professionals'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
+    }
+
+
+    public function professionalUF($local, $pos)
+    {
+
+        $professionals = $this->professionalModel
+            ->where('uf', '=', $local) 
+            ->orderBy('name')->get();
+
+        $professionalCount = $professionals->count();
+        foreach ($professionals as $profAux){
+            $profAux->count = $professionalCount;
+            break;
+
+        }
+        $professionals = $professionals->splice($pos,10)->toArray();
+
+
+       return response()->json(compact('professionals'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
     }
 
     public function professionalSpecialty($specialtyName, $pos)
@@ -239,7 +274,10 @@ class ApiController extends Controller
 
         $professionals = $professionals->splice($pos,10)->toArray();
 
-       return response()->json(compact('professionals'));
+       return response()->json(compact('professionals'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
     }
 
 
@@ -266,19 +304,36 @@ class ApiController extends Controller
 
         $treatmentCenter = $this->treatmentCenterModel->find($id);
 
-        return response()->json(compact('treatmentCenter', 'centerDis'));
+        return response()->json(compact('treatmentCenter', 'centerDis'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
 
     }
 
-    public function centerName($name)
+    public function centerName($name, $pos)
     {
         $centers = $this->treatmentCenterModel
             ->where('name', 'like', '%'.$name.'%')
-            ->orderBy('name')->get()->toArray();
-        return response()->json(compact('centers'));
+            ->orderBy('name')->get();
+
+        $centerCount = $centers->count();
+        foreach ($centers as $centerAux){
+            $centerAux->count = $centerCount;
+            break;
+
+        }
+
+        $centers = $centers->splice($pos,10)->toArray();
+
+        return response()->json(compact('centers'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
+
     }
 
-    public function centerDisorder($disorderName)
+    public function centerDisorder($disorderName, $pos)
     {
         $disorders = $this->disorderModel
             ->where('name', 'like', '%'.$disorderName.'%')
@@ -297,12 +352,24 @@ class ApiController extends Controller
             $centers = $centers->merge($specialty->treatmentCenters);
         }
 
+        $centerCount = $centers->count();
+        foreach ($centers as $centerAux){
+            $centerAux->count = $centerCount;
+            break;
 
-       return response()->json(compact('centers'));
+        }
+
+        $centers = $centers->splice($pos,10)->toArray();
+
+
+       return response()->json(compact('centers'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
     }
 
 
-    public function centerSpecialty($specialtyName)
+    public function centerSpecialty($specialtyName, $pos)
     {
 
         $specialties = $this->specialtyModel
@@ -316,13 +383,25 @@ class ApiController extends Controller
             $centers = $centers->merge($specialty->treatmentCenters);
         }
 
+        $centerCount = $centers->count();
+        foreach ($centers as $centerAux){
+            $centerAux->count = $centerCount;
+            break;
 
-       return response()->json(compact('centers'));
+        }
+
+        $centers = $centers->splice($pos,10)->toArray();
+
+       return response()->json(compact('centers'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
+
     }
 
 
 
-    public function centerLocal($local)
+    public function centerLocal($local, $pos)
     {
 
         $centers= $this->treatmentCenterModel
@@ -330,10 +409,42 @@ class ApiController extends Controller
             ->orWhere('city', 'like', '%'.$local.'%') 
             ->orderBy('name')->get();
 
+        $centerCount = $centers->count();
+        foreach ($centers as $centerAux){
+            $centerAux->count = $centerCount;
+            break;
 
-       return response()->json(compact('centers'));
+        }
+
+        $centers = $centers->splice($pos,10)->toArray();
+
+       return response()->json(compact('centers'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
     }
 
+    public function centerUF($local, $pos)
+    {
+
+        $centers= $this->treatmentCenterModel
+            ->where('uf', '=', $local) 
+            ->orderBy('name')->get();
+
+        $centerCount = $centers->count();
+        foreach ($centers as $centerAux){
+            $centerAux->count = $centerCount;
+            break;
+
+        }
+
+        $centers = $centers->splice($pos,10)->toArray();
+
+       return response()->json(compact('centers'))->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
+    }
 
     // ************************************************************************
     // *                    Signs related routes                              *
@@ -447,7 +558,11 @@ class ApiController extends Controller
         $professionalsFilter = $professionals->take(10)->toArray();
 
         return response()->json(compact('specialties', 'disorder', 'signs', 
-            'signsLength','centers', 'professionalsFilter', 'indicators','protocol','icds'));
+            'signsLength','centers', 'professionalsFilter', 'indicators','protocol','icds'))
+            ->header('Access-Control-Allow-Origin' , '*')
+            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
 
     }
 
@@ -468,7 +583,11 @@ class ApiController extends Controller
 
         $disorders = $disorders->splice($pos,10)->toArray();
 
-        return response()->json(compact('disorders'));
+        return response()->json(compact('disorders'))
+            ->header('Access-Control-Allow-Origin' , '*')
+            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
     }
 
 
@@ -487,7 +606,11 @@ class ApiController extends Controller
 
         $signs = $signs->splice($pos,10)->toArray();
 
-        return response()->json(compact('signs'));
+        return response()->json(compact('signs'))
+            ->header('Access-Control-Allow-Origin' , '*')
+            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
 
     }
 
@@ -515,7 +638,11 @@ class ApiController extends Controller
         $disorders = $disorders->splice($pos,10)->toArray();
 
  
-        return response()->json(compact('disorders'));
+        return response()->json(compact('disorders'))
+            ->header('Access-Control-Allow-Origin' , '*')
+            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
      }
 
     // ***********************************************************************
@@ -574,7 +701,10 @@ class ApiController extends Controller
 
         }
 
-        return response()->json(compact('protocols'));
+        return response()->json(compact('protocols'))->header('Access-Control-Allow-Origin' , '*')
+            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+
 
     }
 

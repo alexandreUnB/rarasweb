@@ -24,6 +24,7 @@ Route::get('/api/profDisorder/{disorderName},{pos}', 'ApiController@profDisorder
 Route::get('/api/profLoader/{id},{pos}', 'ApiController@profLoader');
 Route::get('/api/professionalLocal/{local},{pos}', 'ApiController@professionalLocal');
 Route::get('/api/professionalSpecialty/{specialtyName},{pos}', 'ApiController@professionalSpecialty');
+Route::get('/api/professionalUF/{local},{pos}', 'ApiController@professionalUF');
 
 
 Route::get('/api/disorderID/{id}', 'ApiController@disorderID');
@@ -32,11 +33,13 @@ Route::get('/api/disorderBySign/{name},{pos}', 'ApiController@disorderBySign');
 Route::get('/api/disorderCID/{id},{pos}', 'ApiController@disorderCID');
 
 
-Route::get('/api/centerName/{name}', 'ApiController@centerName');
+Route::get('/api/centerName/{name},{pos}', 'ApiController@centerName');
 Route::get('/api/centerID/{id}', 'ApiController@centerID');
-Route::get('/api/centerDisorder/{disorderName}', 'ApiController@centerDisorder');
-Route::get('/api/centerSpecialty/{specialtyName}', 'ApiController@centerSpecialty');
-Route::get('/api/centerLocal/{local}', 'ApiController@centerLocal');
+Route::get('/api/centerDisorder/{disorderName},{pos}', 'ApiController@centerDisorder');
+Route::get('/api/centerSpecialty/{specialtyName},{pos}', 'ApiController@centerSpecialty');
+Route::get('/api/centerLocal/{local},{pos}', 'ApiController@centerLocal');
+Route::get('/api/centerUF/{local},{pos}', 'ApiController@centerUF');
+
 
 Route::get('/api/signLoader/{id},{pos}', 'ApiController@signLoader');
 
