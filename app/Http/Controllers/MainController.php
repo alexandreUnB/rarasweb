@@ -128,7 +128,7 @@ class MainController extends Controller
 
         $indicators = $disorder->indicators;
 
-        return view('admin.disorders.show', compact('disorder', 'disorderType', 'protocol', 'icds',
+        return view('main.disorders.show', compact('disorder', 'disorderType', 'protocol', 'icds',
             'countICDs', 'meshes', 'countMeSHes', 'umlses', 'countUMLSes', 'meddras', 'countMedDRAs',
             'omims', 'countOMIMs', 'synonyms', 'signs', 'references', 'indicators'));
     }
